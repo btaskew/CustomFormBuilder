@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-8 offset-2">
+    <div>
         <form method="GET"
               @submit.prevent="onSubmit"
               @change="form.errors.clear($event)"
