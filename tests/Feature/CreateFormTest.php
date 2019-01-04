@@ -10,6 +10,15 @@ class CreateFormTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function a_guest_cant_create_new_forms()
+    {
+        $this->withExceptionHandling();
+
+        $this->post('/forms', [])
+            ->assertStatus(302);
+    }
+
+    /** @test */
     public function a_user_can_create_a_new_form()
     {
         $attributes = [
