@@ -20,11 +20,11 @@ class FormController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
-        //
+        return view('form.create');
     }
 
     /**
@@ -35,11 +35,12 @@ class FormController extends Controller
      */
     public function store(Request $request)
     {
-        Form::create([
+        $form = Form::create([
             'title' => $request->input('title'),
-            'description' => $request->input('description'),
             'user_id' => auth()->user()->id
         ]);
+
+        return redirect('/forms/' . $form->id . '/edit');
     }
 
     /**
@@ -56,12 +57,12 @@ class FormController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Form $form
+     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Form $form)
     {
-        //
+        return view('form.edit', compact('form'));
     }
 
     /**
