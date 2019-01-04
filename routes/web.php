@@ -21,4 +21,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('forms', 'FormController');
+
+    Route::post('forms/{form}/questions', 'QuestionsController@store');
 });
