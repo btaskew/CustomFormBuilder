@@ -12,12 +12,10 @@
 */
 
 Route::get('/', function () {
-    return redirect('/home');
+    return redirect('/forms');
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('forms', 'FormController');
