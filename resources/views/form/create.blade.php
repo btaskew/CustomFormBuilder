@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8 offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading"><h3>Create a new form</h3></div>
                 <br />
