@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-12">
+    <div class="col-md-8 offset-2">
         <form method="GET"
               @submit.prevent="onSubmit"
               @change="form.errors.clear($event)"
@@ -36,9 +36,7 @@
             <button type="submit" class="btn btn-raised btn-primary mt" :disabled="loading">Save form</button>
         </form>
 
-        <div v-if="loading" class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
+        <div class="loader" v-if="loading"></div>
     </div>
 </template>
 
@@ -62,13 +60,15 @@
 
         methods: {
             onSubmit() {
+                this.loading = true;
+
                 this.form.patch(`/forms/${this.formData.id}`)
                     .then(response => {
                         this.loading = false;
-                        this.success = true;
+                        flash("Form updated");
                     }).catch(error => {
-                    this.buttonDisabled = false;
-                    this.error = true;
+                    this.loading = false;
+                    flash("Error updating form. Please try again later", "danger");
                 });
             }
         }
