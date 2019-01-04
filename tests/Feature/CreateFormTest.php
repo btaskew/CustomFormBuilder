@@ -22,7 +22,7 @@ class CreateFormTest extends TestCase
         $this->login();
         $form = factory(Form::class)->create(['user_id' => auth()->user()->id]);
 
-        $this->get('/forms/' . $form->id .'/edit')->assertSee($form->title);
+        $this->get('/forms/' . $form->id . '/edit')->assertSee($form->title);
     }
 
     /** @test */
@@ -46,5 +46,17 @@ class CreateFormTest extends TestCase
             ->assertStatus(302);
 
         $this->assertDatabaseHas('forms', $attributes);
+    }
+
+    /** @test */
+    public function a_user_can_edit_their_form()
+    {
+        $this->login();
+        $form = factory(Form::class)->create(['user_id' => auth()->user()->id, 'description' => 'Old description']);
+
+        $this->patch('/forms/' . $form->id, ['description' => 'New description'])
+            ->assertStatus(200);
+
+        $this->assertEquals('New description', $form->fresh()->description);
     }
 }

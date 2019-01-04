@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    {{ $form->title }}
+    <edit-form :form-data="{{ $form }}"></edit-form>
 @endsection

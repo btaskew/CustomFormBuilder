@@ -68,13 +68,18 @@ class FormController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @param Form                      $form
+     * @return Form
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Form $form)
     {
-        //
+        $form->update(request()->validate([
+            'title' => 'string',
+            'description' => 'string'
+        ]));
+
+        return $form;
     }
 
     /**
