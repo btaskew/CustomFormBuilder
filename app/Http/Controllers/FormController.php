@@ -40,7 +40,7 @@ class FormController extends Controller
             'user_id' => auth()->user()->id
         ]);
 
-        return redirect('/forms/' . $form->id . '/edit');
+        return redirect('/forms/' . $form->id . '/edit')->with('flash', 'New form created');
     }
 
     /**
