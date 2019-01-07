@@ -4,8 +4,9 @@
     <h3>{{ $form_title }} - Questions</h3>
 
     <div class="mt-4">
-        @foreach ($questions as $question)
-            <edit-question :question="{{ $question }}"></edit-question>
-        @endforeach
+        <question-list :questions="{{ $questions }}"></question-list>
+        {{--@foreach ($questions as $question)--}}
+            {{--<edit-question :question="{{ $question }}"></edit-question>--}}
+        {{--@endforeach--}}
     </div>
 @endsection
