@@ -1,6 +1,6 @@
 <template>
-    <div class="card" :class="{'mb-2 mt-2 border-primary': isOpen}">
-        <div class="card-header d-flex justify-content-between" :class="{'bg-primary text-white': isOpen}">
+    <div class="card" :class="{'mb-2 mt-2 border-secondary': isOpen}">
+        <div class="card-header d-flex justify-content-between" :class="{'bg-secondary text-white': isOpen}">
             {{ title }}
             <i class="fas fa-cog fa-lg" @click="toggleForm"></i>
         </div>
