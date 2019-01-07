@@ -76,22 +76,22 @@
                     </div>
                     <div class="form-check form-group">
                         <input type="checkbox"
-                               id="question_required"
-                               name="question_required"
+                               id="required"
+                               name="required"
                                class="form-check-input"
-                               v-model="form.question_required"
+                               v-model="form.required"
                                :true-value="true"
                                :false-value="false"
                         >
                         <label for="type"
                                class="form-check-label"
-                               :class="{ 'has-error': form.errors.has('question_required') }"
+                               :class="{ 'has-error': form.errors.has('required') }"
                         >
                             Required
                         </label>
                         <span class="text-danger"
-                              v-if="form.errors.has('question_required')"
-                              v-text="form.errors.get('question_required')"
+                              v-if="form.errors.has('required')"
+                              v-text="form.errors.get('required')"
                         ></span>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
                     title: '',
                     type: '',
                     help_text: '',
-                    question_required: false,
+                    required: false,
                     admin_only: false,
                     order: ''
                 }),
@@ -141,7 +141,7 @@
                     title: this.question.title,
                     type: this.question.type,
                     help_text: this.question.help_text,
-                    question_required: this.question.question_required,
+                    required: this.question.required,
                     admin_only: this.question.admin_only,
                     order: this.question.order
                 });

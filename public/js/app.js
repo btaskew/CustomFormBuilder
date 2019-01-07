@@ -49629,7 +49629,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 title: '',
                 type: '',
                 help_text: '',
-                question_required: false,
+                required: false,
                 admin_only: false,
                 order: ''
             }),
@@ -49645,7 +49645,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 title: this.question.title,
                 type: this.question.type,
                 help_text: this.question.help_text,
-                question_required: this.question.question_required,
+                required: this.question.required,
                 admin_only: this.question.admin_only,
                 order: this.question.order
             });
@@ -49995,26 +49995,26 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.form.question_required,
-                    expression: "form.question_required"
+                    value: _vm.form.required,
+                    expression: "form.required"
                   }
                 ],
                 staticClass: "form-check-input",
                 attrs: {
                   type: "checkbox",
-                  id: "question_required",
-                  name: "question_required",
+                  id: "required",
+                  name: "required",
                   "true-value": true,
                   "false-value": false
                 },
                 domProps: {
-                  checked: Array.isArray(_vm.form.question_required)
-                    ? _vm._i(_vm.form.question_required, null) > -1
-                    : _vm.form.question_required
+                  checked: Array.isArray(_vm.form.required)
+                    ? _vm._i(_vm.form.required, null) > -1
+                    : _vm.form.required
                 },
                 on: {
                   change: function($event) {
-                    var $$a = _vm.form.question_required,
+                    var $$a = _vm.form.required,
                       $$el = $event.target,
                       $$c = $$el.checked ? true : false
                     if (Array.isArray($$a)) {
@@ -50022,21 +50022,17 @@ var render = function() {
                         $$i = _vm._i($$a, $$v)
                       if ($$el.checked) {
                         $$i < 0 &&
-                          _vm.$set(
-                            _vm.form,
-                            "question_required",
-                            $$a.concat([$$v])
-                          )
+                          _vm.$set(_vm.form, "required", $$a.concat([$$v]))
                       } else {
                         $$i > -1 &&
                           _vm.$set(
                             _vm.form,
-                            "question_required",
+                            "required",
                             $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                           )
                       }
                     } else {
-                      _vm.$set(_vm.form, "question_required", $$c)
+                      _vm.$set(_vm.form, "required", $$c)
                     }
                   }
                 }
@@ -50046,9 +50042,7 @@ var render = function() {
                 "label",
                 {
                   staticClass: "form-check-label",
-                  class: {
-                    "has-error": _vm.form.errors.has("question_required")
-                  },
+                  class: { "has-error": _vm.form.errors.has("required") },
                   attrs: { for: "type" }
                 },
                 [
@@ -50058,13 +50052,11 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _vm.form.errors.has("question_required")
+              _vm.form.errors.has("required")
                 ? _c("span", {
                     staticClass: "text-danger",
                     domProps: {
-                      textContent: _vm._s(
-                        _vm.form.errors.get("question_required")
-                      )
+                      textContent: _vm._s(_vm.form.errors.get("required"))
                     }
                   })
                 : _vm._e()
