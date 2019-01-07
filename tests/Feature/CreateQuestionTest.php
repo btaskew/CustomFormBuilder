@@ -24,7 +24,7 @@ class CreateQuestionTest extends TestCase
     public function a_user_can_create_questions()
     {
         $this->login();
-        $form = factory(Form::class)->create(['user_id' => auth()->user()->id]);
+        $form = create(Form::class, ['user_id' => auth()->user()->id]);
 
         $attributes = [
             'title' => 'First question',
@@ -46,7 +46,7 @@ class CreateQuestionTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $form = factory(Form::class)->create(['user_id' => 9999]);
+        $form = create(Form::class, ['user_id' => 9999]);
 
         $this->login()
             ->post('/forms/' . $form->id . '/questions', [])
@@ -57,8 +57,8 @@ class CreateQuestionTest extends TestCase
     public function a_user_can_edit_a_question()
     {
         $this->login();
-        $form = factory(Form::class)->create(['user_id' => auth()->user()->id]);
-        $question = factory(Question::class)->create(['title' => 'Old title', 'form_id' => $form->id]);
+        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $question = create(Question::class, ['title' => 'Old title', 'form_id' => $form->id]);
 
         $this->patch(
             '/forms/' . $question->form->id . '/questions/' . $question->id,
@@ -73,8 +73,8 @@ class CreateQuestionTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $form = factory(Form::class)->create(['user_id' => 9999]);
-        $question = factory(Question::class)->create(['title' => 'Old title', 'form_id' => $form->id]);
+        $form = create(Form::class, ['user_id' => 9999]);
+        $question = create(Question::class, ['title' => 'Old title', 'form_id' => $form->id]);
 
         $this->login()
             ->patch('/forms/' . $form->id . '/questions/' . $question->id, [])

@@ -14,8 +14,8 @@ class UserTest extends TestCase
     /** @test */
     public function a_user_has_forms()
     {
-        $user = factory(User::class)->create();
-        $form = factory(Form::class)->create(['user_id' => $user->id]);
+        $user = create(User::class);
+        $form = create(Form::class, ['user_id' => $user->id]);
 
         $this->assertEquals($form->id, $user->forms->first()->id);
     }

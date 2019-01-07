@@ -14,8 +14,8 @@ class QuestionTest extends TestCase
     /** @test */
     public function a_question_has_a_form()
     {
-        $form = factory(Form::class)->create();
-        $question = factory(Question::class)->create(['form_id' => $form->id]);
+        $form = create(Form::class);
+        $question = create(Question::class, ['form_id' => $form->id]);
 
         $this->assertEquals($form->id, $question->form->id);
     }

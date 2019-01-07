@@ -15,7 +15,7 @@ class ViewFormTest extends TestCase
     public function a_user_can_view_all_their_forms()
     {
         $this->login();
-        $form = factory(Form::class)->create(['user_id' => auth()->user()->id]);
+        $form = create(Form::class, ['user_id' => auth()->user()->id]);
 
         $this->json('get', '/forms')
             ->assertStatus(200)
@@ -26,8 +26,8 @@ class ViewFormTest extends TestCase
     public function a_user_can_view_a_forms_questions()
     {
         $this->login();
-        $form = factory(Form::class)->create(['user_id' => auth()->user()->id]);
-        $question = factory(Question::class)->create(['form_id' => $form->id]);
+        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $question = create(Question::class, ['form_id' => $form->id]);
 
         $this->json('get', '/forms/' . $form->id . '/questions')
             ->assertStatus(200)
@@ -40,8 +40,8 @@ class ViewFormTest extends TestCase
         $this->withExceptionHandling();
 
         $this->login();
-        $form = factory(Form::class)->create(['user_id' => 999]);
-        factory(Question::class)->create(['form_id' => $form->id]);
+        $form = create(Form::class, ['user_id' => 999]);
+        create(Question::class, ['form_id' => $form->id]);
 
         $this->get('/forms/' . $form->id . '/questions')
             ->assertStatus(403);

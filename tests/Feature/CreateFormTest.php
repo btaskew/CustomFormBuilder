@@ -20,7 +20,7 @@ class CreateFormTest extends TestCase
     public function can_view_edit_form_page()
     {
         $this->login();
-        $form = factory(Form::class)->create(['user_id' => auth()->user()->id]);
+        $form = create(Form::class, ['user_id' => auth()->user()->id]);
 
         $this->get('/forms/' . $form->id . '/edit')->assertSee($form->title);
     }
@@ -52,7 +52,7 @@ class CreateFormTest extends TestCase
     public function a_user_can_edit_their_form()
     {
         $this->login();
-        $form = factory(Form::class)->create(['user_id' => auth()->user()->id, 'title' => 'Old title']);
+        $form = create(Form::class, ['user_id' => auth()->user()->id, 'title' => 'Old title']);
 
         $this->patch('/forms/' . $form->id, ['title' => 'New title'])
             ->assertStatus(200);

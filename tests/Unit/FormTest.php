@@ -21,7 +21,7 @@ class FormTest extends TestCase
     {
         parent::setUp();
 
-        $this->form = factory(Form::class)->create();
+        $this->form = create(Form::class);
     }
 
     /** @test */
@@ -33,9 +33,7 @@ class FormTest extends TestCase
     /** @test */
     public function a_form_has_questions()
     {
-        $question = factory(Question::class)->create([
-            'form_id' => $this->form->id
-        ]);
+        $question = create(Question::class, ['form_id' => $this->form->id]);
 
         $this->assertEquals($question->form_id, $this->form->questions->first()->id);
     }
