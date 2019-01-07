@@ -13,7 +13,16 @@ class QuestionsController extends Controller
      */
     public function index(Form $form)
     {
-        return $form->questions;
+        $questions = $form->questions;
+
+        if (request()->wantsJson()) {
+            return $questions;
+        }
+
+        return view('questions.index', [
+            'questions' => $questions,
+            'form_title' => $form->title
+        ]);
     }
 
     /**

@@ -16,6 +16,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('edit-form', require('./components/EditForm.vue'));
+Vue.component('edit-question', require('./components/EditQuestion'));
 Vue.component('flash', require('./components/Flash'));
 
 const app = new Vue({

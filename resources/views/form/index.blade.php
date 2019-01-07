@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="">
+    <div>
         <h3>My forms</h3>
 
         <div class="mt-3">
