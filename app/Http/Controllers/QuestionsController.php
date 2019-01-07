@@ -11,9 +11,12 @@ class QuestionsController extends Controller
     /**
      * @param Form $form
      * @return mixed
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Form $form)
     {
+        $this->authorize('createQuestion', $form);
+
         $questions = $form->questions;
 
         if (request()->wantsJson()) {

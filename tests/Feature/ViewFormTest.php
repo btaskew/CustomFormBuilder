@@ -33,4 +33,17 @@ class ViewFormTest extends TestCase
             ->assertStatus(200)
             ->assertSee($question->title);
     }
+
+    /** @test */
+    public function a_user_cant_view_questions_on_another_users_form()
+    {
+        $this->withExceptionHandling();
+
+        $this->login();
+        $form = factory(Form::class)->create(['user_id' => 999]);
+        factory(Question::class)->create(['form_id' => $form->id]);
+
+        $this->get('/forms/' . $form->id . '/questions')
+            ->assertStatus(403);
+    }
 }
