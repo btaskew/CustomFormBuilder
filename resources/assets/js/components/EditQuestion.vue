@@ -1,5 +1,5 @@
 <template>
-    <div class="card" :class="{'mb-3': isOpen}">
+    <div class="card" :class="{'mb-2 mt-2': isOpen}">
         <div class="card-header d-flex justify-content-between">
             {{ this.question.title }}
             <i class="fas fa-cog fa-lg" @click="toggleForm"></i>

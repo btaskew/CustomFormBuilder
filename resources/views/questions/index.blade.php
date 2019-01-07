@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.form')
 
-@section('content')
-    <h3>{{ $form_title }} - Questions</h3>
+@section('form_content')
+    <h3>Edit form questions</h3>
 
     <div class="mt-4">
         <question-list :questions="{{ $questions }}"></question-list>

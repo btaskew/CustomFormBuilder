@@ -21,7 +21,7 @@ class QuestionsController extends Controller
 
         return view('questions.index', [
             'questions' => $questions,
-            'form_title' => $form->title
+            'form' => $form
         ]);
     }
 

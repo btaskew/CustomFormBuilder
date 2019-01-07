@@ -49390,21 +49390,25 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card", class: { "mb-3": _vm.isOpen } }, [
-    _c("div", { staticClass: "card-header d-flex justify-content-between" }, [
-      _vm._v("\n        " + _vm._s(this.question.title) + "\n        "),
-      _c("i", {
-        staticClass: "fas fa-cog fa-lg",
-        on: { click: _vm.toggleForm }
-      })
-    ]),
-    _vm._v(" "),
-    _vm.isOpen
-      ? _c("div", { staticClass: "card-body" }, [
-          _vm._v("\n        Edit form here\n    ")
-        ])
-      : _vm._e()
-  ])
+  return _c(
+    "div",
+    { staticClass: "card", class: { "mb-2 mt-2": _vm.isOpen } },
+    [
+      _c("div", { staticClass: "card-header d-flex justify-content-between" }, [
+        _vm._v("\n        " + _vm._s(this.question.title) + "\n        "),
+        _c("i", {
+          staticClass: "fas fa-cog fa-lg",
+          on: { click: _vm.toggleForm }
+        })
+      ]),
+      _vm._v(" "),
+      _vm.isOpen
+        ? _c("div", { staticClass: "card-body" }, [
+            _vm._v("\n        Edit form here\n    ")
+          ])
+        : _vm._e()
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
