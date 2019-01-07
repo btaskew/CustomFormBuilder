@@ -28,7 +28,11 @@ class CreateQuestionTest extends TestCase
 
         $attributes = [
             'title' => 'First question',
-            'type' => 'text'
+            'type' => 'text',
+            'help_text' => 'Help text',
+            'required' => true,
+            'admin_only' => false,
+            'order' => 2
         ];
 
         $this->post('/forms/' . $form->id . '/questions', $attributes)

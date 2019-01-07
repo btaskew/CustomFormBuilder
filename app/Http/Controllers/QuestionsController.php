@@ -34,9 +34,13 @@ class QuestionsController extends Controller
     {
         $this->authorize('createQuestion', $form);
 
-        $form->questions()->create([
-            'title' => $request->input('title'),
-            'type' => $request->input('type')
-        ]);
+        $form->questions()->create($request->only([
+            'title',
+            'type',
+            'help_text',
+            'required' ,
+            'admin_only',
+            'order'
+        ]));
     }
 }

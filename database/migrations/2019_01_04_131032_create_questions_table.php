@@ -17,6 +17,10 @@ class CreateQuestionsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('type');
+            $table->string('help_text')->nullable();
+            $table->boolean('required')->default(false);
+            $table->boolean('admin_only')->default(false);
+            $table->unsignedInteger('order');
             $table->unsignedInteger('form_id');
             $table->timestamps();
         });

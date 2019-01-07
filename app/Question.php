@@ -14,5 +14,9 @@ class Question extends Model
     protected $fillable = [
         'title',
         'type',
+        'help_text',
+        'required' ,
+        'admin_only',
+        'order'
     ];
 }
