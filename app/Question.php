@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Question extends Model
 {
@@ -19,4 +20,12 @@ class Question extends Model
         'admin_only',
         'order'
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function form(): BelongsTo
+    {
+        return $this->belongsTo(Form::class);
+    }
 }

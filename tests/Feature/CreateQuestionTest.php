@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Form;
+use App\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -23,7 +24,6 @@ class CreateQuestionTest extends TestCase
     public function a_user_can_create_questions()
     {
         $this->login();
-
         $form = factory(Form::class)->create(['user_id' => auth()->user()->id]);
 
         $attributes = [
@@ -51,5 +51,33 @@ class CreateQuestionTest extends TestCase
         $this->login()
             ->post('/forms/' . $form->id . '/questions', [])
             ->assertStatus(403);
+    }
+
+    /** @test */
+    public function a_user_can_edit_a_question()
+    {
+        $this->login();
+        $form = factory(Form::class)->create(['user_id' => auth()->user()->id]);
+        $question = factory(Question::class)->create(['title' => 'Old title', 'form_id' => $form->id]);
+
+        $this->patch('/forms/' . $question->form->id . '/questions/' . $question->id, ['title' => 'New title'])
+            ->assertStatus(200);
+
+        $this->assertEquals('New title', $question->fresh()->title);
+    }
+
+    /** @test */
+    public function a_user_cant_edit_questions_that_belong_to_another_users_form()
+    {
+        $this->withExceptionHandling();
+
+        $form = factory(Form::class)->create(['user_id' => 9999]);
+        $question = factory(Question::class)->create(['title' => 'Old title', 'form_id' => $form->id]);
+
+        $this->login()
+            ->patch('/forms/' . $form->id . '/questions/' . $question->id, [])
+            ->assertStatus(403);
+
+        $this->assertEquals('Old title', $question->fresh()->title);
     }
 }

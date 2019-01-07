@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Form;
+use App\Question;
 use Illuminate\Http\Request;
 
 class QuestionsController extends Controller
@@ -44,6 +45,26 @@ class QuestionsController extends Controller
         $this->authorize('createQuestion', $form);
 
         $form->questions()->create($request->only([
+            'title',
+            'type',
+            'help_text',
+            'required' ,
+            'admin_only',
+            'order'
+        ]));
+    }
+
+    /**
+     * @param Form     $form
+     * @param Question $question
+     * @param Request  $request
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function update($form, Question $question, Request $request)
+    {
+        $this->authorize('update', $question);
+
+        $question->update($request->only([
             'title',
             'type',
             'help_text',

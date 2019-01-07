@@ -5,6 +5,7 @@
                 :question="question"
                 :key="index"
                 :is-open="visibleQuestion == index"
+                :form-id="formId"
                 @toggled="onToggle"
         >
         </edit-question>
@@ -16,7 +17,8 @@
 
     export default {
         props: {
-            questions: { default: {} }
+            questions: { default: {} },
+            formId: {}
         },
 
         components: {EditQuestion},

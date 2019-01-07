@@ -111,7 +111,7 @@
 
     export default {
 
-        props: ['formId'],
+        props: ['formId', 'question'],
 
         data() {
             return {
@@ -125,7 +125,22 @@
                 }),
                 loading: false,
                 success: true,
-                error: false
+                error: false,
+                newQuestion: true
+            }
+        },
+
+        created() {
+            if (this.question) {
+                this.form = new Form({
+                    title: this.question.title,
+                    type: this.question.type,
+                    help_text: this.question.help_text,
+                    question_required: this.question.question_required,
+                    admin_only: this.question.admin_only,
+                    order: this.question.order
+                });
+                this.newQuestion = false;
             }
         },
 
@@ -133,11 +148,29 @@
             onSubmit() {
                 this.loading = true;
 
+                if (this.newQuestion) {
+                    return (this.submitNewQuestion());
+                }
+
+                this.submitUpdate();
+            },
+
+            submitNewQuestion() {
                 this.form.post(`/forms/${this.formId}/questions`)
                     .then(response => {
                         this.loading = false;
-                        flash()
                         window.location = `/forms/${this.formId}/questions`;
+                    }).catch(error => {
+                    this.loading = false;
+                    flash("Error updating form. Please try again later", "danger");
+                });
+            },
+
+            submitUpdate() {
+                this.form.patch(`/forms/${this.formId}/questions/${this.question.id}`)
+                    .then(response => {
+                        this.loading = false;
+                        flash("Question updated");
                     }).catch(error => {
                     this.loading = false;
                     flash("Error updating form. Please try again later", "danger");

@@ -7,6 +7,6 @@
     </div>
 
     <div class="mt-4">
-        <question-list :questions="{{ $questions }}"></question-list>
+        <question-list :questions="{{ $questions }}" :form-id="{{ $form->id }}"></question-list>
     </div>
 @endsection

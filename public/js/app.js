@@ -48817,12 +48817,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['question', 'isOpen'],
-
-    data: function data() {
-        return {};
-    },
-
+    props: ['question', 'isOpen', 'formId'],
 
     methods: {
         toggleForm: function toggleForm() {
@@ -49300,7 +49295,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -49326,12 +49321,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        questions: { default: {} }
+        questions: { default: {} },
+        formId: {}
     },
 
     components: { EditQuestion: __WEBPACK_IMPORTED_MODULE_0__EditQuestion___default.a },
@@ -49366,7 +49363,11 @@ var render = function() {
     _vm._l(_vm.questions, function(question, index) {
       return _c("edit-question", {
         key: index,
-        attrs: { question: question, "is-open": _vm.visibleQuestion == index },
+        attrs: {
+          question: question,
+          "is-open": _vm.visibleQuestion == index,
+          "form-id": _vm.formId
+        },
         on: { toggled: _vm.onToggle }
       })
     }),
@@ -49395,18 +49396,32 @@ var render = function() {
     "div",
     { staticClass: "card", class: { "mb-2 mt-2": _vm.isOpen } },
     [
-      _c("div", { staticClass: "card-header d-flex justify-content-between" }, [
-        _vm._v("\n        " + _vm._s(this.question.title) + "\n        "),
-        _c("i", {
-          staticClass: "fas fa-cog fa-lg",
-          on: { click: _vm.toggleForm }
-        })
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "card-header d-flex justify-content-between",
+          class: { "bg-primary text-white": _vm.isOpen }
+        },
+        [
+          _vm._v("\n        " + _vm._s(this.question.title) + "\n        "),
+          _c("i", {
+            staticClass: "fas fa-cog fa-lg",
+            on: { click: _vm.toggleForm }
+          })
+        ]
+      ),
       _vm._v(" "),
       _vm.isOpen
-        ? _c("div", { staticClass: "card-body" }, [
-            _vm._v("\n        Edit form here\n    ")
-          ])
+        ? _c(
+            "div",
+            { staticClass: "card-body" },
+            [
+              _c("question-form", {
+                attrs: { question: _vm.question, "form-id": _vm.formId }
+              })
+            ],
+            1
+          )
         : _vm._e()
     ]
   )
@@ -49590,7 +49605,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ['formId'],
+    props: ['formId', 'question'],
 
     data: function data() {
         return {
@@ -49604,23 +49619,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }),
             loading: false,
             success: true,
-            error: false
+            error: false,
+            newQuestion: true
         };
+    },
+    created: function created() {
+        if (this.question) {
+            this.form = new __WEBPACK_IMPORTED_MODULE_0__classes_Form__["a" /* default */]({
+                title: this.question.title,
+                type: this.question.type,
+                help_text: this.question.help_text,
+                question_required: this.question.question_required,
+                admin_only: this.question.admin_only,
+                order: this.question.order
+            });
+            this.newQuestion = false;
+        }
     },
 
 
     methods: {
         onSubmit: function onSubmit() {
-            var _this = this;
-
             this.loading = true;
+
+            if (this.newQuestion) {
+                return this.submitNewQuestion();
+            }
+
+            this.submitUpdate();
+        },
+        submitNewQuestion: function submitNewQuestion() {
+            var _this = this;
 
             this.form.post('/forms/' + this.formId + '/questions').then(function (response) {
                 _this.loading = false;
-                flash();
                 window.location = '/forms/' + _this.formId + '/questions';
             }).catch(function (error) {
                 _this.loading = false;
+                flash("Error updating form. Please try again later", "danger");
+            });
+        },
+        submitUpdate: function submitUpdate() {
+            var _this2 = this;
+
+            this.form.patch('/forms/' + this.formId + '/questions/' + this.question.id).then(function (response) {
+                _this2.loading = false;
+                flash("Question updated");
+            }).catch(function (error) {
+                _this2.loading = false;
                 flash("Error updating form. Please try again later", "danger");
             });
         }

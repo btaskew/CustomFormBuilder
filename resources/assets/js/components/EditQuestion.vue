@@ -1,25 +1,19 @@
 <template>
     <div class="card" :class="{'mb-2 mt-2': isOpen}">
-        <div class="card-header d-flex justify-content-between">
+        <div class="card-header d-flex justify-content-between" :class="{'bg-primary text-white': isOpen}">
             {{ this.question.title }}
             <i class="fas fa-cog fa-lg" @click="toggleForm"></i>
         </div>
 
         <div v-if="isOpen" class="card-body">
-            Edit form here
+            <question-form :question="question" :form-id="formId"></question-form>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        props: ['question', 'isOpen'],
-
-        data() {
-            return {
-
-            }
-        },
+        props: ['question', 'isOpen', 'formId'],
 
         methods: {
             toggleForm() {
