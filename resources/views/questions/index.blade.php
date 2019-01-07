@@ -1,7 +1,10 @@
 @extends('layouts.form')
 
 @section('form_content')
-    <h3>Edit form questions</h3>
+    <div class="d-flex justify-content-between">
+        <h3>Edit form questions</h3>
+        <a href="/forms/{{ $form->id }}/questions/create">Add question</a>
+    </div>
 
     <div class="mt-4">
         <question-list :questions="{{ $questions }}"></question-list>

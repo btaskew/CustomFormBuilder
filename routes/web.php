@@ -21,5 +21,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('forms', 'FormController');
 
     Route::get('forms/{form}/questions', 'QuestionsController@index');
+    Route::get('forms/{form}/questions/create', 'QuestionsController@create');
     Route::post('forms/{form}/questions', 'QuestionsController@store');
 });

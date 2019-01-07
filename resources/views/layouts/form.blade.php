@@ -14,6 +14,8 @@
         </ul>
     </nav>
 
+    <hr />
+
     @yield('form_content')
 
 @endsection

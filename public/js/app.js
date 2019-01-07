@@ -25466,9 +25466,10 @@ window.Vue = __webpack_require__(15);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('flash', __webpack_require__(56));
 Vue.component('edit-form', __webpack_require__(42));
 Vue.component('question-list', __webpack_require__(242));
-Vue.component('flash', __webpack_require__(56));
+Vue.component('question-form', __webpack_require__(248));
 
 var app = new Vue({
   el: '#app'
@@ -49417,6 +49418,618 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-55d82472", module.exports)
+  }
+}
+
+/***/ }),
+/* 248 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(5)
+/* script */
+var __vue_script__ = __webpack_require__(251)
+/* template */
+var __vue_template__ = __webpack_require__(253)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/QuestionForm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-399b7681", Component.options)
+  } else {
+    hotAPI.reload("data-v-399b7681", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 249 */,
+/* 250 */,
+/* 251 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Form__ = __webpack_require__(47);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    props: ['formId'],
+
+    data: function data() {
+        return {
+            form: new __WEBPACK_IMPORTED_MODULE_0__classes_Form__["a" /* default */]({
+                title: '',
+                type: '',
+                help_text: '',
+                question_required: false,
+                admin_only: false,
+                order: ''
+            }),
+            loading: false,
+            success: true,
+            error: false
+        };
+    },
+
+
+    methods: {
+        onSubmit: function onSubmit() {
+            var _this = this;
+
+            this.loading = true;
+
+            this.form.post('/forms/' + this.formId + '/questions').then(function (response) {
+                _this.loading = false;
+                flash();
+                window.location = '/forms/' + _this.formId + '/questions';
+            }).catch(function (error) {
+                _this.loading = false;
+                flash("Error updating form. Please try again later", "danger");
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 252 */,
+/* 253 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "form",
+      {
+        attrs: { method: "GET" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.onSubmit($event)
+          },
+          change: function($event) {
+            _vm.form.errors.clear($event)
+          },
+          keydown: function($event) {
+            _vm.form.errors.clear($event)
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "mt-2 form-row" }, [
+          _c("div", { staticClass: "col" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                {
+                  class: { "has-error": _vm.form.errors.has("title") },
+                  attrs: { for: "title" }
+                },
+                [
+                  _vm._v(
+                    "\n                        Title\n                    "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.title,
+                    expression: "form.title"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "title",
+                  name: "title",
+                  required: ""
+                },
+                domProps: { value: _vm.form.title },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "title", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.form.errors.has("title")
+                ? _c("span", {
+                    staticClass: "text-danger",
+                    domProps: {
+                      textContent: _vm._s(_vm.form.errors.get("title"))
+                    }
+                  })
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                {
+                  class: { "has-error": _vm.form.errors.has("order") },
+                  attrs: { for: "type" }
+                },
+                [
+                  _vm._v(
+                    "\n                        Order\n                    "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.order,
+                    expression: "form.order"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "order", name: "order" },
+                domProps: { value: _vm.form.order },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "order", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.form.errors.has("order")
+                ? _c("span", {
+                    staticClass: "text-danger",
+                    domProps: {
+                      textContent: _vm._s(_vm.form.errors.get("order"))
+                    }
+                  })
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                {
+                  class: { "has-error": _vm.form.errors.has("help_text") },
+                  attrs: { for: "help_text" }
+                },
+                [
+                  _vm._v(
+                    "\n                        Help text for question\n                    "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.help_text,
+                    expression: "form.help_text"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "help_text",
+                  name: "help_text",
+                  rows: "2"
+                },
+                domProps: { value: _vm.form.help_text },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "help_text", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.form.errors.has("help_text")
+                ? _c("span", {
+                    staticClass: "text-danger",
+                    domProps: {
+                      textContent: _vm._s(_vm.form.errors.get("help_text"))
+                    }
+                  })
+                : _vm._e()
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                {
+                  class: { "has-error": _vm.form.errors.has("type") },
+                  attrs: { for: "type" }
+                },
+                [
+                  _vm._v(
+                    "\n                        Question type\n                    "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.type,
+                    expression: "form.type"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "type", name: "type", required: "" },
+                domProps: { value: _vm.form.type },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "type", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.form.errors.has("type")
+                ? _c("span", {
+                    staticClass: "text-danger",
+                    domProps: {
+                      textContent: _vm._s(_vm.form.errors.get("type"))
+                    }
+                  })
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-check form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.admin_only,
+                    expression: "form.admin_only"
+                  }
+                ],
+                staticClass: "form-check-input",
+                attrs: {
+                  type: "checkbox",
+                  id: "admin_only",
+                  name: "admin_only",
+                  "true-value": true,
+                  "false-value": false
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.form.admin_only)
+                    ? _vm._i(_vm.form.admin_only, null) > -1
+                    : _vm.form.admin_only
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.form.admin_only,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.form, "admin_only", $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.form,
+                            "admin_only",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.form, "admin_only", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "form-check-label",
+                  class: { "has-error": _vm.form.errors.has("admin_only") },
+                  attrs: { for: "type" }
+                },
+                [
+                  _vm._v(
+                    "\n                        Admin only field\n                    "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm.form.errors.has("admin_only")
+                ? _c("span", {
+                    staticClass: "text-danger",
+                    domProps: {
+                      textContent: _vm._s(_vm.form.errors.get("admin_only"))
+                    }
+                  })
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-check form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.question_required,
+                    expression: "form.question_required"
+                  }
+                ],
+                staticClass: "form-check-input",
+                attrs: {
+                  type: "checkbox",
+                  id: "question_required",
+                  name: "question_required",
+                  "true-value": true,
+                  "false-value": false
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.form.question_required)
+                    ? _vm._i(_vm.form.question_required, null) > -1
+                    : _vm.form.question_required
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.form.question_required,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.form,
+                            "question_required",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.form,
+                            "question_required",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.form, "question_required", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "form-check-label",
+                  class: {
+                    "has-error": _vm.form.errors.has("question_required")
+                  },
+                  attrs: { for: "type" }
+                },
+                [
+                  _vm._v(
+                    "\n                        Required\n                    "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm.form.errors.has("question_required")
+                ? _c("span", {
+                    staticClass: "text-danger",
+                    domProps: {
+                      textContent: _vm._s(
+                        _vm.form.errors.get("question_required")
+                      )
+                    }
+                  })
+                : _vm._e()
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-raised btn-primary mt",
+            attrs: { type: "submit", disabled: _vm.loading }
+          },
+          [_vm._v("Save question")]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _vm.loading ? _c("div", { staticClass: "loader" }) : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-399b7681", module.exports)
   }
 }
 

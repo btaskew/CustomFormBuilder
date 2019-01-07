@@ -15,9 +15,10 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('edit-form', require('./components/EditForm.vue'));
-Vue.component('question-list', require('./components/QuestionList'));
 Vue.component('flash', require('./components/Flash'));
+Vue.component('edit-form', require('./components/EditForm'));
+Vue.component('question-list', require('./components/QuestionList'));
+Vue.component('question-form', require('./components/QuestionForm'));
 
 const app = new Vue({
     el: '#app'

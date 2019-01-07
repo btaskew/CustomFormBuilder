@@ -26,6 +26,15 @@ class QuestionsController extends Controller
     }
 
     /**
+     * @param Form $form
+     * @return \Illuminate\View\View
+     */
+    public function create(Form $form)
+    {
+        return view('questions.create', compact('form'));
+    }
+
+    /**
      * @param Form    $form
      * @param Request $request
      * @throws \Illuminate\Auth\Access\AuthorizationException
