@@ -49,7 +49,23 @@
                         <label for="type" :class="{ 'has-error': form.errors.has('type') }">
                             Question type
                         </label>
-                        <input class="form-control" type="text" v-model="form.type" id="type" name="type" required>
+                        <select class="form-control" type="text" v-model="form.type" id="type" name="type" required>
+                            <option value="text">Text</option>
+                            <option value="email">Email</option>
+                            <option value="password">Password</option>
+                            <option value="hidden">Hidden</option>
+                            <option value="textarea">Text area</option>
+                            <option value="number">Number</option>
+                            <option value="file">File upload</option>
+                            <option value="url">URL</option>
+                            <option value="tel">Telephone</option>
+                            <option value="date">Date</option>
+                            <option value="time">Time</option>
+                            <option value="datetime-local">Datetime</option>
+                            <option value="checkbox">Checkboxex</option>
+                            <option value="radio">Radio buttons</option>
+                            <option value="dropdown">Dropdown select</option>
+                        </select>
                         <span class="text-danger" v-if="form.errors.has('type')" v-text="form.errors.get('type')"></span>
                     </div>
 

@@ -62,7 +62,7 @@ class CreateQuestionTest extends TestCase
 
         $this->patch(
             '/forms/' . $question->form->id . '/questions/' . $question->id,
-            ['title' => 'New title', 'type' => 'type']
+            ['title' => 'New title', 'type' => 'text']
         )->assertStatus(200);
 
         $this->assertEquals('New title', $question->fresh()->title);

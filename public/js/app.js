@@ -49424,6 +49424,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -49691,27 +49707,98 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.type,
-                    expression: "form.type"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", id: "type", name: "type", required: "" },
-                domProps: { value: _vm.form.type },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.type,
+                      expression: "form.type"
                     }
-                    _vm.$set(_vm.form, "type", $event.target.value)
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "type",
+                    name: "type",
+                    required: ""
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "type",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
                   }
-                }
-              }),
+                },
+                [
+                  _c("option", { attrs: { value: "text" } }, [_vm._v("Text")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "email" } }, [
+                    _vm._v("Email")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "password" } }, [
+                    _vm._v("Password")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "hidden" } }, [
+                    _vm._v("Hidden")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "textarea" } }, [
+                    _vm._v("Text area")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "number" } }, [
+                    _vm._v("Number")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "file" } }, [
+                    _vm._v("File upload")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "url" } }, [_vm._v("URL")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "tel" } }, [
+                    _vm._v("Telephone")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "date" } }, [_vm._v("Date")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "time" } }, [_vm._v("Time")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "datetime-local" } }, [
+                    _vm._v("Datetime")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "checkbox" } }, [
+                    _vm._v("Checkboxex")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "radio" } }, [
+                    _vm._v("Radio buttons")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "dropdown" } }, [
+                    _vm._v("Dropdown select")
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _vm.form.errors.has("type")
                 ? _c("span", {

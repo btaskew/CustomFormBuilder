@@ -16,7 +16,23 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('type');
+            $table->enum('type', [
+                'text',
+                'email',
+                'password',
+                'hidden',
+                'textarea',
+                'number',
+                'file',
+                'url',
+                'tel',
+                'date',
+                'datetime-local',
+                'time',
+                'checkbox',
+                'radio',
+                'dropdown'
+            ]);
             $table->string('help_text')->nullable();
             $table->boolean('required')->default(false);
             $table->boolean('admin_only')->default(false);
