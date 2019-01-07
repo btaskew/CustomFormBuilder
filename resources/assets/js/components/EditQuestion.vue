@@ -6,7 +6,7 @@
         </div>
 
         <div v-if="isOpen" class="card-body">
-            <question-form :question="question" :form-id="formId" @questionUpdated="this.updateTitle"></question-form>
+            <question-form :question-id="question.id" :form-id="formId" @questionUpdated="this.updateTitle"></question-form>
         </div>
     </div>
 </template>

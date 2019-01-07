@@ -17,7 +17,7 @@ class QuestionsController extends Controller
     {
         $this->authorize('createQuestion', $form);
 
-        $questions = $form->questions;
+        $questions = $form->questions()->get(['id', 'title']);
 
         if (request()->wantsJson()) {
             return $questions;
@@ -27,6 +27,16 @@ class QuestionsController extends Controller
             'questions' => $questions,
             'form' => $form
         ]);
+    }
+
+    /**
+     * @param Form     $form
+     * @param Question $question
+     * @return Question
+     */
+    public function show($form, Question $question)
+    {
+        return $question;
     }
 
     /**

@@ -20,7 +20,7 @@
                         <label for="type" :class="{ 'has-error': form.errors.has('order') }">
                             Order
                         </label>
-                        <input class="form-control" type="text" v-model="form.order" id="order" name="order">
+                        <input class="form-control" type="number" v-model="form.order" id="order" name="order">
                         <span class="text-danger" v-if="form.errors.has('order')" v-text="form.errors.get('order')"></span>
                     </div>
 
@@ -128,11 +128,12 @@
 </template>
 
 <script>
+    import axios from 'axios';
     import Form from '../classes/Form';
 
     export default {
 
-        props: ['formId', 'question'],
+        props: ['formId', 'questionId'],
 
         data() {
             return {
@@ -152,20 +153,29 @@
         },
 
         created() {
-            if (this.question) {
-                this.form = new Form({
-                    title: this.question.title,
-                    type: this.question.type,
-                    help_text: this.question.help_text,
-                    required: this.question.required,
-                    admin_only: this.question.admin_only,
-                    order: this.question.order
-                });
-                this.newQuestion = false;
+            if (this.questionId) {
+                this.loadQuestionData(this.questionId);
             }
         },
 
         methods: {
+            loadQuestionData(id) {
+                this.loading = true;
+                axios.get(`/forms/${this.formId}/questions/${id}`)
+                    .then(response => {
+                        this.form = new Form({
+                            title: response.data.title,
+                            type: response.data.type,
+                            help_text: response.data.help_text,
+                            required: response.data.required,
+                            admin_only: response.data.admin_only,
+                            order: response.data.order
+                        });
+                        this.newQuestion = false;
+                        this.loading = false;
+                    });
+            },
+
             onSubmit() {
                 this.loading = true;
 
@@ -188,7 +198,7 @@
             },
 
             submitUpdate() {
-                this.form.patch(`/forms/${this.formId}/questions/${this.question.id}`)
+                this.form.patch(`/forms/${this.formId}/questions/${this.questionId}`)
                     .then(response => {
                         this.loading = false;
                         flash("Question updated");
