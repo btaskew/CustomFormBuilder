@@ -52,11 +52,11 @@ class CreateFormTest extends TestCase
     public function a_user_can_edit_their_form()
     {
         $this->login();
-        $form = factory(Form::class)->create(['user_id' => auth()->user()->id, 'description' => 'Old description']);
+        $form = factory(Form::class)->create(['user_id' => auth()->user()->id, 'title' => 'Old title']);
 
-        $this->patch('/forms/' . $form->id, ['description' => 'New description'])
+        $this->patch('/forms/' . $form->id, ['title' => 'New title'])
             ->assertStatus(200);
 
-        $this->assertEquals('New description', $form->fresh()->description);
+        $this->assertEquals('New title', $form->fresh()->title);
     }
 }

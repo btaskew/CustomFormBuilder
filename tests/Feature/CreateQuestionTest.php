@@ -60,8 +60,10 @@ class CreateQuestionTest extends TestCase
         $form = factory(Form::class)->create(['user_id' => auth()->user()->id]);
         $question = factory(Question::class)->create(['title' => 'Old title', 'form_id' => $form->id]);
 
-        $this->patch('/forms/' . $question->form->id . '/questions/' . $question->id, ['title' => 'New title'])
-            ->assertStatus(200);
+        $this->patch(
+            '/forms/' . $question->form->id . '/questions/' . $question->id,
+            ['title' => 'New title', 'type' => 'type']
+        )->assertStatus(200);
 
         $this->assertEquals('New title', $question->fresh()->title);
     }

@@ -47,13 +47,13 @@ class QuestionsController extends Controller
     {
         $this->authorize('createQuestion', $form);
 
-        $form->questions()->create($request->only([
-            'title',
-            'type',
-            'help_text',
-            'required' ,
-            'admin_only',
-            'order'
+        $form->questions()->create($request->validate([
+            'title' => 'string|required',
+            'type' => 'string|required',
+            'help_text' => 'string',
+            'required' => 'boolean',
+            'admin_only' => 'boolean',
+            'order' => 'numeric'
         ]));
     }
 
@@ -68,13 +68,13 @@ class QuestionsController extends Controller
     {
         $this->authorize('update', $question);
 
-        $question->update($request->only([
-            'title',
-            'type',
-            'help_text',
-            'required' ,
-            'admin_only',
-            'order'
+        $question->update($request->validate([
+            'title' => 'string|required',
+            'type' => 'string|required',
+            'help_text' => 'string',
+            'required' => 'boolean',
+            'admin_only' => 'boolean',
+            'order' => 'numeric'
         ]));
 
         return $question;

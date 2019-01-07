@@ -80,8 +80,8 @@ class FormController extends Controller
      */
     public function update(Request $request, Form $form)
     {
-        $form->update(request()->validate([
-            'title' => 'string',
+        $form->update($request->validate([
+            'title' => 'string|required',
             'description' => 'string'
         ]));
 
