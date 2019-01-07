@@ -46,4 +46,17 @@ class ViewFormTest extends TestCase
         $this->get('/forms/' . $form->id . '/questions')
             ->assertStatus(403);
     }
+
+    /** @test */
+    public function a_user_can_view_their_complete_form()
+    {
+        $this->login();
+        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $question = create(Question::class, ['form_id' => $form->id]);
+
+        $this->get('/forms/' . $form->id)
+            ->assertStatus(200)
+            ->assertSee($form->title)
+            ->assertSee($question->title);
+    }
 }

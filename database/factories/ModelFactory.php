@@ -35,7 +35,7 @@ $factory->define(App\Form::class, function (Faker $faker) {
 $factory->define(App\Question::class, function (Faker $faker) {
     return [
         'title' => $faker->sentence,
-        'type' => $faker->word,
+        'type' => 'text',
         'form_id' => function () {
             return factory(\App\Form::class)->create()->id;
         },

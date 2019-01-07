@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Form;
 use Illuminate\Http\Request;
+use Kris\LaravelFormBuilder\Facades\FormBuilder;
 
 class FormController extends Controller
 {
+    /**
+     * Create a new ThreadsController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -52,12 +61,24 @@ class FormController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Form $form
+     * @return \Illuminate\View\View
      */
-    public function show($id)
+    public function show(Form $form)
     {
-        //
+        $questions = $form->questions;
+        $formView = FormBuilder::plain(['name' => $form->title]);
+
+        foreach ($questions as $question) {
+            $formView->add($question->id, $question->type, [
+                'label' => $question->title
+            ]);
+        }
+
+        return view('form.show', [
+            'form' => $formView,
+            'description' => $form->description
+        ]);
     }
 
     /**

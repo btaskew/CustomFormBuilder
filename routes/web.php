@@ -17,8 +17,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::resource('forms', 'FormController');
+
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('forms', 'FormController');
 
     Route::get('forms/{form}/questions', 'QuestionsController@index');
     Route::get('forms/{form}/questions/create', 'QuestionsController@create');
