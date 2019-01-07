@@ -48819,9 +48819,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['question', 'isOpen', 'formId'],
 
+    data: function data() {
+        return {
+            title: this.question.title
+        };
+    },
+
+
     methods: {
         toggleForm: function toggleForm() {
             this.$emit('toggled', this.$vnode.key);
+        },
+        updateTitle: function updateTitle(title) {
+            this.title = title;
         }
     }
 });
@@ -49394,7 +49404,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "card", class: { "mb-2 mt-2": _vm.isOpen } },
+    { staticClass: "card", class: { "mb-2 mt-2 border-primary": _vm.isOpen } },
     [
       _c(
         "div",
@@ -49403,7 +49413,7 @@ var render = function() {
           class: { "bg-primary text-white": _vm.isOpen }
         },
         [
-          _vm._v("\n        " + _vm._s(this.question.title) + "\n        "),
+          _vm._v("\n        " + _vm._s(_vm.title) + "\n        "),
           _c("i", {
             staticClass: "fas fa-cog fa-lg",
             on: { click: _vm.toggleForm }
@@ -49417,7 +49427,8 @@ var render = function() {
             { staticClass: "card-body" },
             [
               _c("question-form", {
-                attrs: { question: _vm.question, "form-id": _vm.formId }
+                attrs: { question: _vm.question, "form-id": _vm.formId },
+                on: { questionUpdated: this.updateTitle }
               })
             ],
             1
@@ -49600,6 +49611,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -49665,6 +49681,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.patch('/forms/' + this.formId + '/questions/' + this.question.id).then(function (response) {
                 _this2.loading = false;
                 flash("Question updated");
+                _this2.$emit('questionUpdated', response.title);
             }).catch(function (error) {
                 _this2.loading = false;
                 flash("Error updating form. Please try again later", "danger");
@@ -50055,18 +50072,15 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-raised btn-primary mt",
-            attrs: { type: "submit", disabled: _vm.loading }
-          },
-          [_vm._v("Save question")]
-        )
+        _c("button", {
+          staticClass: "btn btn-raised btn-primary mt",
+          attrs: { type: "submit", disabled: _vm.loading },
+          domProps: {
+            textContent: _vm._s(_vm.loading ? "Loading" : "Save question")
+          }
+        })
       ]
-    ),
-    _vm._v(" "),
-    _vm.loading ? _c("div", { staticClass: "loader" }) : _vm._e()
+    )
   ])
 }
 var staticRenderFns = []

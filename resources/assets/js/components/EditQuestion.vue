@@ -1,12 +1,12 @@
 <template>
-    <div class="card" :class="{'mb-2 mt-2': isOpen}">
+    <div class="card" :class="{'mb-2 mt-2 border-primary': isOpen}">
         <div class="card-header d-flex justify-content-between" :class="{'bg-primary text-white': isOpen}">
-            {{ this.question.title }}
+            {{ title }}
             <i class="fas fa-cog fa-lg" @click="toggleForm"></i>
         </div>
 
         <div v-if="isOpen" class="card-body">
-            <question-form :question="question" :form-id="formId"></question-form>
+            <question-form :question="question" :form-id="formId" @questionUpdated="this.updateTitle"></question-form>
         </div>
     </div>
 </template>
@@ -15,9 +15,19 @@
     export default {
         props: ['question', 'isOpen', 'formId'],
 
+        data() {
+            return {
+                title: this.question.title
+            }
+        },
+
         methods: {
             toggleForm() {
                 this.$emit('toggled', this.$vnode.key);
+            },
+
+            updateTitle(title) {
+                this.title = title;
             }
         }
     }

@@ -99,10 +99,15 @@
 
             </div>
 
-            <button type="submit" class="btn btn-raised btn-primary mt" :disabled="loading">Save question</button>
-        </form>
+            <button
+                    type="submit"
+                    class="btn btn-raised btn-primary mt"
+                    :disabled="loading"
+                    v-text="loading ? 'Loading' : 'Save question'"
+            >
 
-        <div class="loader" v-if="loading"></div>
+            </button>
+        </form>
     </div>
 </template>
 
@@ -171,6 +176,7 @@
                     .then(response => {
                         this.loading = false;
                         flash("Question updated");
+                        this.$emit('questionUpdated', response.title);
                     }).catch(error => {
                     this.loading = false;
                     flash("Error updating form. Please try again later", "danger");

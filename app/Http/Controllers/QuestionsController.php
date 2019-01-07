@@ -58,6 +58,7 @@ class QuestionsController extends Controller
      * @param Form     $form
      * @param Question $question
      * @param Request  $request
+     * @return Question
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update($form, Question $question, Request $request)
@@ -72,5 +73,7 @@ class QuestionsController extends Controller
             'admin_only',
             'order'
         ]));
+
+        return $question;
     }
 }
