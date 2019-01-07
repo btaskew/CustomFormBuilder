@@ -77,7 +77,7 @@
             </div>
         </nav>
 
-        <main class="container py-4 col-md-8 offset-2">
+        <main class="container py-4">
             @yield('content')
         </main>
 
