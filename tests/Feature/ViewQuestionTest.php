@@ -22,4 +22,17 @@ class ViewQuestionTest extends TestCase
             ->assertStatus(200)
             ->assertSee($question->title);
     }
+
+    /** @test */
+    public function a_user_cant_view_question_data_for_someone_elses_form()
+    {
+        $this->withExceptionHandling();
+
+        $this->login();
+        $form = create(Form::class, ['user_id' => 999]);
+        $question = create(Question::class, ['form_id' => $form->id]);
+
+        $this->get('/forms/' . $form->id . '/questions/' . $question->id)
+            ->assertStatus(403);
+    }
 }

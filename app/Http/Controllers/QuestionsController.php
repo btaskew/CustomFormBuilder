@@ -33,9 +33,12 @@ class QuestionsController extends Controller
      * @param Form     $form
      * @param Question $question
      * @return Question
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show($form, Question $question)
+    public function show(Form $form, Question $question)
     {
+        $this->authorize('createQuestion', $form);
+
         return $question;
     }
 
