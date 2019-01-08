@@ -15,7 +15,7 @@ class QuestionsController extends Controller
      */
     public function index(Form $form)
     {
-        $this->authorize('createQuestion', $form);
+        $this->authorize('update', $form);
 
         $questions = $form->questions()->get(['id', 'title']);
 
@@ -37,7 +37,7 @@ class QuestionsController extends Controller
      */
     public function show(Form $form, Question $question)
     {
-        $this->authorize('createQuestion', $form);
+        $this->authorize('update', $form);
 
         return $question;
     }
@@ -58,7 +58,7 @@ class QuestionsController extends Controller
      */
     public function store(Form $form, QuestionRequest $request)
     {
-        $this->authorize('createQuestion', $form);
+        $this->authorize('update', $form);
 
         $question = $form->questions()->create($request->only([
             'title', 'type', 'help_text', 'required', 'admin_only', 'order',

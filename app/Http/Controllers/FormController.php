@@ -8,9 +8,6 @@ use Kris\LaravelFormBuilder\Facades\FormBuilder;
 
 class FormController extends Controller
 {
-    /**
-     * Create a new ThreadsController instance.
-     */
     public function __construct()
     {
         $this->middleware('auth')->except(['show']);
@@ -98,9 +95,12 @@ class FormController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @param Form                      $form
      * @return Form
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Form $form)
     {
+        $this->authorize('update', $form);
+
         $form->update($request->validate([
             'title' => 'string|required',
             'description' => 'string'

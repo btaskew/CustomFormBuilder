@@ -57,4 +57,15 @@ class CreateFormTest extends TestCase
 
         $this->assertEquals('New title', $form->fresh()->title);
     }
+
+    /** @test */
+    public function a_user_cant_edit_another_users_form()
+    {
+        $this->withExceptionHandling();
+        $form = create(Form::class, ['user_id' => 999]);
+
+        $this->login()
+            ->patch('/forms/' . $form->id, ['title' => 'New title'])
+            ->assertStatus(403);
+    }
 }
