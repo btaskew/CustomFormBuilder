@@ -69,6 +69,22 @@
                         <span class="text-danger" v-if="form.errors.has('type')" v-text="form.errors.get('type')"></span>
                     </div>
 
+                    <div v-if="isSelectQuestion">
+                        Edit options:
+                        <div class="mt-1 border border-secondary rounded">
+                            <options-form
+                                    v-for="option in form.options"
+                                    :key="option.id"
+                                    :value.sync="option.value"
+                                    :display-value.sync="option.display_value"
+                            >
+                            </options-form>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col col-md-2">
                     <div class="form-check form-group">
                         <input type="checkbox"
 
@@ -130,9 +146,10 @@
 <script>
     import axios from 'axios';
     import Form from '../classes/Form';
+    import OptionsForm from "./OptionsForm";
 
     export default {
-
+        components: {OptionsForm},
         props: ['formId', 'questionId'],
 
         data() {
@@ -143,7 +160,8 @@
                     help_text: '',
                     required: false,
                     admin_only: false,
-                    order: ''
+                    order: '',
+                    options: []
                 }),
                 loading: false,
                 success: true,
@@ -158,6 +176,12 @@
             }
         },
 
+        computed: {
+            isSelectQuestion() {
+                return this.form.type === 'checkbox' || this.form.type === 'radio' || this.form.type === 'dropdown';
+            }
+        },
+
         methods: {
             loadQuestionData(id) {
                 this.loading = true;
@@ -169,7 +193,8 @@
                             help_text: response.data.help_text,
                             required: response.data.required,
                             admin_only: response.data.admin_only,
-                            order: response.data.order
+                            order: response.data.order,
+                            options: response.data.options
                         });
                         this.newQuestion = false;
                         this.loading = false;

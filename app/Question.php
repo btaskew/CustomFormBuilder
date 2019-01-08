@@ -23,6 +23,13 @@ class Question extends Model
     ];
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['options'];
+
+    /**
      * @return BelongsTo
      */
     public function form(): BelongsTo

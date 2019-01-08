@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Form;
 use App\Question;
+use App\SelectOption;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -23,15 +24,17 @@ class ViewFormTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_a_forms_questions()
+    public function a_user_can_view_a_forms_questions_and_options()
     {
         $this->login();
         $form = create(Form::class, ['user_id' => auth()->user()->id]);
         $question = create(Question::class, ['form_id' => $form->id]);
+        $option = create(SelectOption::class, ['question_id' => $question->id]);
 
         $this->json('get', '/forms/' . $form->id . '/questions')
             ->assertStatus(200)
-            ->assertSee($question->title);
+            ->assertSee($question->title)
+            ->assertSee($option->value);
     }
 
     /** @test */
