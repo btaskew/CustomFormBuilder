@@ -24,8 +24,7 @@ class CreateQuestionTest extends TestCase
     /** @test */
     public function a_user_can_create_questions()
     {
-        $this->login();
-        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $form = $this->loginUserWithForm();
 
         $attributes = [
             'title' => 'First question',
@@ -45,8 +44,7 @@ class CreateQuestionTest extends TestCase
     /** @test */
     public function a_user_can_create_a_select_question()
     {
-        $this->login();
-        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $form = $this->loginUserWithForm();
 
         $attributes = [
             'title' => 'First question',
@@ -83,8 +81,7 @@ class CreateQuestionTest extends TestCase
     /** @test */
     public function a_user_can_edit_a_question()
     {
-        $this->login();
-        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $form = $this->loginUserWithForm();
         $question = create(Question::class, ['title' => 'Old title', 'form_id' => $form->id]);
 
         $this->patch(
@@ -98,8 +95,7 @@ class CreateQuestionTest extends TestCase
     /** @test */
     public function a_user_can_edit_a_select_questions_options()
     {
-        $this->login();
-        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $form = $this->loginUserWithForm();
         $question = create(Question::class, ['title' => 'Old title', 'type' => 'radio', 'form_id' => $form->id]);
         $option = create(SelectOption::class, ['display_value' => 'Old value', 'question_id' => $question->id]);
 
@@ -117,8 +113,7 @@ class CreateQuestionTest extends TestCase
     /** @test */
     public function a_user_can_add_a_new_option_to_a_select_question()
     {
-        $this->login();
-        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $form = $this->loginUserWithForm();
         $question = create(Question::class, ['title' => 'Old title', 'type' => 'radio', 'form_id' => $form->id]);
 
         $this->patch(

@@ -14,8 +14,7 @@ class ViewQuestionTest extends TestCase
     /** @test */
     public function a_user_can_view_question_data_for_one_of_their_forms()
     {
-        $this->login();
-        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $form = $this->loginUserWithForm();
         $question = create(Question::class, ['title' => 'Old title', 'form_id' => $form->id]);
 
         $this->get('/forms/' . $form->id . '/questions/' . $question->id)

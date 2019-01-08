@@ -17,8 +17,7 @@ class CreateQuestionValidationTest extends TestCase
         parent::setUp();
         $this->withExceptionHandling();
 
-        $this->login();
-        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $form = $this->loginUserWithForm();
         $this->uri = '/forms/' . $form->id . '/questions';
     }
 

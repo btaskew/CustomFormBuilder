@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Form;
 use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
@@ -21,5 +22,14 @@ abstract class TestCase extends BaseTestCase
         $this->be(create(User::class));
 
         return $this;
+    }
+
+    /**
+     * @return \App\Form
+     */
+    public function loginUserWithForm()
+    {
+        $this->login();
+        return create(Form::class, ['user_id' => auth()->user()->id]);
     }
 }

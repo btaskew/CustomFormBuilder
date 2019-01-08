@@ -15,8 +15,7 @@ class ViewFormTest extends TestCase
     /** @test */
     public function a_user_can_view_all_their_forms()
     {
-        $this->login();
-        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $form = $this->loginUserWithForm();
 
         $this->json('get', '/forms')
             ->assertStatus(200)
@@ -26,8 +25,7 @@ class ViewFormTest extends TestCase
     /** @test */
     public function a_user_can_view_a_forms_questions_and_options()
     {
-        $this->login();
-        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $form = $this->loginUserWithForm();
         $question = create(Question::class, ['form_id' => $form->id]);
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
@@ -53,8 +51,7 @@ class ViewFormTest extends TestCase
     /** @test */
     public function a_user_can_view_their_complete_form()
     {
-        $this->login();
-        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $form = $this->loginUserWithForm();
         $question = create(Question::class, ['form_id' => $form->id]);
 
         $this->get('/forms/' . $form->id)
