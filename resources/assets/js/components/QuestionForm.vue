@@ -79,6 +79,7 @@
                                     :display-value.sync="option.display_value"
                             >
                             </options-form>
+                            <button class="btn btn-raised btn-primary m-2" @click="addOption">Add option</button>
                         </div>
                     </div>
 
@@ -232,6 +233,11 @@
                     this.loading = false;
                     flash("Error updating form. Please try again later", "danger");
                 });
+            },
+
+            addOption(e) {
+                e.preventDefault();
+                this.form.options.push({id: null, value: '', display_value: ''});
             }
         }
     }
