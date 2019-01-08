@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Form;
 use App\Question;
+use App\SelectOption;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -92,6 +93,43 @@ class CreateQuestionTest extends TestCase
         )->assertStatus(200);
 
         $this->assertEquals('New title', $question->fresh()->title);
+    }
+
+    /** @test */
+    public function a_user_can_edit_a_select_questions_options()
+    {
+        $this->login();
+        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $question = create(Question::class, ['title' => 'Old title', 'type' => 'radio', 'form_id' => $form->id]);
+        $option = create(SelectOption::class, ['display_value' => 'Old value', 'question_id' => $question->id]);
+
+        $this->patch(
+            '/forms/' . $question->form->id . '/questions/' . $question->id,
+            [
+                'title' => 'New title',
+                'type' => 'radio',
+                'options' => [['id' => $option->id, 'value' => 'value', 'display_value' => 'New value']]]
+        )->assertStatus(200);
+
+        $this->assertEquals('New value', $option->fresh()->display_value);
+    }
+
+    /** @test */
+    public function a_user_can_add_a_new_option_to_a_select_question()
+    {
+        $this->login();
+        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+        $question = create(Question::class, ['title' => 'Old title', 'type' => 'radio', 'form_id' => $form->id]);
+
+        $this->patch(
+            '/forms/' . $question->form->id . '/questions/' . $question->id,
+            [
+                'title' => 'New title',
+                'type' => 'radio',
+                'options' => [['id' => null, 'value' => 'value', 'display_value' => 'New value']]]
+        )->assertStatus(200);
+
+        $this->assertDatabaseHas('select_options', ['display_value' => 'New value']);
     }
 
     /** @test */

@@ -37,6 +37,7 @@ class QuestionRequest extends FormRequest
             foreach ($this->get('options') as $key => $option) {
                 $rules['options.' . $key . '.value'] = 'required|string';
                 $rules['options.' . $key . '.display_value'] = 'required|string';
+                $rules['options.' . $key . '.id'] = 'nullable';
             }
         }
 

@@ -58,4 +58,19 @@ class Question extends Model
             ]);
         }
     }
+
+    /**
+     * @param array $options
+     */
+    public function updateOptions(array $options = []): void
+    {
+        foreach ($options as $option) {
+            $this->options()->updateOrCreate([
+                'id' => $option['id']
+            ], [
+                'value' => $option['value'],
+                'display_value' => $option['display_value'],
+            ]);
+        }
+    }
 }

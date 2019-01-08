@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Form;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
-use Illuminate\Http\Request;
 
 class QuestionsController extends Controller
 {
@@ -84,6 +83,11 @@ class QuestionsController extends Controller
         $question->update($request->only([
             'title', 'type', 'help_text', 'required', 'admin_only', 'order',
         ]));
+
+
+        if ($question->isSelectQuestion()) {
+            $question->updateOptions($request->input('options'));
+        }
 
         return $question;
     }
