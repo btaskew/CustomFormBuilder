@@ -99,16 +99,11 @@ export default class Form
             axios[requestType](url, this.data())
                 .then(response => {
                     this.onSuccess(response.data);
-
                     resolve(response.data);
                 })
-                .catch(error => {
-                    if (error.response) {
-                        this.onFail(error.response.data);
-                        reject(error.response);
-                        return;
-                    }
-                    reject('Error', error.message);
+                .catch(({response}) => {
+                    this.onFail(response.data.errors);
+                    reject(response);
                 });
         });
     }
@@ -134,6 +129,6 @@ export default class Form
             return;
         }
         this.errors = new Errors();
-        this.errors.record(errors.error);
+        this.errors.record(errors);
     }
 }

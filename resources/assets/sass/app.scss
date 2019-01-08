@@ -39,6 +39,10 @@ i {
   100% { transform: rotate(360deg); }
 }
 
+.has-error {
+  color: darkred;
+}
+
 #form-nav {
   padding-left: 0;
 }
