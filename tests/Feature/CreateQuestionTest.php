@@ -72,9 +72,10 @@ class CreateQuestionTest extends TestCase
         $this->withExceptionHandling();
 
         $form = create(Form::class, ['user_id' => 9999]);
+        $attributes = raw(Question::class);
 
         $this->login()
-            ->post('/forms/' . $form->id . '/questions', [])
+            ->post('/forms/' . $form->id . '/questions', $attributes)
             ->assertStatus(403);
     }
 
@@ -99,10 +100,12 @@ class CreateQuestionTest extends TestCase
         $this->withExceptionHandling();
 
         $form = create(Form::class, ['user_id' => 9999]);
-        $question = create(Question::class, ['title' => 'Old title', 'form_id' => $form->id]);
+        $question = create(Question::class, ['title' => 'Old title', 'type' => 'text', 'form_id' => $form->id]);
 
         $this->login()
-            ->patch('/forms/' . $form->id . '/questions/' . $question->id, [])
+            ->patch('/forms/' . $form->id . '/questions/' . $question->id, [
+                'title' => 'New title', 'type' => 'text'
+            ])
             ->assertStatus(403);
 
         $this->assertEquals('Old title', $question->fresh()->title);

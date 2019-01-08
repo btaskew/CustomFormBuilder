@@ -10,3 +10,14 @@ function create(string $class, array $attributes = [], int $count = null)
 {
     return factory($class, $count)->create($attributes);
 }
+
+/**
+ * @param string $class
+ * @param array  $attributes
+ * @param int    $count
+ * @return array
+ */
+function raw(string $class, array $attributes = [], int $count = null)
+{
+    return factory($class, $count)->raw($attributes);
+}

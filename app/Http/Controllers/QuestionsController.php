@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Form;
+use App\Http\Requests\QuestionRequest;
 use App\Question;
 use Illuminate\Http\Request;
 
@@ -52,21 +53,16 @@ class QuestionsController extends Controller
     }
 
     /**
-     * @param Form    $form
-     * @param Request $request
+     * @param Form            $form
+     * @param QuestionRequest $request
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Form $form, Request $request)
+    public function store(Form $form, QuestionRequest $request)
     {
         $this->authorize('createQuestion', $form);
 
-        $question = $form->questions()->create($request->validate([
-            'title' => 'string|required',
-            'type' => 'string|required',
-            'help_text' => 'string',
-            'required' => 'boolean',
-            'admin_only' => 'boolean',
-            'order' => 'numeric'
+        $question = $form->questions()->create($request->only([
+            'title', 'type', 'help_text', 'required', 'admin_only', 'order',
         ]));
 
         if ($question->isSelectQuestion()) {
@@ -75,23 +71,18 @@ class QuestionsController extends Controller
     }
 
     /**
-     * @param Form     $form
-     * @param Question $question
-     * @param Request  $request
+     * @param Form            $form
+     * @param Question        $question
+     * @param QuestionRequest $request
      * @return Question
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update($form, Question $question, Request $request)
+    public function update($form, Question $question, QuestionRequest $request)
     {
         $this->authorize('update', $question);
 
-        $question->update($request->validate([
-            'title' => 'string|required',
-            'type' => 'string|required',
-            'help_text' => 'string',
-            'required' => 'boolean',
-            'admin_only' => 'boolean',
-            'order' => 'numeric'
+        $question->update($request->only([
+            'title', 'type', 'help_text', 'required', 'admin_only', 'order',
         ]));
 
         return $question;

@@ -42,7 +42,7 @@ $factory->define(App\Question::class, function (Faker $faker) {
         'help_text' => $faker->sentence,
         'required' => $faker->boolean,
         'admin_only' => $faker->boolean,
-        'order' => $faker->randomDigitNotNull
+        'order' => $faker->randomDigitNotNull,
     ];
 });
 
