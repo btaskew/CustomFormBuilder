@@ -60,7 +60,7 @@ class QuestionsController extends Controller
     {
         $this->authorize('createQuestion', $form);
 
-        $form->questions()->create($request->validate([
+        $question = $form->questions()->create($request->validate([
             'title' => 'string|required',
             'type' => 'string|required',
             'help_text' => 'string',
@@ -68,6 +68,10 @@ class QuestionsController extends Controller
             'admin_only' => 'boolean',
             'order' => 'numeric'
         ]));
+
+        if ($question->isSelectQuestion()) {
+            $question->addOptions($request->input('options'));
+        }
     }
 
     /**

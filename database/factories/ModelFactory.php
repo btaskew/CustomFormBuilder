@@ -45,3 +45,13 @@ $factory->define(App\Question::class, function (Faker $faker) {
         'order' => $faker->randomDigitNotNull
     ];
 });
+
+$factory->define(App\SelectOption::class, function (Faker $faker) {
+    return [
+        'question_id' => function () {
+            return factory(\App\Question::class)->create()->id;
+        },
+        'value' => $faker->word,
+        'display_value' => $faker->word
+    ];
+});

@@ -513,6 +513,12 @@ module.exports = function normalizeComponent (
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(23);
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
@@ -614,7 +620,7 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 /*
@@ -696,7 +702,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -924,7 +930,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3505,7 +3511,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -13874,12 +13880,6 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(23);
 
 /***/ }),
 /* 9 */
@@ -25443,7 +25443,7 @@ module.exports = Vue;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Errors__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Success__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -25668,7 +25668,7 @@ var app = new Vue({
 
 
 window._ = __webpack_require__(20);
-window.Popper = __webpack_require__(6).default;
+window.Popper = __webpack_require__(7).default;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -25677,7 +25677,7 @@ window.Popper = __webpack_require__(6).default;
  */
 
 try {
-    window.$ = window.jQuery = __webpack_require__(7);
+    window.$ = window.jQuery = __webpack_require__(8);
 
     __webpack_require__(22);
 } catch (e) {}
@@ -25688,7 +25688,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(8);
+window.axios = __webpack_require__(3);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -42868,7 +42868,7 @@ module.exports = function(module) {
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(6), __webpack_require__(7)) :
+   true ? factory(exports, __webpack_require__(7), __webpack_require__(8)) :
   typeof define === 'function' && define.amd ? define(['exports', 'popper.js', 'jquery'], factory) :
   (factory((global.bootstrap = {}),global.Popper,global.jQuery));
 }(this, (function (exports,Popper,$) { 'use strict';
@@ -47123,7 +47123,7 @@ module.exports = function(module) {
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(9);
 var Axios = __webpack_require__(25);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 
 /**
  * Create an instance of Axios
@@ -47206,7 +47206,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(34);
 var dispatchRequest = __webpack_require__(35);
@@ -47745,7 +47745,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(36);
 var isCancel = __webpack_require__(13);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 var isAbsoluteURL = __webpack_require__(37);
 var combineURLs = __webpack_require__(38);
 
@@ -48320,7 +48320,7 @@ var content = __webpack_require__(45);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(5)("eeb0f47c", content, false, {});
+var update = __webpack_require__(6)("eeb0f47c", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -48339,7 +48339,7 @@ if(false) {
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(5)(false);
 // imports
 
 
@@ -48549,7 +48549,7 @@ var content = __webpack_require__(51);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(5)("47c55430", content, false, {});
+var update = __webpack_require__(6)("47c55430", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -48568,7 +48568,7 @@ if(false) {
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(5)(false);
 // imports
 
 
@@ -49004,7 +49004,7 @@ var content = __webpack_require__(58);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(5)("4204caf3", content, false, {});
+var update = __webpack_require__(6)("4204caf3", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -49023,7 +49023,7 @@ if(false) {
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(5)(false);
 // imports
 
 
@@ -49316,7 +49316,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Form__ = __webpack_require__(16);
 //
@@ -49805,7 +49805,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("option", { attrs: { value: "checkbox" } }, [
-                    _vm._v("Checkboxex")
+                    _vm._v("Checkboxes")
                   ]),
                   _vm._v(" "),
                   _c("option", { attrs: { value: "radio" } }, [

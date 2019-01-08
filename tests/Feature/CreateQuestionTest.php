@@ -42,6 +42,31 @@ class CreateQuestionTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_create_a_select_question()
+    {
+        $this->login();
+        $form = create(Form::class, ['user_id' => auth()->user()->id]);
+
+        $attributes = [
+            'title' => 'First question',
+            'type' => 'radio',
+            'help_text' => 'Help text',
+            'required' => true,
+            'admin_only' => false,
+            'order' => 2,
+            'options' => [
+                ['value' => 'a', 'display_value' => 'Value a']
+            ]
+        ];
+
+        $this->post('/forms/' . $form->id . '/questions', $attributes)
+            ->assertStatus(200);
+
+        $this->assertDatabaseHas('questions', ['title' => 'First question']);
+        $this->assertDatabaseHas('select_options', ['value' => 'a', 'display_value' => 'Value a']);
+    }
+
+    /** @test */
     public function a_user_cant_create_questions_to_another_users_form()
     {
         $this->withExceptionHandling();

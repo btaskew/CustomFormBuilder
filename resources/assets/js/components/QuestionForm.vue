@@ -62,7 +62,7 @@
                             <option value="date">Date</option>
                             <option value="time">Time</option>
                             <option value="datetime-local">Datetime</option>
-                            <option value="checkbox">Checkboxex</option>
+                            <option value="checkbox">Checkboxes</option>
                             <option value="radio">Radio buttons</option>
                             <option value="dropdown">Dropdown select</option>
                         </select>

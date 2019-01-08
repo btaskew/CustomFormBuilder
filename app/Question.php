@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Question extends Model
 {
@@ -27,5 +28,34 @@ class Question extends Model
     public function form(): BelongsTo
     {
         return $this->belongsTo(Form::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function options(): HasMany
+    {
+        return $this->hasMany(SelectOption::class);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSelectQuestion(): bool
+    {
+        return $this->type == 'checkbox' || $this->type == 'radio' || $this->type == 'dropdown';
+    }
+
+    /**
+     * @param array $options
+     */
+    public function addOptions(array $options = []): void
+    {
+        foreach ($options as $option) {
+            $this->options()->create([
+                'value' => $option['value'],
+                'display_value' => $option['display_value'],
+            ]);
+        }
     }
 }
