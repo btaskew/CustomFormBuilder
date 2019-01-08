@@ -12,7 +12,7 @@
                         <label for="title" :class="{ 'has-error': form.errors.has('title') }">
                             Title
                         </label>
-                        <input class="form-control" type="text" v-model="form.title" id="title" name="title" required>
+                        <input class="form-control" type="text" v-model="form.title" id="title" name="title">
                         <span class="text-danger" v-if="form.errors.has('title')" v-text="form.errors.get('title')"></span>
                     </div>
 
@@ -73,10 +73,12 @@
                         Edit options:
                         <div class="mt-1 border border-secondary rounded">
                             <options-form
-                                    v-for="option in form.options"
+                                    v-for="(option, key) in form.options"
                                     :key="option.id"
                                     :value.sync="option.value"
                                     :display-value.sync="option.display_value"
+                                    :has-value-error="optionHasValueError(key)"
+                                    :has-display-value-error="optionHasDisplayValueError(key)"
                             >
                             </options-form>
                             <button class="btn btn-raised btn-primary m-2" @click="addOption">Add option</button>
@@ -238,7 +240,15 @@
             addOption(e) {
                 e.preventDefault();
                 this.form.options.push({id: null, value: '', display_value: ''});
-            }
+            },
+
+            optionHasValueError(key) {
+                return this.form.errors.has(`options.${key}.value`);
+            },
+
+            optionHasDisplayValueError(key) {
+                return this.form.errors.has(`options.${key}.display_value`);
+            },
         }
     }
 </script>
