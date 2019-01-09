@@ -93,7 +93,7 @@ class ManageSelectOptionsTest extends TestCase
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
         $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id .'/options/' . $option->id)
-            ->assertStatus(302);
+            ->assertRedirect('login');
     }
 
     /** @test */

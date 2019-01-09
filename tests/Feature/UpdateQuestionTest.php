@@ -20,7 +20,7 @@ class UpdateQuestionTest extends TestCase
         $question = create(Question::class, ['form_id' => $form->id]);
 
         $this->patch('/forms/' . $question->form->id . '/questions/' . $question->id,[])
-            ->assertStatus(302);
+            ->assertRedirect('login');
     }
 
     /** @test */
@@ -66,5 +66,42 @@ class UpdateQuestionTest extends TestCase
             ->assertStatus(403);
 
         $this->assertEquals('Old title', $question->fresh()->title);
+    }
+
+    /** @test */
+    public function a_guest_cant_delete_a_question()
+    {
+        $this->withExceptionHandling();
+
+        $form = create(Form::class);
+        $question = create(Question::class, ['form_id' => $form->id]);
+
+        $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id)
+            ->assertRedirect('login');
+    }
+
+    /** @test */
+    public function a_user_can_delete_a_question()
+    {
+        $form = $this->loginUserWithForm();
+        $question = create(Question::class, ['form_id' => $form->id]);
+
+        $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id)
+            ->assertStatus(200);
+
+        $this->assertDatabaseMissing('questions', ['id' => $question->id]);
+    }
+
+    /** @test */
+    public function a_user_cant_delete_a_question_on_another_users_form()
+    {
+        $this->withExceptionHandling();
+
+        $form = create(Form::class, ['user_id' => 9999]);
+        $question = create(Question::class, ['form_id' => $form->id]);
+
+        $this->login()
+            ->delete('/forms/' . $question->form->id . '/questions/' . $question->id)
+            ->assertStatus(403);
     }
 }

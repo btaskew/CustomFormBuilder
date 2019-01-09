@@ -18,7 +18,7 @@ class CreateQuestionTest extends TestCase
         $this->withExceptionHandling();
 
         $this->post('/forms/1/questions', [])
-            ->assertStatus(302);
+            ->assertRedirect('login');
     }
 
     /** @test */

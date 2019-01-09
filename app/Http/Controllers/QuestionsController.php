@@ -90,4 +90,19 @@ class QuestionsController extends Controller
 
         return $question->fresh();
     }
+
+    /**
+     * @param Form     $form
+     * @param Question $question
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function destroy($form, Question $question)
+    {
+        $this->authorize('update', $question);
+
+        $question->delete();
+
+        return response()->json(['success' => 'Question deleted']);
+    }
 }

@@ -22,7 +22,7 @@ class CreateFormTest extends TestCase
         $this->withExceptionHandling();
 
         $this->post('/forms', [])
-            ->assertStatus(302);
+            ->assertRedirect('login');
     }
 
     /** @test */

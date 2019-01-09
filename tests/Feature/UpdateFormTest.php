@@ -19,6 +19,17 @@ class UpdateFormTest extends TestCase
     }
 
     /** @test */
+    public function a_guest_cant_edit_a_form()
+    {
+        $this->withExceptionHandling();
+        
+        $form = create(Form::class);
+
+        $this->patch('/forms/' . $form->id, ['title' => 'New title'])
+            ->assertRedirect('login');
+    }
+
+    /** @test */
     public function a_user_can_edit_their_form()
     {
         $form = $this->loginUserWithForm();
