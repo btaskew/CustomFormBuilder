@@ -256,9 +256,7 @@
             deleteOption(id) {
                 if (!id) {
                     // User is deleting an empty option, so just remove from local data
-                    this.form.options = filter(this.form.options, option => {
-                        return option.id !== null
-                    });
+                    this.form.options = filter(this.form.options, option =>  option.id !== null);
                     return;
                 }
 
@@ -266,9 +264,7 @@
                     .then(response => {
                         this.loading = false;
                         flash("Option deleted");
-                        this.form.options = filter(this.form.options, option => {
-                            return option.id !== id
-                        });
+                        this.form.options = filter(this.form.options, option => option.id !== id);
                     }).catch(error => {
                     this.loading = false;
                     flash("Error deleting option. Please try again later", "danger");

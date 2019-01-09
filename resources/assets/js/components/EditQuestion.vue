@@ -2,33 +2,86 @@
     <div class="card" :class="{'mb-2 mt-2 border-secondary': isOpen}">
         <div class="card-header d-flex justify-content-between" :class="{'bg-secondary text-white': isOpen}">
             {{ title }}
-            <i class="fas fa-cog fa-lg" @click="toggleForm"></i>
+            <div class="d-flex">
+                <i class="fas fa-trash-alt mr-3" :class="{'text-danger': !isOpen}" @click="showConfirmModal = true"></i>
+                <i class="fas fa-cog fa-lg" @click="toggleForm"></i>
+            </div>
         </div>
 
         <div v-if="isOpen" class="card-body">
-            <question-form :question-id="question.id" :form-id="formId" @questionUpdated="this.updateTitle"></question-form>
+            <question-form :question-id="question.id" :form-id="formId"
+                           @questionUpdated="this.updateTitle"></question-form>
         </div>
+
+        <modal :show="showConfirmModal">
+            <h4 slot="header">Confirm deletion</h4>
+
+            <div slot="body">
+                <p>Are you sure you want to delete this question?</p>
+
+                <div class="form-group flex-column">
+                    <button type="button" @click="deleteQuestion" class="btn btn-raised btn-primary">
+                        Delete question
+                    </button>
+                    <button type="button" @click="showConfirmModal = false" class="btn btn-raised btn-secondary">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </modal>
+
+        <modal :show="loading">
+            <h4 slot="header">Loading...</h4>
+
+            <div slot="body">
+                <div class="loader"></div>
+            </div>
+        </modal>
     </div>
 </template>
 
 <script>
+    import axios from 'axios';
+    import Modal from './modal';
+
     export default {
+        components: {Modal},
+
         props: ['question', 'isOpen', 'formId'],
 
         data() {
             return {
-                title: this.question.title
+                title: this.question.title,
+                showConfirmModal: false,
+                loading: false
             }
         },
 
         methods: {
             toggleForm() {
-                this.$emit('toggled', this.$vnode.key);
+                this.$emit('toggled', this.question.id);
             },
 
             updateTitle(title) {
                 this.title = title;
+            },
+
+            deleteQuestion() {
+                this.showConfirmModal = false;
+                this.loading = true;
+                const id = this.question.id;
+
+                axios.delete(`/forms/${this.formId}/questions/${id}`)
+                    .then(response => {
+                        this.loading = false;
+                        flash('Question deleted');
+                        this.$emit('questionDeleted', id);
+                    }).catch(error => {
+                    this.loading = false;
+                    flash('Error deleting question. Please try again later', 'danger');
+                });
             }
+
         }
     }
 </script>
