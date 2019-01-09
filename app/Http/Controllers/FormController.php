@@ -64,13 +64,8 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
-        $questions = $form->questions;
-
-        $formView = FormBuilder::plain(['name' => $form->title]);
-        $formView = (new FormMapper($formView))->mapQuestions($questions);
-
         return view('form.show', [
-            'form' => $formView,
+            'form' => $form->build(),
             'description' => $form->description
         ]);
     }

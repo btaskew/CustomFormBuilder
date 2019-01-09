@@ -6,6 +6,7 @@ use App\Form;
 use App\Question;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Kris\LaravelFormBuilder\Facades\FormBuilder;
 use Tests\TestCase;
 
 class FormTest extends TestCase
@@ -46,5 +47,14 @@ class FormTest extends TestCase
         $this->form->delete();
 
         $this->assertDatabaseMissing('questions', ['id' => $question->id]);
+    }
+
+    /** @test */
+    public function a_form_can_build_itself()
+    {
+        $formView = new \Kris\LaravelFormBuilder\Form();
+        FormBuilder::shouldReceive('plain')->once()->with(['name' => $this->form->title])->andReturn($formView);
+
+        $this->assertEquals($formView, $this->form->build());
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App;
 
+use App\Mappers\FormMapper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Kris\LaravelFormBuilder\Facades\FormBuilder;
 
 class Form extends Model
 {
@@ -45,5 +47,14 @@ class Form extends Model
     public function questions(): HasMany
     {
         return $this->hasMany(Question::class);
+    }
+
+    /**
+     * @return \Kris\LaravelFormBuilder\Form
+     */
+    public function build(): \Kris\LaravelFormBuilder\Form
+    {
+        $formView = FormBuilder::plain(['name' => $this->title]);
+        return (new FormMapper($formView))->mapQuestions($this->questions);
     }
 }
