@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Form;
 use App\Policies\FormPolicy;
 use App\Policies\QuestionPolicy;
+use App\Policies\SelectOptionPolicy;
 use App\Question;
+use App\SelectOption;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -17,7 +19,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Form::class => FormPolicy::class,
-        Question::class => QuestionPolicy::class
+        Question::class => QuestionPolicy::class,
+        SelectOption::class => SelectOptionPolicy::class
     ];
 
     /**
