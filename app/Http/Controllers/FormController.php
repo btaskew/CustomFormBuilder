@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Form;
+use App\Mappers\FormMapper;
 use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\Facades\FormBuilder;
 
@@ -64,13 +65,9 @@ class FormController extends Controller
     public function show(Form $form)
     {
         $questions = $form->questions;
-        $formView = FormBuilder::plain(['name' => $form->title]);
 
-        foreach ($questions as $question) {
-            $formView->add($question->id, $question->type, [
-                'label' => $question->title
-            ]);
-        }
+        $formView = FormBuilder::plain(['name' => $form->title]);
+        $formView = (new FormMapper($formView))->mapQuestions($questions);
 
         return view('form.show', [
             'form' => $formView,

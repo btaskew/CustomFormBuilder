@@ -59,4 +59,17 @@ class ViewFormTest extends TestCase
             ->assertSee($form->title)
             ->assertSee($question->title);
     }
+
+    /** @test */
+    public function a_user_can_view_their_complete_form_with_a_select_question()
+    {
+        $form = $this->loginUserWithForm();
+        $question = create(Question::class, ['form_id' => $form->id, 'type' => 'radio']);
+        $option = create(SelectOption::class, ['question_id' => $question->id]);
+
+        $this->get('/forms/' . $form->id)
+            ->assertStatus(200)
+            ->assertSee($question->title)
+            ->assertSee($option->display_value);
+    }
 }
