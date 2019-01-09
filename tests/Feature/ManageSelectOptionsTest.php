@@ -94,6 +94,8 @@ class ManageSelectOptionsTest extends TestCase
 
         $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id .'/options/' . $option->id)
             ->assertRedirect('login');
+
+        $this->assertDatabaseHas('select_options', ['id' => $option->id]);
     }
 
     /** @test */
@@ -108,5 +110,7 @@ class ManageSelectOptionsTest extends TestCase
         $this->login()
             ->delete('/forms/' . $question->form->id . '/questions/' . $question->id .'/options/' . $option->id)
             ->assertStatus(403);
+
+        $this->assertDatabaseHas('select_options', ['id' => $option->id]);
     }
 }

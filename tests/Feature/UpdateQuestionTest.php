@@ -78,6 +78,8 @@ class UpdateQuestionTest extends TestCase
 
         $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id)
             ->assertRedirect('login');
+
+        $this->assertDatabaseHas('questions', ['id' => $question->id]);
     }
 
     /** @test */
@@ -103,5 +105,7 @@ class UpdateQuestionTest extends TestCase
         $this->login()
             ->delete('/forms/' . $question->form->id . '/questions/' . $question->id)
             ->assertStatus(403);
+
+        $this->assertDatabaseHas('questions', ['id' => $question->id]);
     }
 }
