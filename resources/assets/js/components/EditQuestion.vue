@@ -1,5 +1,5 @@
 <template>
-    <div class="card" :class="{'mb-2 mt-2 border-secondary': isOpen}">
+    <div class="card edit-question" :class="{'mb-2 mt-2 border-secondary': isOpen}">
         <div class="card-header d-flex justify-content-between" :class="{'bg-secondary text-white': isOpen}">
             {{ title }}
             <div class="d-flex">
@@ -9,8 +9,10 @@
         </div>
 
         <div v-if="isOpen" class="card-body">
-            <question-form :question-id="question.id" :form-id="formId"
-                           @questionUpdated="this.updateTitle"></question-form>
+            <question-form :question-id="question.id"
+                           :form-id="formId"
+                           @questionUpdated="this.updateTitle">
+            </question-form>
         </div>
 
         <modal v-if="showConfirmModal">
@@ -85,3 +87,9 @@
         }
     }
 </script>
+
+<style>
+    .edit-question {
+        cursor: move;
+    }
+</style>

@@ -9,7 +9,7 @@
                 To change the order of questions, drag and drop them into the correct order then click the "Save order" button
             </p>
 
-            <draggable v-model="displayQuestions">
+            <draggable v-model="displayQuestions" :options="dragOptions">
                 <edit-question
                         v-for="question in displayQuestions"
                         :question="question"
@@ -47,7 +47,8 @@
             return {
                 visibleQuestion: null,
                 displayQuestions: this.questions,
-                loading: false
+                loading: false,
+                dragOptions: {ghostClass: "ghost"}
             };
         },
 
@@ -84,3 +85,9 @@
         }
     }
 </script>
+
+<style>
+    .ghost {
+        opacity: 0;
+    }
+</style>
