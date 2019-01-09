@@ -23,4 +23,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('forms/{form}/questions', 'QuestionsController');
 
+    Route::delete('forms/{form}/questions/{question}/options/{option}', 'SelectOptionsController@destroy');
+
 });

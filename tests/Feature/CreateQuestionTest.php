@@ -130,22 +130,16 @@ class CreateQuestionTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_update_an_option_when_updating_the_question()
+    public function a_user_can_delete_an_option_from_a_select_question()
     {
         $form = $this->loginUserWithForm();
         $question = create(Question::class, ['title' => 'Old title', 'type' => 'radio', 'form_id' => $form->id]);
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
-        $this->patch(
-            '/forms/' . $question->form->id . '/questions/' . $question->id,
-            [
-                'title' => 'New title',
-                'type' => 'radio',
-                'options' => [['id' => $option->id, 'value' => 'value', 'display_value' => 'New value']]
-            ]
-        )->assertStatus(200);
+        $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id .'/options/' . $option->id)
+            ->assertStatus(200);
 
-        $this->assertDatabaseHas('select_options', ['display_value' => 'New value']);
+        $this->assertDatabaseMissing('select_options', ['id' => $option->id]);
     }
 
     /** @test */
