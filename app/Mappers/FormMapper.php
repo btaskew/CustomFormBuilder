@@ -91,7 +91,7 @@ class FormMapper
                 $options['expanded'] = true;
                 $options['multiple'] = false;
                 break;
-            case 'select':
+            case 'dropdown':
                 $options['expanded'] = false;
                 $options['multiple'] = false;
                 break;
