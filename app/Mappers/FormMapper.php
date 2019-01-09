@@ -34,14 +34,25 @@ class FormMapper
                 continue;
             }
 
-            //TODO extract to method
-            $this->form->add($question->id, $question->type, [
-                'label' => $question->title,
-                'help_block' => ['text' => $question->help_text]
-            ]);
+            $this->addQuestion($question, $question->type);
         }
 
         return $this->form;
+    }
+
+    /**
+     * @param Question $question
+     * @param string   $type
+     * @param array    $options
+     */
+    private function addQuestion(Question $question, string $type, array $options = []): void
+    {
+        $defaultOptions = [
+            'label' => $question->title,
+            'help_block' => ['text' => $question->help_text]
+        ];
+
+        $this->form->add($question->id, $type, array_merge($defaultOptions, $options));
     }
 
     /**
@@ -50,15 +61,12 @@ class FormMapper
     private function addSelectQuestion(Question $question): void
     {
         $options = [
-            'label' => $question->title,
-            'help_block' => ['text' => $question->help_text],
             'choices' => $this->mapOptions($question->options)
         ];
 
         $this->calculateSelectType($options, $question->type);
 
-        //TODO move to extracted method
-        $this->form->add($question->id, 'choice', $options);
+        $this->addQuestion($question, 'choice', $options);
     }
 
     /**
