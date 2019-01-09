@@ -16,7 +16,7 @@
             </ul>
         </div>
 
-        <modal :show="showConfirmModal">
+        <modal v-if="showConfirmModal">
             <h4 slot="header">Confirm deletion</h4>
 
             <div slot="body">
@@ -33,7 +33,7 @@
             </div>
         </modal>
 
-        <modal :show="loading">
+        <modal v-if="loading">
             <h4 slot="header">Loading...</h4>
 
             <div slot="body">
