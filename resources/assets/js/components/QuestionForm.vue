@@ -85,6 +85,7 @@
                             </options-form>
                             <button class="btn btn-raised btn-primary m-2" @click="addOption">Add option</button>
                         </div>
+                        <span class="text-danger" v-if="form.errors.has('options')" v-text="form.errors.get('options')"></span>
                     </div>
 
                 </div>

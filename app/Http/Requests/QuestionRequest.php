@@ -30,7 +30,7 @@ class QuestionRequest extends FormRequest
             'required' => 'boolean',
             'admin_only' => 'boolean',
             'order' => 'numeric|required',
-            'options' => 'array'
+            'options' => 'array|required_if:type,checkbox,radio,dropdown'
         ];
 
         if ($this->has('options')) {

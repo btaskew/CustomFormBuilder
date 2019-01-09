@@ -57,7 +57,7 @@ class CreateQuestionValidationTest extends TestCase
     public function a_value_is_required_for_select_questions()
     {
         $this->json('post', $this->uri, [
-            'title' => 'Title', 'type' => 'foobar', 'options' => ['display_value' => 'Display']
+            'title' => 'Title', 'type' => 'checkbox', 'order' => 1, 'options' => ['display_value' => 'Display']
         ])
             ->assertStatus(422)
             ->assertSee('value');
@@ -67,9 +67,31 @@ class CreateQuestionValidationTest extends TestCase
     public function a_display_value_is_required_for_select_questions()
     {
         $this->json('post', $this->uri, [
-            'title' => 'Title', 'type' => 'foobar', 'options' => ['value' => 'value']
+            'title' => 'Title', 'type' => 'checkbox', 'order' => 1, 'options' => ['value' => 'value']
         ])
             ->assertStatus(422)
             ->assertSee('display_value');
+    }
+
+    /** @test */
+    public function at_least_one_option_is_required_for_select_questions()
+    {
+        $this->json('post', $this->uri, [
+            'title' => 'Title', 'type' => 'checkbox', 'order' => 1, 'options' => []
+        ])
+            ->assertStatus(422)
+            ->assertSee('options');
+
+        $this->json('post', $this->uri, [
+            'title' => 'Title', 'type' => 'radio', 'order' => 1, 'options' => []
+        ])
+            ->assertStatus(422)
+            ->assertSee('options');
+
+        $this->json('post', $this->uri, [
+            'title' => 'Title', 'type' => 'dropdown', 'order' => 1, 'options' => []
+        ])
+            ->assertStatus(422)
+            ->assertSee('options');
     }
 }
