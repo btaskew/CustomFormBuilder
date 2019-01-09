@@ -1,15 +1,21 @@
 <template>
     <div>
-        <edit-question
-                v-for="question in displayQuestions"
-                :question="question"
-                :key="question.id"
-                :is-open="visibleQuestion === question.id"
-                :form-id="formId"
-                @toggled="onToggle"
-                @questionDeleted="removeQuestion"
-        >
-        </edit-question>
+        <div v-if="displayQuestions.length < 1" class="alert alert-info animated mt" role="alert">
+            No questions found for current form
+        </div>
+
+        <div v-else>
+            <edit-question
+                    v-for="question in displayQuestions"
+                    :question="question"
+                    :key="question.id"
+                    :is-open="visibleQuestion === question.id"
+                    :form-id="formId"
+                    @toggled="onToggle"
+                    @questionDeleted="removeQuestion"
+            >
+            </edit-question>
+        </div>
     </div>
 </template>
 
