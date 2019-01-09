@@ -36,7 +36,8 @@ class FormMapper
 
             //TODO extract to method
             $this->form->add($question->id, $question->type, [
-                'label' => $question->title
+                'label' => $question->title,
+                'help_block' => ['text' => $question->help_text]
             ]);
         }
 
@@ -50,6 +51,7 @@ class FormMapper
     {
         $options = [
             'label' => $question->title,
+            'help_block' => ['text' => $question->help_text],
             'choices' => $this->mapOptions($question->options)
         ];
 
