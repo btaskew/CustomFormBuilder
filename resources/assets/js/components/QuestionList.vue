@@ -5,6 +5,10 @@
         </div>
 
         <div v-else>
+            <p>
+                To change the order of questions, drag and drop them into the correct order then click the "Save order" button
+            </p>
+
             <draggable v-model="displayQuestions">
                 <edit-question
                         v-for="question in displayQuestions"
@@ -17,7 +21,9 @@
                 >
                 </edit-question>
             </draggable>
-            <button @click="saveOrder">Save order</button>
+
+            <button class="btn btn-primary mt-3" @click="saveOrder">Save order</button>
+
             <div v-if="loading" class="loader"></div>
         </div>
     </div>
