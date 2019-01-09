@@ -36,7 +36,13 @@ class Question extends Model
     {
         parent::boot();
 
+        static::creating(function ($question) {
+            /** @var Question $question */
+            $question->setOrder();
+        });
+
         static::deleting(function ($question) {
+            /** @var Question $question */
             $question->options->each->delete();
         });
     }
@@ -90,6 +96,24 @@ class Question extends Model
                 'value' => $option['value'],
                 'display_value' => $option['display_value'],
             ]);
+        }
+    }
+
+    /**
+     * Set question to be last in form
+     */
+    private function setOrder(): void
+    {
+        if (isset($this->order)) {
+            return;
+        }
+
+        $highestOrder = $this->form->questions()->max('order');
+
+        if (is_null($highestOrder)) {
+            $this->order = 0;
+        } else {
+            $this->order = $highestOrder + 1;
         }
     }
 }

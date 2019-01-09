@@ -96,4 +96,30 @@ class QuestionTest extends TestCase
 
         $this->assertDatabaseMissing('select_options', ['id' => $option->id]);
     }
+
+    /** @test */
+    public function the_order_value_is_calculated_when_the_model_is_created()
+    {
+        $form = create(Form::class);
+        // Existing question
+        create(Question::class, ['form_id' => $form->id, 'order' => 0]);
+
+        $newQuestion = $form->questions()->create([
+            'title' => 'Title', 'type' => 'text'
+        ]);
+
+        $this->assertEquals(1, $newQuestion->fresh()->order);
+    }
+
+    /** @test */
+    public function the_order_value_is_set_to_zero_when_is_the_first_question()
+    {
+        $form = create(Form::class);
+
+        $newQuestion = $form->questions()->create([
+            'title' => 'Title', 'type' => 'text'
+        ]);
+
+        $this->assertEquals(0, $newQuestion->fresh()->order);
+    }
 }

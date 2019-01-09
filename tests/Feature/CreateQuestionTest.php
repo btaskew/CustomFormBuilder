@@ -31,8 +31,7 @@ class CreateQuestionTest extends TestCase
             'type' => 'text',
             'help_text' => 'Help text',
             'required' => true,
-            'admin_only' => false,
-            'order' => 2
+            'admin_only' => false
         ];
 
         $this->post('/forms/' . $form->id . '/questions', $attributes)
@@ -52,7 +51,6 @@ class CreateQuestionTest extends TestCase
             'help_text' => 'Help text',
             'required' => true,
             'admin_only' => false,
-            'order' => 2,
             'options' => [
                 ['value' => 'a', 'display_value' => 'Value a']
             ]

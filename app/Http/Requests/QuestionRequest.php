@@ -29,7 +29,6 @@ class QuestionRequest extends FormRequest
             'help_text' => 'string|nullable',
             'required' => 'boolean',
             'admin_only' => 'boolean',
-            'order' => 'numeric|required',
             'options' => 'array|required_if:type,checkbox,radio,dropdown'
         ];
 

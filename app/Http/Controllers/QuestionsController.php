@@ -61,7 +61,7 @@ class QuestionsController extends Controller
         $this->authorize('update', $form);
 
         $question = $form->questions()->create($request->only([
-            'title', 'type', 'help_text', 'required', 'admin_only', 'order',
+            'title', 'type', 'help_text', 'required', 'admin_only'
         ]));
 
         if ($question->isSelectQuestion()) {
@@ -81,7 +81,7 @@ class QuestionsController extends Controller
         $this->authorize('update', $question);
 
         $question->update($request->only([
-            'title', 'type', 'help_text', 'required', 'admin_only', 'order',
+            'title', 'type', 'help_text', 'required', 'admin_only'
         ]));
 
         if ($question->isSelectQuestion()) {

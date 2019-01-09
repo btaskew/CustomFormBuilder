@@ -17,14 +17,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="type" :class="{ 'has-error': form.errors.has('order') }">
-                            Order
-                        </label>
-                        <input class="form-control" type="number" v-model="form.order" id="order" name="order" required>
-                        <span class="text-danger" v-if="form.errors.has('order')" v-text="form.errors.get('order')"></span>
-                    </div>
-
-                    <div class="form-group">
                         <label for="help_text"
                                :class="{ 'has-error': form.errors.has('help_text') }"
                         >
@@ -166,7 +158,6 @@
                     help_text: null,
                     required: false,
                     admin_only: false,
-                    order: null,
                     options: []
                 }),
                 loading: false,
@@ -206,7 +197,6 @@
                     help_text: question.help_text,
                     required: question.required,
                     admin_only: question.admin_only,
-                    order: question.order,
                     options: question.options
                 });
             },
