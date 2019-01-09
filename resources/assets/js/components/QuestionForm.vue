@@ -75,10 +75,12 @@
                             <options-form
                                     v-for="(option, key) in form.options"
                                     :key="option.id"
+                                    :id="option.id"
                                     :value.sync="option.value"
                                     :display-value.sync="option.display_value"
                                     :has-value-error="optionHasValueError(key)"
                                     :has-display-value-error="optionHasDisplayValueError(key)"
+                                    @deleteOption="deleteOption"
                             >
                             </options-form>
                             <button class="btn btn-raised btn-primary m-2" @click="addOption">Add option</button>
@@ -131,7 +133,6 @@
                     </div>
                 </div>
 
-
             </div>
 
             <button
@@ -148,6 +149,7 @@
 
 <script>
     import axios from 'axios';
+    import {filter} from 'lodash';
     import Form from '../classes/Form';
     import OptionsForm from "./OptionsForm";
 
@@ -231,6 +233,7 @@
                         this.loading = false;
                         flash("Question updated");
                         this.$emit('questionUpdated', response.title);
+                        this.loadQuestionData(this.formId);
                     }).catch(error => {
                     this.loading = false;
                     flash("Error updating form. Please try again later", "danger");
@@ -249,6 +252,28 @@
             optionHasDisplayValueError(key) {
                 return this.form.errors.has(`options.${key}.display_value`);
             },
+
+            deleteOption(id) {
+                if (!id) {
+                    // User is deleting an empty option, so just remove from local data
+                    this.form.options = filter(this.form.options, option => {
+                        return option.id !== null
+                    });
+                    return;
+                }
+
+                axios.delete(`/forms/${this.formId}/questions/${this.questionId}/options/${id}`)
+                    .then(response => {
+                        this.loading = false;
+                        flash("Option deleted");
+                        this.form.options = filter(this.form.options, option => {
+                            return option.id !== id
+                        });
+                    }).catch(error => {
+                    this.loading = false;
+                    flash("Error deleting option. Please try again later", "danger");
+                });
+            }
         }
     }
 </script>
