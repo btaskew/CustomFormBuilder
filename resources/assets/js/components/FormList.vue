@@ -24,7 +24,7 @@
 
                 <div class="form-group flex-column">
                     <button type="button" @click="deleteForm" class="btn btn-raised btn-primary">
-                        Delete question
+                        Delete form
                     </button>
                     <button type="button" @click="showConfirmModal = false" class="btn btn-raised btn-secondary">
                         Cancel
@@ -75,6 +75,7 @@
             },
 
             deleteForm() {
+                this.showConfirmModal = false;
                 this.loading = true;
 
                 axios.delete(`/forms/${this.formToDelete}`)
@@ -93,7 +94,6 @@
                     return form.id !== this.formToDelete;
                 });
                 this.formToDelete = null;
-                this.showConfirmModal = false;
             }
         }
     }
