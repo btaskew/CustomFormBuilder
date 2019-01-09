@@ -12,7 +12,7 @@
                         <label for="title" :class="{ 'has-error': form.errors.has('title') }">
                             Title
                         </label>
-                        <input class="form-control" type="text" v-model="form.title" id="title" name="title">
+                        <input class="form-control" type="text" v-model="form.title" id="title" name="title" required>
                         <span class="text-danger" v-if="form.errors.has('title')" v-text="form.errors.get('title')"></span>
                     </div>
 
@@ -20,7 +20,7 @@
                         <label for="type" :class="{ 'has-error': form.errors.has('order') }">
                             Order
                         </label>
-                        <input class="form-control" type="number" v-model="form.order" id="order" name="order">
+                        <input class="form-control" type="number" v-model="form.order" id="order" name="order" required>
                         <span class="text-danger" v-if="form.errors.has('order')" v-text="form.errors.get('order')"></span>
                     </div>
 

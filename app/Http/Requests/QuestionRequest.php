@@ -29,7 +29,7 @@ class QuestionRequest extends FormRequest
             'help_text' => 'string',
             'required' => 'boolean',
             'admin_only' => 'boolean',
-            'order' => 'numeric',
+            'order' => 'numeric|required',
             'options' => 'array'
         ];
 

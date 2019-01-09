@@ -86,10 +86,8 @@ class CreateQuestionTest extends TestCase
         $form = create(Form::class);
         $question = create(Question::class, ['form_id' => $form->id]);
 
-        $this->patch(
-            '/forms/' . $question->form->id . '/questions/' . $question->id,
-            ['title' => 'New title', 'type' => 'text']
-        )->assertStatus(302);
+        $this->patch('/forms/' . $question->form->id . '/questions/' . $question->id,[])
+            ->assertStatus(302);
     }
 
     /** @test */
@@ -100,7 +98,7 @@ class CreateQuestionTest extends TestCase
 
         $this->patch(
             '/forms/' . $question->form->id . '/questions/' . $question->id,
-            ['title' => 'New title', 'type' => 'text']
+            ['title' => 'New title', 'type' => 'text', 'order' => 1]
         )->assertStatus(200);
 
         $this->assertEquals('New title', $question->fresh()->title);
@@ -116,7 +114,7 @@ class CreateQuestionTest extends TestCase
 
         $this->login()
             ->patch('/forms/' . $form->id . '/questions/' . $question->id, [
-                'title' => 'New title', 'type' => 'text'
+                'title' => 'New title', 'type' => 'text', 'order' => 1
             ])
             ->assertStatus(403);
 

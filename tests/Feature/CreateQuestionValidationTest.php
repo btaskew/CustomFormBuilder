@@ -24,15 +24,23 @@ class CreateQuestionValidationTest extends TestCase
     /** @test */
     public function a_title_is_required()
     {
-        $this->json('post', $this->uri, ['type' => 'text'])
+        $this->json('post', $this->uri, ['type' => 'text', 'order' => 1])
             ->assertStatus(422)
             ->assertSee('title');
     }
 
     /** @test */
+    public function an_order_value_is_required()
+    {
+        $this->json('post', $this->uri, ['title' => 'title', 'type' => 'text'])
+            ->assertStatus(422)
+            ->assertSee('order');
+    }
+
+    /** @test */
     public function a_type_is_required()
     {
-        $this->json('post', $this->uri, ['title' => 'Title'])
+        $this->json('post', $this->uri, ['title' => 'Title', 'order' => 1])
             ->assertStatus(422)
             ->assertSee('type');
     }
@@ -40,7 +48,7 @@ class CreateQuestionValidationTest extends TestCase
     /** @test */
     public function a_valid_type_is_required()
     {
-        $this->json('post', $this->uri, ['title' => 'Title', 'type' => 'foobar'])
+        $this->json('post', $this->uri, ['title' => 'Title', 'type' => 'foobar', 'order' => 1])
             ->assertStatus(422)
             ->assertSee('type');
     }

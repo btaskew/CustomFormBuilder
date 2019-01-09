@@ -24,6 +24,7 @@ class ManageSelectOptionsTest extends TestCase
             [
                 'title' => 'New title',
                 'type' => 'radio',
+                'order' => 2,
                 'options' => [['id' => $option->id, 'value' => 'value', 'display_value' => 'New value']]
             ]
         )->assertStatus(200);
@@ -42,6 +43,7 @@ class ManageSelectOptionsTest extends TestCase
             [
                 'title' => 'New title',
                 'type' => 'radio',
+                'order' => 2,
                 'options' => [['id' => null, 'value' => 'value', 'display_value' => 'New value']]
             ]
         )->assertStatus(200);
@@ -62,6 +64,7 @@ class ManageSelectOptionsTest extends TestCase
             [
                 'title' => 'New title',
                 'type' => 'radio',
+                'order' => 2,
                 'options' => [['id' => null, 'value' => 'value', 'display_value' => 'New value']]
             ]
         )->assertStatus(403);
