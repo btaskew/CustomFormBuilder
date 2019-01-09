@@ -55,6 +55,6 @@ class Form extends Model
     public function build(): \Kris\LaravelFormBuilder\Form
     {
         $formView = FormBuilder::plain(['name' => $this->title]);
-        return (new FormMapper($formView))->mapQuestions($this->questions);
+        return (new FormMapper($formView))->mapQuestions($this->questions()->orderBy('order')->get());
     }
 }

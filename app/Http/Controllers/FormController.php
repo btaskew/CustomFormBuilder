@@ -21,13 +21,7 @@ class FormController extends Controller
      */
     public function index()
     {
-        $forms = auth()->user()->forms;
-
-        if (request()->wantsJson()) {
-            return $forms;
-        }
-
-        return view('form.index', compact('forms'));
+        return view('form.index', ['forms' => auth()->user()->forms]);
     }
 
     /**

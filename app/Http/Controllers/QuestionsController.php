@@ -17,7 +17,7 @@ class QuestionsController extends Controller
     {
         $this->authorize('update', $form);
 
-        $questions = $form->questions()->get(['id', 'title']);
+        $questions = $form->questions()->orderBy('order')->get(['id', 'title']);
 
         if (request()->wantsJson()) {
             return $questions;
