@@ -84,11 +84,10 @@ class QuestionsController extends Controller
             'title', 'type', 'help_text', 'required', 'admin_only', 'order',
         ]));
 
-
         if ($question->isSelectQuestion()) {
             $question->updateOptions($request->input('options'));
         }
 
-        return $question;
+        return $question->fresh();
     }
 }

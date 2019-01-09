@@ -78,8 +78,8 @@
                                     :id="option.id"
                                     :value.sync="option.value"
                                     :display-value.sync="option.display_value"
-                                    :has-value-error="optionHasValueError(key)"
-                                    :has-display-value-error="optionHasDisplayValueError(key)"
+                                    :has-value-error="optionHasError(key, 'value')"
+                                    :has-display-value-error="optionHasError(key, 'display_value')"
                                     @deleteOption="deleteOption"
                             >
                             </options-form>
@@ -192,18 +192,22 @@
                 this.loading = true;
                 axios.get(`/forms/${this.formId}/questions/${id}`)
                     .then(response => {
-                        this.form = new Form({
-                            title: response.data.title,
-                            type: response.data.type,
-                            help_text: response.data.help_text,
-                            required: response.data.required,
-                            admin_only: response.data.admin_only,
-                            order: response.data.order,
-                            options: response.data.options
-                        });
+                        this.mapQuestion(response.data);
                         this.newQuestion = false;
                         this.loading = false;
                     });
+            },
+
+            mapQuestion(question) {
+                this.form = new Form({
+                    title: question.title,
+                    type: question.type,
+                    help_text: question.help_text,
+                    required: question.required,
+                    admin_only: question.admin_only,
+                    order: question.order,
+                    options: question.options
+                });
             },
 
             onSubmit() {
@@ -230,10 +234,10 @@
             submitUpdate() {
                 this.form.patch(`/forms/${this.formId}/questions/${this.questionId}`)
                     .then(response => {
-                        this.loading = false;
                         flash("Question updated");
                         this.$emit('questionUpdated', response.title);
-                        this.loadQuestionData(this.formId);
+                        this.mapQuestion(response);
+                        this.loading = false;
                     }).catch(error => {
                     this.loading = false;
                     flash("Error updating form. Please try again later", "danger");
@@ -245,12 +249,8 @@
                 this.form.options.push({id: null, value: '', display_value: ''});
             },
 
-            optionHasValueError(key) {
-                return this.form.errors.has(`options.${key}.value`);
-            },
-
-            optionHasDisplayValueError(key) {
-                return this.form.errors.has(`options.${key}.display_value`);
+            optionHasError(key, field) {
+                return this.form.errors.has(`options.${key}.${field}`);
             },
 
             deleteOption(id) {
