@@ -104,7 +104,8 @@ class CreateQuestionTest extends TestCase
             [
                 'title' => 'New title',
                 'type' => 'radio',
-                'options' => [['id' => $option->id, 'value' => 'value', 'display_value' => 'New value']]]
+                'options' => [['id' => $option->id, 'value' => 'value', 'display_value' => 'New value']]
+            ]
         )->assertStatus(200);
 
         $this->assertEquals('New value', $option->fresh()->display_value);
@@ -121,7 +122,27 @@ class CreateQuestionTest extends TestCase
             [
                 'title' => 'New title',
                 'type' => 'radio',
-                'options' => [['id' => null, 'value' => 'value', 'display_value' => 'New value']]]
+                'options' => [['id' => null, 'value' => 'value', 'display_value' => 'New value']]
+            ]
+        )->assertStatus(200);
+
+        $this->assertDatabaseHas('select_options', ['display_value' => 'New value']);
+    }
+
+    /** @test */
+    public function a_user_can_update_an_option_when_updating_the_question()
+    {
+        $form = $this->loginUserWithForm();
+        $question = create(Question::class, ['title' => 'Old title', 'type' => 'radio', 'form_id' => $form->id]);
+        $option = create(SelectOption::class, ['question_id' => $question->id]);
+
+        $this->patch(
+            '/forms/' . $question->form->id . '/questions/' . $question->id,
+            [
+                'title' => 'New title',
+                'type' => 'radio',
+                'options' => [['id' => $option->id, 'value' => 'value', 'display_value' => 'New value']]
+            ]
         )->assertStatus(200);
 
         $this->assertDatabaseHas('select_options', ['display_value' => 'New value']);
