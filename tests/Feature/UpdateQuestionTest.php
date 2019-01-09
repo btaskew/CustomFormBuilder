@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Form;
 use App\Question;
+use App\SelectOption;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -49,6 +50,21 @@ class UpdateQuestionTest extends TestCase
         )->assertStatus(200);
 
         $this->assertEquals('', $question->fresh()->help_text);
+    }
+
+    /** @test */
+    public function a_questions_select_options_are_deleted_when_the_type_is_changed()
+    {
+        $form = $this->loginUserWithForm();
+        $question = create(Question::class, ['form_id' => $form->id]);
+        $option = create(SelectOption::class, ['question_id' => $question->id]);
+
+        $this->patch(
+            '/forms/' . $form->id . '/questions/' . $question->id,
+            ['title' => 'New title', 'type' => 'text', 'order' => 1, 'help_text' => '']
+        )->assertStatus(200);
+
+        $this->assertDatabaseMissing('select_options', ['id' => $option->id]);
     }
 
     /** @test */

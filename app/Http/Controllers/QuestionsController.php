@@ -86,6 +86,8 @@ class QuestionsController extends Controller
 
         if ($question->isSelectQuestion()) {
             $question->updateOptions($request->input('options'));
+        } else {
+            $question->options->each->delete();
         }
 
         return $question->fresh();
