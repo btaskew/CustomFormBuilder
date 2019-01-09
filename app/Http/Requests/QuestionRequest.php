@@ -26,7 +26,7 @@ class QuestionRequest extends FormRequest
         $rules = [
             'title' => 'string|required',
             'type' => 'string|required|in:text,email,password,hidden,textarea,number,file,url,tel,date,datetime-local,time,checkbox,radio,dropdown',
-            'help_text' => 'string',
+            'help_text' => 'string|nullable',
             'required' => 'boolean',
             'admin_only' => 'boolean',
             'order' => 'numeric|required',

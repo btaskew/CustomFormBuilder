@@ -105,6 +105,20 @@ class CreateQuestionTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_clear_the_help_text_field()
+    {
+        $form = $this->loginUserWithForm();
+        $question = create(Question::class, ['form_id' => $form->id]);
+
+        $this->patch(
+            '/forms/' . $question->form->id . '/questions/' . $question->id,
+            ['title' => 'New title', 'type' => 'text', 'order' => 1, 'help_text' => '']
+        )->assertStatus(200);
+
+        $this->assertEquals('', $question->fresh()->help_text);
+    }
+
+    /** @test */
     public function a_user_cant_edit_questions_that_belong_to_another_users_form()
     {
         $this->withExceptionHandling();

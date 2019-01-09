@@ -59,6 +59,17 @@ class CreateFormTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_clear_the_description_field()
+    {
+        $form = $this->loginUserWithForm();
+
+        $this->patch('/forms/' . $form->id, ['title' => 'New title', 'description' => ''])
+            ->assertStatus(200);
+
+        $this->assertEquals('', $form->fresh()->description);
+    }
+
+    /** @test */
     public function a_user_cant_edit_another_users_form()
     {
         $this->withExceptionHandling();

@@ -103,7 +103,7 @@ class FormController extends Controller
 
         $form->update($request->validate([
             'title' => 'string|required',
-            'description' => 'string'
+            'description' => 'string|nullable'
         ]));
 
         return $form;

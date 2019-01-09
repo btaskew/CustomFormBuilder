@@ -160,12 +160,12 @@
         data() {
             return {
                 form: new Form({
-                    title: '',
-                    type: '',
-                    help_text: '',
+                    title: null,
+                    type: null,
+                    help_text: null,
                     required: false,
                     admin_only: false,
-                    order: '',
+                    order: null,
                     options: []
                 }),
                 loading: false,
