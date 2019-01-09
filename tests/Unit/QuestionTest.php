@@ -39,4 +39,50 @@ class QuestionTest extends TestCase
 
         $this->assertFalse((create(Question::class, ['type' => 'text']))->isSelectQuestion());
     }
+
+    /** @test */
+    public function a_question_can_create_a_new_select_option()
+    {
+        $question = create(Question::class);
+
+        $question->addOptions([['value' => 'value', 'display_value' => 'Display']]);
+
+        $this->assertDatabaseHas('select_options', ['value' => 'value']);
+    }
+
+    /** @test */
+    public function a_question_can_create_a_new_select_option_when_updating()
+    {
+        $question = create(Question::class);
+
+        $question->updateOptions([['id' => null, 'value' => 'value', 'display_value' => 'Display']]);
+
+        $this->assertDatabaseHas('select_options', ['value' => 'value']);
+    }
+
+    /** @test */
+    public function a_question_can_update_a_select_option()
+    {
+        $question = create(Question::class);
+        $option = create(SelectOption::class, ['value' => 'old', 'question_id' => $question->id]);
+
+        $question->updateOptions([['id' => $option->id, 'value' => 'value', 'display_value' => 'Display']]);
+
+        $this->assertEquals('value', $option->fresh()->value);
+    }
+
+    /** @test */
+    public function a_question_can_create_and_update_an_option_at_the_same_time()
+    {
+        $question = create(Question::class);
+        $option = create(SelectOption::class, ['value' => 'old', 'question_id' => $question->id]);
+
+        $question->updateOptions([
+            ['id' => $option->id, 'value' => 'value', 'display_value' => 'Display'],
+            ['id' => null, 'value' => 'value 2', 'display_value' => 'Display 2'],
+        ]);
+
+        $this->assertEquals('value', $option->fresh()->value);
+        $this->assertDatabaseHas('select_options', ['value' => 'value 2']);
+    }
 }
