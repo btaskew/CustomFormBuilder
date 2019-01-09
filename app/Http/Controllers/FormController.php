@@ -119,7 +119,7 @@ class FormController extends Controller
     public function destroy(Form $form)
     {
         $this->authorize('update', $form);
-        
+
         $form->delete();
 
         return response()->json(['success' => 'Form deleted']);

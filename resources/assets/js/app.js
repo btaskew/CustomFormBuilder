@@ -19,6 +19,7 @@ Vue.component('flash', require('./components/Flash'));
 Vue.component('edit-form', require('./components/EditForm'));
 Vue.component('question-list', require('./components/QuestionList'));
 Vue.component('question-form', require('./components/QuestionForm'));
+Vue.component('form-list', require('./components/FormList'));
 
 const app = new Vue({
     el: '#app'

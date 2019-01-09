@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <div @click="close" v-show="show" class="modal-mask animated">
+        <div @click="close" v-if="show" class="modal-mask animated">
             <div class="modal-wrapper">
                 <div class="modal-container" @click.stop>
                     <div class="modal-header">
