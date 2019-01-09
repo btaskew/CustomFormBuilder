@@ -30,6 +30,18 @@ class Question extends Model
     protected $with = ['options'];
 
     /**
+     * Boot the model
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($question) {
+            $question->options->each->delete();
+        });
+    }
+
+    /**
      * @return BelongsTo
      */
     public function form(): BelongsTo

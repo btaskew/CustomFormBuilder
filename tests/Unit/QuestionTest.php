@@ -85,4 +85,15 @@ class QuestionTest extends TestCase
         $this->assertEquals('value', $option->fresh()->value);
         $this->assertDatabaseHas('select_options', ['value' => 'value 2']);
     }
+
+    /** @test */
+    public function a_questions_select_options_are_deleted_when_the_question_is_deleted()
+    {
+        $question = create(Question::class);
+        $option = create(SelectOption::class, ['question_id' => $question->id]);
+
+        $question->delete();
+
+        $this->assertDatabaseMissing('select_options', ['id' => $option->id]);
+    }
 }
