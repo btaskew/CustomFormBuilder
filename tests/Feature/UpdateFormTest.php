@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Form;
+use App\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -95,5 +96,23 @@ class UpdateFormTest extends TestCase
         $this->login()->delete('/forms/' . $form->id)->assertStatus(403);
 
         $this->assertDatabaseHas('forms', ['id' => $form->id]);
+    }
+
+    /** @test */
+    public function a_user_can_update_the_order_of_their_forms_questions()
+    {
+        $form = $this->loginUserWithForm();
+        $question1 = create(Question::class, ['form_id' => $form->id, 'order' => 1]);
+        $question2 = create(Question::class, ['form_id' => $form->id, 'order' => 2]);
+
+        $this->patch('/forms/' . $form->id . '/order', [
+            'order' => [
+                ['question' => $question1->id, 'order' => 2],
+                ['question' => $question2->id, 'order' => 1],
+            ]
+        ])->assertStatus(200);
+
+        $this->assertEquals(2, $question1->fresh()->order);
+        $this->assertEquals(1, $question2->fresh()->order);
     }
 }

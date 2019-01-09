@@ -23,6 +23,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('forms/{form}/preview', 'FormPreviewController@show');
 
+    Route::patch('forms/{form}/order', 'FormOrderController@update');
+
     Route::resource('forms/{form}/questions', 'QuestionsController');
 
     Route::delete('forms/{form}/questions/{question}/options/{option}', 'SelectOptionsController@destroy');

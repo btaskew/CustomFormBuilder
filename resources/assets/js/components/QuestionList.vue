@@ -5,22 +5,28 @@
         </div>
 
         <div v-else>
-            <edit-question
-                    v-for="question in displayQuestions"
-                    :question="question"
-                    :key="question.id"
-                    :is-open="visibleQuestion === question.id"
-                    :form-id="formId"
-                    @toggled="onToggle"
-                    @questionDeleted="removeQuestion"
-            >
-            </edit-question>
+            <draggable v-model="displayQuestions">
+                <edit-question
+                        v-for="question in displayQuestions"
+                        :question="question"
+                        :key="question.id"
+                        :is-open="visibleQuestion === question.id"
+                        :form-id="formId"
+                        @toggled="onToggle"
+                        @questionDeleted="removeQuestion"
+                >
+                </edit-question>
+            </draggable>
+            <button @click="saveOrder">Save order</button>
+            <div v-if="loading" class="loader"></div>
         </div>
     </div>
 </template>
 
 <script>
+    import axios from 'axios';
     import {filter} from 'lodash';
+    import Draggable from 'vuedraggable';
     import EditQuestion from './EditQuestion';
 
     export default {
@@ -29,12 +35,13 @@
             formId: {}
         },
 
-        components: {EditQuestion},
+        components: {EditQuestion, Draggable},
 
         data() {
             return {
                 visibleQuestion: null,
-                displayQuestions: this.questions
+                displayQuestions: this.questions,
+                loading: false
             };
         },
 
@@ -49,6 +56,23 @@
             removeQuestion(id) {
                 this.displayQuestions = filter(this.displayQuestions, question => {
                     return question.id !== id
+                });
+            },
+
+            saveOrder() {
+                const order = [];
+
+                this.displayQuestions.forEach((question, index) => {
+                    order.push({question:question.id, order:index});
+                });
+                
+                axios.patch(`/forms/${this.formId}/order`, {'order':order})
+                    .then(response => {
+                        flash("Order updated");
+                        this.loading = false;
+                    }).catch(error => {
+                    this.loading = false;
+                    flash("Error updating order. Please try again later", "danger");
                 });
             }
         }
