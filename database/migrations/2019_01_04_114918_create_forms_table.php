@@ -17,6 +17,7 @@ class CreateFormsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('description')->nullable();
+            $table->boolean('active')->default(false);
             $table->unsignedInteger('user_id');
             $table->timestamps();
         });

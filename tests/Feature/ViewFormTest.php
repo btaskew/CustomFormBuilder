@@ -61,9 +61,9 @@ class ViewFormTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_their_complete_form()
+    public function anyone_can_view_a_complete_form()
     {
-        $form = $this->loginUserWithForm();
+        $form = create(Form::class);
         $question = create(Question::class, ['form_id' => $form->id]);
 
         $this->get('/forms/' . $form->id)
@@ -73,9 +73,9 @@ class ViewFormTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_their_complete_form_with_a_select_question()
+    public function anyone_can_view_a_complete_form_with_a_select_question()
     {
-        $form = $this->loginUserWithForm();
+        $form = create(Form::class);
         $question = create(Question::class, ['form_id' => $form->id, 'type' => 'radio']);
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
@@ -83,5 +83,15 @@ class ViewFormTest extends TestCase
             ->assertStatus(200)
             ->assertSee($question->title)
             ->assertSee($option->display_value);
+    }
+
+    /** @test */
+    public function an_inactive_form_is_not_viewable()
+    {
+        $form = create(Form::class, ['active' => false]);
+
+        $this->get('/forms/' . $form->id)
+            ->assertStatus(200)
+            ->assertSee('This form is not currently active');
     }
 }

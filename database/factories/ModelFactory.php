@@ -26,6 +26,7 @@ $factory->define(App\Form::class, function (Faker $faker) {
     return [
         'title' => $faker->word,
         'description' => $faker->sentence,
+        'active' => true,
         'user_id' => function () {
             return factory(\App\User::class)->create()->id;
         },

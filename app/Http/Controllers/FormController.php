@@ -58,6 +58,10 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
+        if (!$form->isActive()) {
+            return view('form.inactive');
+        }
+
         return view('form.show', [
             'form' => $form->build(),
             'description' => $form->description

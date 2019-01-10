@@ -50,6 +50,14 @@ class Form extends Model
     }
 
     /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+    /**
      * @return \Kris\LaravelFormBuilder\Form
      */
     public function build(): \Kris\LaravelFormBuilder\Form
