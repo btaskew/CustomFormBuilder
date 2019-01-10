@@ -1,3 +1,5 @@
+import FieldFactory from './FieldFactory';
+
 class FormBuilder
 {
     buildModel(questions) {
@@ -23,15 +25,8 @@ class FormBuilder
     }
 
     buildField(question) {
-        return {
-            id: question.id,
-            type: "input",
-            inputType: question.type,
-            model: question.id,
-            label: question.title,
-            required: question.required,
-            help: question.help_text
-        };
+        const field = FieldFactory.makeField(question);
+        return field.build();
     }
 }
 
