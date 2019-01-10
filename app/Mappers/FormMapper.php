@@ -37,6 +37,8 @@ class FormMapper
             $this->addQuestion($question, $question->type);
         }
 
+        $this->form->add('submit', 'submit', ['label' => 'Submit']);
+
         return $this->form;
     }
 
