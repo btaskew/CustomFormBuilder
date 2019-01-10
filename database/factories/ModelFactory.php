@@ -43,7 +43,7 @@ $factory->define(App\Question::class, function (Faker $faker) {
             return factory(\App\Form::class)->create()->id;
         },
         'help_text' => $faker->sentence,
-        'required' => $faker->boolean,
+        'required' => false,
         'admin_only' => $faker->boolean,
         'order' => $faker->randomDigitNotNull,
     ];

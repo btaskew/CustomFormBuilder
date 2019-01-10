@@ -50,15 +50,6 @@ class FormTest extends TestCase
     }
 
     /** @test */
-    public function a_form_can_build_itself()
-    {
-        $formView = new \Kris\LaravelFormBuilder\Form();
-        FormBuilder::shouldReceive('plain')->once()->with(['name' => $this->form->title])->andReturn($formView);
-
-        $this->assertEquals($formView, $this->form->build());
-    }
-
-    /** @test */
     public function a_form_is_inactive_if_current_date_before_open_date()
     {
         $form = create(Form::class, ['open_date' => '01-01-2990', 'close_date' => '02-01-2990', 'active' => true]);

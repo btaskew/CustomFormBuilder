@@ -27,6 +27,27 @@ class FormMapperTest extends TestCase
                 'help_block' => ['text' => $question->help_text]
             ]
         );
+        $form->shouldReceive('add')->once()->with('submit', 'submit', ['label' => 'Submit']);
+
+        (new FormMapper($form))->mapQuestions(collect([$question]));
+    }
+
+    /** @test */
+    public function correctly_maps_a_forms_required_question()
+    {
+        $question = create(Question::class, ['required' => true]);
+
+        $form = \Mockery::mock(Form::class);
+        $form->shouldReceive('add')->once()->with(
+            $question->id,
+            $question->type,
+            [
+                'label' => $question->title,
+                'help_block' => ['text' => $question->help_text],
+                'rules' => 'required'
+            ]
+        );
+        $form->shouldReceive('add')->once()->with('submit', 'submit', ['label' => 'Submit']);
 
         (new FormMapper($form))->mapQuestions(collect([$question]));
     }
@@ -49,6 +70,7 @@ class FormMapperTest extends TestCase
                 'multiple' => true,
             ]
         );
+        $form->shouldReceive('add')->once()->with('submit', 'submit', ['label' => 'Submit']);
 
         (new FormMapper($form))->mapQuestions(collect([$question]));
     }
@@ -71,6 +93,7 @@ class FormMapperTest extends TestCase
                 'multiple' => false,
             ]
         );
+        $form->shouldReceive('add')->once()->with('submit', 'submit', ['label' => 'Submit']);
 
         (new FormMapper($form))->mapQuestions(collect([$question]));
     }
@@ -93,6 +116,7 @@ class FormMapperTest extends TestCase
                 'multiple' => false,
             ]
         );
+        $form->shouldReceive('add')->once()->with('submit', 'submit', ['label' => 'Submit']);
 
         (new FormMapper($form))->mapQuestions(collect([$question]));
     }

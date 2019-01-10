@@ -54,6 +54,10 @@ class FormMapper
             'help_block' => ['text' => $question->help_text]
         ];
 
+        if ($question->required) {
+            $defaultOptions['rules'] = 'required';
+        }
+
         $this->form->add($question->id, $type, array_merge($defaultOptions, $options));
     }
 
