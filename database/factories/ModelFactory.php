@@ -27,8 +27,8 @@ $factory->define(App\Form::class, function (Faker $faker) {
         'title' => $faker->word,
         'description' => $faker->sentence,
         'active' => true,
-        'open_date' => '01-01-1990',
-        'close_date' => '01-01-2990',
+        'open_date' => '1990-01-01',
+        'close_date' => '2990-01-01',
         'user_id' => function () {
             return factory(\App\User::class)->create()->id;
         },

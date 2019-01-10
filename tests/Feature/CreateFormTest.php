@@ -36,7 +36,7 @@ class CreateFormTest extends TestCase
 
         $this->login()
             ->post('/forms', $attributes)
-            ->assertStatus(302);
+            ->assertStatus(201);
 
         $this->assertDatabaseHas('forms', $attributes);
     }

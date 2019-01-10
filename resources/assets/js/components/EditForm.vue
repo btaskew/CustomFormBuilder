@@ -32,6 +32,34 @@
                           v-text="form.errors.get('description')"
                     ></span>
                 </div>
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label for="open_date"
+                               class="col-form-label"
+                               :class="{ 'has-error': form.errors.has('open_date') }"
+                        >
+                            Open date
+                        </label>
+                        <input class="form-control" type="date" v-model="form.open_date" id="open_date" name="open_date" required>
+                        <span class="text-danger"
+                              v-if="form.errors.has('open_date')"
+                              v-text="form.errors.get('open_date')"
+                        ></span>
+                    </div>
+                    <div class="col form-group">
+                        <label for="close_date"
+                               class="col-form-label"
+                               :class="{ 'has-error': form.errors.has('close_date') }"
+                        >
+                            Closing date
+                        </label>
+                        <input class="form-control" type="date" v-model="form.close_date" id="close_date" name="close_date" required>
+                        <span class="text-danger"
+                              v-if="form.errors.has('close_date')"
+                              v-text="form.errors.get('close_date')"
+                        ></span>
+                    </div>
+                </div>
                 <div class="form-check form-group">
                     <input type="checkbox"
                            id="active"
@@ -64,18 +92,32 @@
     import Form from '../classes/Form';
 
     export default {
-        props: ['formData'],
+        props: {formData: {default: null}},
 
         data() {
             return {
                 form: new Form({
-                    title: this.formData.title,
-                    description: this.formData.description,
-                    active: this.formData.active,
+                    title: null,
+                    description: null,
+                    open_date: null,
+                    close_date: null,
+                    active: null,
                 }),
                 loading: false,
                 success: true,
-                error: false
+                error: false,
+                isNewForm: true
+            }
+        },
+
+        created() {
+            if (this.formData) {
+                this.form.title = this.formData.title;
+                this.form.description = this.formData.description;
+                this.form.open_date = this.formData.open_date;
+                this.form.close_date = this.formData.close_date;
+                this.form.active = this.formData.active;
+                this.isNewForm = false;
             }
         },
 
@@ -83,6 +125,25 @@
             onSubmit() {
                 this.loading = true;
 
+                if (this.isNewForm) {
+                    return (this.submitNewForm());
+                }
+
+                this.submitUpdate();
+            },
+
+            submitNewForm() {
+                this.form.post(`/forms`)
+                    .then(response => {
+                        this.loading = false;
+                        window.location = `/forms/${response.id}/edit`;
+                    }).catch(error => {
+                    this.loading = false;
+                    flash("Error saving form. Please try again later", "danger");
+                });
+            },
+
+            submitUpdate() {
                 this.form.patch(`/forms/${this.formData.id}`)
                     .then(response => {
                         this.loading = false;

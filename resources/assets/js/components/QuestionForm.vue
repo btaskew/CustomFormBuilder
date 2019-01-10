@@ -162,7 +162,7 @@
                 loading: false,
                 success: true,
                 error: false,
-                newQuestion: true
+                isNewQuestion: true
             }
         },
 
@@ -184,7 +184,7 @@
                 axios.get(`/forms/${this.formId}/questions/${id}`)
                     .then(response => {
                         this.mapQuestion(response.data);
-                        this.newQuestion = false;
+                        this.isNewQuestion = false;
                         this.loading = false;
                     });
             },
@@ -203,7 +203,7 @@
             onSubmit() {
                 this.loading = true;
 
-                if (this.newQuestion) {
+                if (this.isNewQuestion) {
                     return (this.submitNewQuestion());
                 }
 

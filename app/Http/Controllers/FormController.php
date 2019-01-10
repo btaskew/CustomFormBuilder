@@ -35,8 +35,8 @@ class FormController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @return Form
      */
     public function store(Request $request)
     {
@@ -48,14 +48,12 @@ class FormController extends Controller
             'active' => 'boolean'
         ]);
 
-        $form = Form::create([
+        return Form::create([
             'title' => $request->input('title'),
             'open_date' => $request->input('open_date'),
             'close_date' => $request->input('close_date'),
             'user_id' => auth()->user()->id
         ]);
-
-        return redirect('/forms/' . $form->id . '/edit')->with('flash', 'New form created');
     }
 
     /**

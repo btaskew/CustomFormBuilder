@@ -17,8 +17,8 @@ class CreateFormsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('description')->nullable();
-            $table->dateTime('open_date');
-            $table->dateTime('close_date');
+            $table->date('open_date');
+            $table->date('close_date');
             $table->boolean('active')->default(false);
             $table->unsignedInteger('user_id');
             $table->timestamps();
