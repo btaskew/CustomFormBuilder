@@ -16,7 +16,7 @@ class FormPreviewController extends Controller
     {
         return view('form.preview', [
             'form' => $form,
-            'formView' => $form->build(),
+            'formView' => $form->buildPreview(),
             'description' => $form->description
         ]);
     }

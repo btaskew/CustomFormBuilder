@@ -79,4 +79,13 @@ class Form extends Model
         $formView = FormBuilder::plain(['name' => $this->title]);
         return (new FormMapper($formView))->mapQuestions($this->questions()->orderBy('order')->get());
     }
+
+    /**
+     * @return \Kris\LaravelFormBuilder\Form
+     */
+    public function buildPreview(): \Kris\LaravelFormBuilder\Form
+    {
+        $formView = FormBuilder::plain(['name' => $this->title]);
+        return (new FormMapper($formView))->mapQuestions($this->questions()->orderBy('order')->get());
+    }
 }
