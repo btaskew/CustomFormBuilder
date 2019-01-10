@@ -69,7 +69,7 @@ class FormController extends Controller
         }
 
         return view('form.show', [
-            'form' => $form->build(),
+            'form' => $form->getAttributes(),
             'description' => $form->description
         ]);
     }

@@ -20,6 +20,11 @@ Vue.component('edit-form', require('./components/EditForm'));
 Vue.component('question-list', require('./components/QuestionList'));
 Vue.component('question-form', require('./components/QuestionForm'));
 Vue.component('form-list', require('./components/FormList'));
+Vue.component('form-builder', require('./components/FormBuilder'));
+
+import VueFormGenerator from 'vue-form-generator'
+import 'vue-form-generator/dist/vfg.css'
+Vue.use(VueFormGenerator)
 
 const app = new Vue({
     el: '#app'
