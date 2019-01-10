@@ -85,7 +85,6 @@
                 <div class="col col-md-2">
                     <div class="form-check form-group">
                         <input type="checkbox"
-
                                id="admin_only"
                                name="admin_only"
                                class="form-check-input"

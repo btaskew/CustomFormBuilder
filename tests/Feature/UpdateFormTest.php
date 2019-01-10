@@ -35,10 +35,18 @@ class UpdateFormTest extends TestCase
     {
         $form = $this->loginUserWithForm();
 
-        $this->patch('/forms/' . $form->id, ['title' => 'New title'])
+        $attributes = [
+            'title' => 'New title',
+            'description' => 'New description',
+            'active' => false
+        ];
+
+        $this->patch('/forms/' . $form->id, $attributes)
             ->assertStatus(200);
 
         $this->assertEquals('New title', $form->fresh()->title);
+        $this->assertEquals('New description', $form->fresh()->description);
+        $this->assertFalse($form->fresh()->active);
     }
 
     /** @test */

@@ -18,7 +18,17 @@ class Form extends Model
     protected $fillable = [
         'title',
         'description',
+        'active',
         'user_id'
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'active' => 'boolean'
     ];
 
     /**

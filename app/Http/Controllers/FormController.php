@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Form;
-use App\Mappers\FormMapper;
 use Illuminate\Http\Request;
-use Kris\LaravelFormBuilder\Facades\FormBuilder;
 
 class FormController extends Controller
 {
@@ -93,7 +91,8 @@ class FormController extends Controller
 
         $form->update($request->validate([
             'title' => 'string|required',
-            'description' => 'string|nullable'
+            'description' => 'string|nullable',
+            'active' => 'boolean'
         ]));
 
         return $form;

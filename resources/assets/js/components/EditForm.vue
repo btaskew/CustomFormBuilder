@@ -32,6 +32,26 @@
                           v-text="form.errors.get('description')"
                     ></span>
                 </div>
+                <div class="form-check form-group">
+                    <input type="checkbox"
+                           id="active"
+                           name="active"
+                           class="form-check-input"
+                           v-model="form.active"
+                           :true-value="true"
+                           :false-value="false"
+                    >
+                    <label for="active"
+                           class="form-check-label"
+                           :class="{ 'has-error': form.errors.has('active') }"
+                    >
+                        Active
+                    </label>
+                    <span class="text-danger"
+                          v-if="form.errors.has('active')"
+                          v-text="form.errors.get('active')"
+                    ></span>
+                </div>
             </div>
             <button type="submit" class="btn btn-raised btn-primary mt" :disabled="loading">Save form</button>
         </form>
@@ -51,6 +71,7 @@
                 form: new Form({
                     title: this.formData.title,
                     description: this.formData.description,
+                    active: this.formData.active,
                 }),
                 loading: false,
                 success: true,
