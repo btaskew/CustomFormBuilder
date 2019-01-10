@@ -29,7 +29,9 @@ class CreateFormTest extends TestCase
     public function a_user_can_create_a_new_form()
     {
         $attributes = [
-            'title' => 'Form Title'
+            'title' => 'Form Title',
+            'open_date' => '1990-01-01',
+            'close_date' => '1990-01-02',
         ];
 
         $this->login()

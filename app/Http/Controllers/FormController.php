@@ -40,8 +40,18 @@ class FormController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'string|required',
+            'description' => 'string|nullable',
+            'open_date' => 'date',
+            'close_date' => 'date',
+            'active' => 'boolean'
+        ]);
+
         $form = Form::create([
             'title' => $request->input('title'),
+            'open_date' => $request->input('open_date'),
+            'close_date' => $request->input('close_date'),
             'user_id' => auth()->user()->id
         ]);
 
@@ -92,6 +102,8 @@ class FormController extends Controller
         $form->update($request->validate([
             'title' => 'string|required',
             'description' => 'string|nullable',
+            'open_date' => 'date',
+            'close_date' => 'date',
             'active' => 'boolean'
         ]));
 

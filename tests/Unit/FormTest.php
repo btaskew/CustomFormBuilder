@@ -57,4 +57,37 @@ class FormTest extends TestCase
 
         $this->assertEquals($formView, $this->form->build());
     }
+
+    /** @test */
+    public function a_form_is_inactive_if_current_date_before_open_date()
+    {
+        $form = create(Form::class, ['open_date' => '01-01-2990', 'close_date' => '02-01-2990', 'active' => true]);
+
+        $this->assertFalse($form->isActive());
+    }
+
+    /** @test */
+    public function a_form_is_inactive_if_current_date_after_close_date()
+    {
+        $form = create(Form::class, ['open_date' => '01-01-1990', 'close_date' => '02-01-1990', 'active' => true]);
+
+        $this->assertFalse($form->isActive());
+    }
+
+    /** @test */
+    public function a_form_is_active_if_current_date_between_open_and_close_dates()
+    {
+        $form = create(Form::class, ['open_date' => '01-01-1990', 'close_date' => '01-01-2990', 'active' => true]);
+
+        $this->assertTrue($form->isActive());
+    }
+
+    /** @test */
+    public function a_form_is_inactive_if_active_is_false()
+    {
+        //Even if dates are within range
+        $form = create(Form::class, ['open_date' => '01-01-1990', 'close_date' => '01-01-2990', 'active' => false]);
+
+        $this->assertFalse($form->isActive());
+    }
 }

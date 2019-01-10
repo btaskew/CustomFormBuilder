@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Mappers\FormMapper;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -19,6 +20,8 @@ class Form extends Model
         'title',
         'description',
         'active',
+        'open_date',
+        'close_date',
         'user_id'
     ];
 
@@ -64,7 +67,8 @@ class Form extends Model
      */
     public function isActive(): bool
     {
-        return $this->active;
+        $currentDate = new Carbon();
+        return $this->active && $currentDate->between((new Carbon($this->open_date)), (new Carbon($this->close_date)));
     }
 
     /**

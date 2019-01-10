@@ -38,6 +38,8 @@ class UpdateFormTest extends TestCase
         $attributes = [
             'title' => 'New title',
             'description' => 'New description',
+            'open_date' => '1990-01-01',
+            'close_date' => '1990-01-02',
             'active' => false
         ];
 
@@ -46,6 +48,8 @@ class UpdateFormTest extends TestCase
 
         $this->assertEquals('New title', $form->fresh()->title);
         $this->assertEquals('New description', $form->fresh()->description);
+        $this->assertEquals('1990-01-01', $form->fresh()->open_date);
+        $this->assertEquals('1990-01-02', $form->fresh()->close_date);
         $this->assertFalse($form->fresh()->active);
     }
 
