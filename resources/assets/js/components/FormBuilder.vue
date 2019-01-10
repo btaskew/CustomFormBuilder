@@ -1,70 +1,26 @@
 <template>
-    <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
+    <vue-form-generator :schema="schema" :model="model"></vue-form-generator>
 </template>
 
 <script>
-    import VueFormGenerator from 'vue-form-generator'
+    import FormBuilder from './../classes/FormBuilder';
 
     export default {
-        props: ["form"],
+        props: ["form", "questions"],
 
         data() {
             return {
-                model: {
-                    id: 1,
-                    name: 'John Doe',
-                    password: 'J0hnD03!x4',
-                    skills: ['Javascript', 'VueJS'],
-                    email: 'john.doe@gmail.com',
-                    status: true
-                },
+                model: {},
 
                 schema: {
-                    fields: [
-                        {
-                            type: 'input',
-                            inputType: 'text',
-                            label: 'ID (disabled text field)',
-                            model: 'id',
-                            readonly: true,
-                            disabled: true
-                        },
-                        {
-                            type: 'input',
-                            inputType: 'text',
-                            label: 'Name',
-                            model: 'name',
-                            id: 'user_name',
-                            placeholder: 'Your name',
-                            featured: true,
-                            required: true
-                        },
-                        {
-                            type: 'input',
-                            inputType: 'email',
-                            label: 'E-mail',
-                            model: 'email',
-                            placeholder: 'User\'s e-mail address'
-                        },
-                        {
-                            type: 'input',
-                            inputType: 'password',
-                            label: 'Password',
-                            model: 'password',
-                            min: 6,
-                            required: true,
-                            hint: 'Minimum 6 characters',
-                            validator: 'string'
-                        }
-                    ]
-                },
-
-                formOptions: {
-                    validateAfterLoad: true,
-                    validateAfterChanged: true,
-                    validateAsync: true
+                    fields: []
                 }
             }
+        },
+
+        created() {
+            this.model = FormBuilder.buildModel(this.questions);
+            this.schema.fields = FormBuilder.buildFields(this.questions);
         }
     }
 </script>

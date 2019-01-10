@@ -70,6 +70,7 @@ class FormController extends Controller
 
         return view('form.show', [
             'form' => $form->getAttributes(),
+            'questions' => $form->questions->toArray(),
             'description' => $form->description
         ]);
     }
