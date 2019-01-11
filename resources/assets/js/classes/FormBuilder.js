@@ -6,7 +6,7 @@ class FormBuilder
         const model = {};
 
         for (const i in questions) {
-            model[questions[i].id] = null;
+            model[questions[i].id.toString()] = null;
         }
 
         return model;

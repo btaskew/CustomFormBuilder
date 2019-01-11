@@ -7,7 +7,7 @@ export default class Field
 
     setDefaultProperties() {
         this.properties.id = this.question.id;
-        this.properties.model = this.question.id;
+        this.properties.model = this.question.id.toString();
         this.properties.label = this.question.title;
         this.properties.required = this.question.required;
         this.properties.help = this.question.help_text;
