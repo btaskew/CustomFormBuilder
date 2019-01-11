@@ -8,16 +8,14 @@ class SelectQuestionsController extends Controller
 {
     /**
      * @param Form $form
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function index(Form $form)
     {
-        $questions = $form->questions()
+        return $form->questions()
             ->select('id', 'title')
             ->whereIn('type', ['checkbox', 'radio', 'dropdown'])
             ->with('options:value,question_id')
             ->get();
-
-        return response()->json(['data' => $questions->toArray()]);
     }
 }

@@ -82,7 +82,7 @@
 
                 </div>
 
-                <div class="col col-md-2">
+                <div class="col">
                     <div class="form-check form-group">
                         <input type="checkbox"
                                id="admin_only"
@@ -123,6 +123,27 @@
                               v-text="form.errors.get('required')"
                         ></span>
                     </div>
+                    <div class="form-check form-group">
+                        <input type="checkbox"
+                               id="visibility-requirement"
+                               name="visibility-requirement"
+                               class="form-check-input"
+                               v-model="hasVisibilityRequirement"
+                               :true-value="true"
+                               :false-value="false"
+                        >
+                        <label for="type" class="form-check-label">
+                            Visibility requirement
+                        </label>
+                    </div>
+
+                    <visibility-requirement-form
+                            v-if="hasVisibilityRequirement"
+                            :form-id="this.formId"
+                            :question.sync="form.required_if.question"
+                            :value.sync="form.required_if.value"
+                    >
+                    </visibility-requirement-form>
                 </div>
 
             </div>
@@ -144,9 +165,10 @@
     import {filter} from 'lodash';
     import Form from '../classes/Form';
     import OptionsForm from "./OptionsForm";
+    import VisibilityRequirementForm from "./VisibilityRequirementForm";
 
     export default {
-        components: {OptionsForm},
+        components: {VisibilityRequirementForm, OptionsForm},
         props: ['formId', 'questionId'],
 
         data() {
@@ -157,12 +179,17 @@
                     help_text: null,
                     required: false,
                     admin_only: false,
-                    options: []
+                    options: [],
+                    required_if: {
+                        question: null,
+                        value: null
+                    }
                 }),
                 loading: false,
                 success: true,
                 error: false,
-                isNewQuestion: true
+                isNewQuestion: true,
+                hasVisibilityRequirement: false
             }
         },
 
