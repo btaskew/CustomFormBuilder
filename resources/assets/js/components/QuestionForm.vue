@@ -129,6 +129,7 @@
                                name="visibility-requirement"
                                class="form-check-input"
                                v-model="hasVisibilityRequirement"
+                               @change="clearVisibilityRequirement"
                                :true-value="true"
                                :false-value="false"
                         >
@@ -298,6 +299,13 @@
                     this.loading = false;
                     flash("Error deleting option. Please try again later", "danger");
                 });
+            },
+
+            clearVisibilityRequirement() {
+                this.form.required_if = {
+                    question: null,
+                    value: null
+                };
             }
         }
     }

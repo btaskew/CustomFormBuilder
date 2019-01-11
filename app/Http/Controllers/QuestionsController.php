@@ -69,7 +69,7 @@ class QuestionsController extends Controller
             $question->addOptions($request->input('options'));
         }
 
-        if ($request->input('required_if')) {
+        if ($request->has('required_if')) {
             $question->setVisibilityRequirement($request->input('required_if'));
         }
     }
@@ -85,6 +85,7 @@ class QuestionsController extends Controller
     {
         $this->authorize('update', $question);
 
+        //TODO wrap these in a transaction, probably in a facade
         $question->update($request->only([
             'title', 'type', 'help_text', 'required', 'admin_only'
         ]));
@@ -95,8 +96,10 @@ class QuestionsController extends Controller
             $question->options->each->delete();
         }
 
-        if ($request->input('required_if')) {
+        if ($request->has('required_if') && !is_null($request->input('required_if')['question'])) {
             $question->updateVisibilityRequirement($request->input('required_if'));
+        } else if ($question->visibilityRequirement()->exists()) {
+            $question->visibilityRequirement->delete();
         }
 
         return $question->fresh();
