@@ -10,13 +10,6 @@
         @endif
     </div>
 
-    <div class="custom-form border border-secondary rounded p-3">
-        <h3>{{ $formView->getName() }}</h3>
-
-        @if (!is_null($description))
-            <p>{{ $description }}</p>
-        @endif
-
-        {!! form($formView) !!}
-    </div>
+    <form-builder :form="{{ json_encode($form->getAttributes()) }}" :questions="{{ json_encode($questions) }}">
+    </form-builder>
 @endsection
