@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Form;
 use App\Question;
 use App\SelectOption;
+use App\VisibilityRequirement;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -28,6 +29,15 @@ class QuestionTest extends TestCase
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
         $this->assertEquals($option->id, $question->options->first()->id);
+    }
+
+    /** @test */
+    public function a_question_can_have_a_visibility_requirement()
+    {
+        $question = create(Question::class);
+        $option = create(VisibilityRequirement::class, ['question_id' => $question->id]);
+
+        $this->assertEquals($option->id, $question->visibilityRequirement->first()->id);
     }
 
     /** @test */
@@ -121,5 +131,20 @@ class QuestionTest extends TestCase
         ]);
 
         $this->assertEquals(0, $newQuestion->fresh()->order);
+    }
+
+    /** @test */
+    public function a_question_can_set_a_visibility_requirement()
+    {
+        $question = create(Question::class);
+        $requiredQuestion = create(Question::class, ['type' => 'radio']);
+        $option = create(SelectOption::class, ['question_id' => $requiredQuestion->id]);
+
+        $question->setVisibilityRequirement([
+            'question' => $requiredQuestion->id,
+            'value' => $option->value
+        ]);
+
+        $this->assertDatabaseHas('visibility_requirements', ['question_id' => $question->id]);
     }
 }

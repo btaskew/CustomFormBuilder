@@ -2,9 +2,11 @@
 
 namespace App;
 
+use App\Specifications\CanSetVisibilityRequirement;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Question extends Model
 {
@@ -64,6 +66,14 @@ class Question extends Model
     }
 
     /**
+     * @return HasOne
+     */
+    public function visibilityRequirement(): HasOne
+    {
+        return $this->hasOne(VisibilityRequirement::class);
+    }
+
+    /**
      * @return bool
      */
     public function isSelectQuestion(): bool
@@ -76,6 +86,7 @@ class Question extends Model
      */
     public function addOptions(array $options = []): void
     {
+        //TODO replace with below method??
         foreach ($options as $option) {
             $this->options()->create([
                 'value' => $option['value'],
@@ -95,6 +106,20 @@ class Question extends Model
             ], [
                 'value' => $option['value'],
                 'display_value' => $option['display_value'],
+            ]);
+        }
+    }
+
+    /**
+     * @param array $requirement
+     */
+    public function setVisibilityRequirement(array $requirement): void
+    {
+        if (CanSetVisibilityRequirement::isSatisfiedBy($requirement)) {
+            $this->visibilityRequirement()->create([
+                'question_id' => $this->id,
+                'required_question_id' => $requirement['question'],
+                'required_value' => $requirement['value']
             ]);
         }
     }

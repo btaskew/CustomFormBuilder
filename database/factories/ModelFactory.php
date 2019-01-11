@@ -58,3 +58,15 @@ $factory->define(App\SelectOption::class, function (Faker $faker) {
         'display_value' => $faker->word
     ];
 });
+
+$factory->define(App\VisibilityRequirement::class, function (Faker $faker) {
+    return [
+        'question_id' => function () {
+            return factory(\App\Question::class)->create()->id;
+        },
+        'required_question_id' => function () {
+            return factory(\App\Question::class)->create()->id;
+        },
+        'required_value' => $faker->word,
+    ];
+});

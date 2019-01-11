@@ -62,6 +62,32 @@ class CreateQuestionTest extends TestCase
         $this->assertDatabaseHas('questions', ['title' => 'First question']);
         $this->assertDatabaseHas('select_options', ['value' => 'a', 'display_value' => 'Value a']);
     }
+    
+    /** @test */
+    public function a_user_can_create_a_question_with_a_visibility_requirement()
+    {
+        $form = $this->loginUserWithForm();
+        $question = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
+        $option = create(SelectOption::class, ['question_id' => $question->id]);
+
+        $attributes = [
+            'title' => 'First question',
+            'type' => 'text',
+            'help_text' => 'Help text',
+            'required' => true,
+            'admin_only' => false,
+            'required_if' => [
+                'question' => $question->id,
+                'value' => $option->value
+            ]
+        ];
+
+        $this->post('/forms/' . $form->id . '/questions', $attributes)
+            ->assertStatus(200);
+
+        $this->assertDatabaseHas('questions', ['title' => 'First question']);
+        $this->assertDatabaseHas('visibility_requirements', ['required_value' => $option->value]);
+    }
 
     /** @test */
     public function a_user_cant_create_questions_to_another_users_form()

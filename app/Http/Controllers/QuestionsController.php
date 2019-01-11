@@ -60,12 +60,17 @@ class QuestionsController extends Controller
     {
         $this->authorize('update', $form);
 
+        //TODO wrap these in a transaction, probably in a facade
         $question = $form->questions()->create($request->only([
             'title', 'type', 'help_text', 'required', 'admin_only'
         ]));
 
         if ($question->isSelectQuestion()) {
             $question->addOptions($request->input('options'));
+        }
+
+        if ($request->input('required_if')) {
+            $question->setVisibilityRequirement($request->input('required_if'));
         }
     }
 
