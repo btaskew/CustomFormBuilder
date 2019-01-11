@@ -1,8 +1,8 @@
 <template>
-    <div class="card edit-question" :class="{'mb-2 mt-2 border-secondary': isOpen}">
+    <div class="card" :class="{'mb-2 mt-2 border-secondary': isOpen}">
         <div class="card-header d-flex justify-content-between" :class="{'bg-secondary text-white': isOpen}">
             {{ title }}
-            <div class="d-flex">
+            <div class="d-flex control-buttons">
                 <i class="fas fa-trash-alt mr-3" :class="{'text-danger': !isOpen}" @click="showConfirmModal = true"></i>
                 <i class="fas fa-cog fa-lg" @click="toggleForm"></i>
             </div>
@@ -89,7 +89,11 @@
 </script>
 
 <style>
-    .edit-question {
+    .card-header {
         cursor: move;
+    }
+
+    .control-buttons {
+        cursor: pointer;
     }
 </style>
