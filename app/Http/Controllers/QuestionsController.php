@@ -95,6 +95,10 @@ class QuestionsController extends Controller
             $question->options->each->delete();
         }
 
+        if ($request->input('required_if')) {
+            $question->updateVisibilityRequirement($request->input('required_if'));
+        }
+
         return $question->fresh();
     }
 

@@ -29,7 +29,7 @@ class Question extends Model
      *
      * @var array
      */
-    protected $with = ['options'];
+    protected $with = ['options', 'visibilityRequirement'];
 
     /**
      * Boot the model
@@ -115,9 +115,23 @@ class Question extends Model
      */
     public function setVisibilityRequirement(array $requirement): void
     {
+        //TODO merge into below with createOrUpdate
         if (CanSetVisibilityRequirement::isSatisfiedBy($requirement)) {
             $this->visibilityRequirement()->create([
                 'question_id' => $this->id,
+                'required_question_id' => $requirement['question'],
+                'required_value' => $requirement['value']
+            ]);
+        }
+    }
+
+    /**
+     * @param array $requirement
+     */
+    public function updateVisibilityRequirement(array $requirement): void
+    {
+        if (CanSetVisibilityRequirement::isSatisfiedBy($requirement)) {
+            $this->visibilityRequirement()->update([
                 'required_question_id' => $requirement['question'],
                 'required_value' => $requirement['value']
             ]);

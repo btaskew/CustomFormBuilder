@@ -9,7 +9,7 @@
                 <label for="question">
                     Question
                 </label>
-                <select class="form-control" type="text" @change="updateQuestion" id="question" name="question" required>
+                <select class="form-control" type="text" v-model="selectedQuestion" @change="updateQuestion" id="question" name="question" required>
                     <option v-for="question in questions" :value="question.id">{{ question.title }}</option>
                 </select>
             </div>
@@ -36,6 +36,7 @@
                 loading: true,
                 questions: [],
                 error: false,
+                selectedQuestion: null,
                 selectedValue: null
             }
         },
@@ -58,6 +59,12 @@
                     const questions = [{id:null}];
                     this.questions = questions.concat(response.data);
                     this.loading = false;
+
+                    if (this.question && this.value) {
+                        this.selectedQuestion = this.question;
+                        this.selectedValue = this.value;
+                    }
+
                 }).catch(error => {
                 this.loading = false;
                 this.error = true;

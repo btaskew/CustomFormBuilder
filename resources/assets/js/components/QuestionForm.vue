@@ -223,8 +223,20 @@
                     help_text: question.help_text,
                     required: question.required,
                     admin_only: question.admin_only,
-                    options: question.options
+                    options: question.options,
+                    required_if: {
+                        question: null,
+                        value: null
+                    }
                 });
+
+                if (question.visibility_requirement) {
+                    this.form.required_if = {
+                        question: question.visibility_requirement.required_question_id,
+                        value: question.visibility_requirement.required_value,
+                    };
+                    this.hasVisibilityRequirement = true;
+                }
             },
 
             onSubmit() {

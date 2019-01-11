@@ -12,6 +12,7 @@ class CanSetVisibilityRequirement
      */
     public static function isSatisfiedBy(array $requirement): bool
     {
+        //TODO check if question belongs to same form
         if (!static::requiredQuestionExists($requirement['question'])) {
             throw new \InvalidArgumentException("Required question does not exist");
         }
