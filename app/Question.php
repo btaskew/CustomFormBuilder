@@ -84,25 +84,11 @@ class Question extends Model
     /**
      * @param array $options
      */
-    public function addOptions(array $options = []): void
-    {
-        //TODO replace with below method??
-        foreach ($options as $option) {
-            $this->options()->create([
-                'value' => $option['value'],
-                'display_value' => $option['display_value'],
-            ]);
-        }
-    }
-
-    /**
-     * @param array $options
-     */
-    public function updateOptions(array $options = []): void
+    public function setOptions(array $options = []): void
     {
         foreach ($options as $option) {
             $this->options()->updateOrCreate([
-                'id' => $option['id']
+                'id' => (isset($option['id']) ? $option['id'] : null)
             ], [
                 'value' => $option['value'],
                 'display_value' => $option['display_value'],
@@ -114,21 +100,6 @@ class Question extends Model
      * @param array $requirement
      */
     public function setVisibilityRequirement(array $requirement): void
-    {
-        //TODO merge into below with createOrUpdate
-        if (CanSetVisibilityRequirement::isSatisfiedBy($requirement)) {
-            $this->visibilityRequirement()->create([
-                'question_id' => $this->id,
-                'required_question_id' => $requirement['question'],
-                'required_value' => $requirement['value']
-            ]);
-        }
-    }
-
-    /**
-     * @param array $requirement
-     */
-    public function updateVisibilityRequirement(array $requirement): void
     {
         if (CanSetVisibilityRequirement::isSatisfiedBy($requirement)) {
             $this->visibilityRequirement()->updateOrCreate([

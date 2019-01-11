@@ -66,7 +66,7 @@ class QuestionsController extends Controller
         ]));
 
         if ($question->isSelectQuestion()) {
-            $question->addOptions($request->input('options'));
+            $question->setOptions($request->input('options'));
         }
 
         if ($request->has('required_if')) {
@@ -91,13 +91,13 @@ class QuestionsController extends Controller
         ]));
 
         if ($question->isSelectQuestion()) {
-            $question->updateOptions($request->input('options'));
+            $question->setOptions($request->input('options'));
         } else {
             $question->options->each->delete();
         }
 
         if ($request->has('required_if') && !is_null($request->input('required_if')['question'])) {
-            $question->updateVisibilityRequirement($request->input('required_if'));
+            $question->setVisibilityRequirement($request->input('required_if'));
         } else if ($question->visibilityRequirement()->exists()) {
             $question->visibilityRequirement->delete();
         }
