@@ -2,12 +2,10 @@
 
 namespace App;
 
-use App\Mappers\FormMapper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Kris\LaravelFormBuilder\Facades\FormBuilder;
 
 class Form extends Model
 {
@@ -69,23 +67,5 @@ class Form extends Model
     {
         $currentDate = new Carbon();
         return $this->active && $currentDate->between((new Carbon($this->open_date)), (new Carbon($this->close_date)));
-    }
-
-    /**
-     * @return \Kris\LaravelFormBuilder\Form
-     */
-    public function build(): \Kris\LaravelFormBuilder\Form
-    {
-        $formView = FormBuilder::plain(['name' => $this->title]);
-        return (new FormMapper($formView))->mapQuestions($this->questions()->orderBy('order')->get());
-    }
-
-    /**
-     * @return \Kris\LaravelFormBuilder\Form
-     */
-    public function buildPreview(): \Kris\LaravelFormBuilder\Form
-    {
-        $formView = FormBuilder::plain(['name' => $this->title]);
-        return (new FormMapper($formView))->mapQuestions($this->questions()->orderBy('order')->get());
     }
 }
