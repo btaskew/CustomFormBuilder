@@ -45,7 +45,6 @@
                             <option value="text">Text</option>
                             <option value="email">Email</option>
                             <option value="password">Password</option>
-                            <option value="hidden">Hidden</option>
                             <option value="textarea">Text area</option>
                             <option value="number">Number</option>
                             <option value="file">File upload</option>
