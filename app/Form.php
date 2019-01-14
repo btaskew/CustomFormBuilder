@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 class Form extends Model
 {
@@ -58,6 +59,14 @@ class Form extends Model
     public function questions(): HasMany
     {
         return $this->hasMany(Question::class);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getOrderedQuestions(): Collection
+    {
+        return $this->questions()->orderBy('order')->get();
     }
 
     /**

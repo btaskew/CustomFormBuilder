@@ -16,7 +16,7 @@ class FormPreviewController extends Controller
     {
         return view('form.preview', [
             'form' => $form,
-            'questions' => $form->questions->toArray(),
+            'questions' => $form->getOrderedQuestions(),
             'description' => $form->description
         ]);
     }

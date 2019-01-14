@@ -81,4 +81,14 @@ class FormTest extends TestCase
 
         $this->assertFalse($form->isActive());
     }
+
+    /** @test */
+    public function a_form_can_get_its_questions_in_order()
+    {
+        $question2 = create(Question::class, ['order' => 2, 'form_id' => $this->form->id]);
+        $question1 = create(Question::class, ['order' => 1, 'form_id' => $this->form->id]);
+
+        $this->assertEquals($question1->id, $this->form->getOrderedQuestions()->first()->id);
+        $this->assertEquals($question2->id, $this->form->getOrderedQuestions()[1]->id);
+    }
 }
