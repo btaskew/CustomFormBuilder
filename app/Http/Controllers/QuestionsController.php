@@ -69,7 +69,7 @@ class QuestionsController extends Controller
             $question->setOptions($request->input('options'));
         }
 
-        if ($request->has('required_if')) {
+        if ($request->has('required_if') && !is_null($request->input('required_if')['question'])) {
             $question->setVisibilityRequirement($request->input('required_if'));
         }
     }
