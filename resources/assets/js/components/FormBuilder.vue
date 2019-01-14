@@ -1,5 +1,9 @@
 <template>
-    <vue-form-generator :schema="schema" :model="model"></vue-form-generator>
+    <div v-if="isSubmitted" class="alert alert-success animated mt" role="alert">
+        <h4>Form submitted</h4>
+    </div>
+
+    <vue-form-generator v-else :schema="schema" :model="model"></vue-form-generator>
 </template>
 
 <script>
@@ -7,7 +11,7 @@
     import FormBuilder from './../classes/FormBuilder';
 
     export default {
-        props: ["form", "questions"],
+        props: ["form", "questions", "isPreview"],
 
         data() {
             return {
@@ -15,7 +19,9 @@
 
                 schema: {
                     fields: []
-                }
+                },
+
+                isSubmitted: false
             }
         },
 
@@ -27,6 +33,10 @@
 
         methods: {
             submitForm() {
+                if (this.isPreview) {
+                    return (this.isSubmitted = true);
+                }
+                
                 const formData = new FormData();
 
                 for (const field in this.model) {
@@ -35,7 +45,7 @@
 
                 axios.post(`/forms/${this.form.id}/responses`, formData)
                     .then(response => {
-                        // alert("submitted");
+                        this.isSubmitted = true;
                     }).catch(error => {
                     // alert("error");
                 });

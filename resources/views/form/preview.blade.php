@@ -10,6 +10,10 @@
         @endif
     </div>
 
-    <form-builder :form="{{ json_encode($form->getAttributes()) }}" :questions="{{ json_encode($questions) }}">
+    <form-builder
+            :form="{{ json_encode($form->getAttributes()) }}"
+            :questions="{{ json_encode($questions) }}"
+            :is-preview="true"
+    >
     </form-builder>
 @endsection
