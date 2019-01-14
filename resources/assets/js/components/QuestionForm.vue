@@ -243,6 +243,10 @@
             onSubmit() {
                 this.loading = true;
 
+                if (!this.isSelectQuestion) {
+                    this.form.options = [];
+                }
+
                 if (this.isNewQuestion) {
                     return (this.submitNewQuestion());
                 }

@@ -77,7 +77,7 @@ class QuestionsController extends Controller
 
         QuestionFacade::updateQuestion($question, $request);
 
-        return $question->fresh();
+        return $question->fresh()->load(['options', 'visibilityRequirement']);
     }
 
     /**
