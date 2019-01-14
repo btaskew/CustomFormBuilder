@@ -19,8 +19,6 @@ class FormBuilder
             fields.push(this.buildField(questions[i]));
         }
 
-        fields.push({type:"submit"});
-
         return fields;
     }
 

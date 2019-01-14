@@ -19,6 +19,8 @@ Auth::routes();
 
 Route::resource('forms', 'FormController');
 
+Route::post('forms/{form}/responses', 'FormResponseController@store');
+
 Route::group(['middleware' => 'auth', 'prefix' => 'forms/{form}'], function () {
 
     Route::get('preview', 'FormPreviewController@show');
