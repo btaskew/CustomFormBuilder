@@ -66,7 +66,10 @@ class Form extends Model
      */
     public function getOrderedQuestions(): Collection
     {
-        return $this->questions()->orderBy('order')->get();
+        return $this->questions()
+            ->orderBy('order')
+            ->with(['options', 'visibilityRequirement'])
+            ->get();
     }
 
     /**

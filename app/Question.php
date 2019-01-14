@@ -25,13 +25,6 @@ class Question extends Model
     ];
 
     /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = ['options', 'visibilityRequirement'];
-
-    /**
      * Boot the model
      */
     protected static function boot()

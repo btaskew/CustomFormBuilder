@@ -23,16 +23,14 @@ class ViewFormTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_a_forms_questions_and_options()
+    public function a_user_can_view_a_forms_questions()
     {
         $form = $this->loginUserWithForm();
         $question = create(Question::class, ['form_id' => $form->id]);
-        $option = create(SelectOption::class, ['question_id' => $question->id]);
 
         $this->json('get', '/forms/' . $form->id . '/questions')
             ->assertStatus(200)
-            ->assertSee($question->title)
-            ->assertSee($option->value);
+            ->assertSee($question->title);
     }
 
     /** @test */

@@ -40,7 +40,7 @@ class QuestionsController extends Controller
     {
         $this->authorize('update', $form);
 
-        return $question;
+        return $question->load(['options', 'visibilityRequirement']);
     }
 
     /**
