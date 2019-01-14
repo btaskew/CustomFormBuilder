@@ -127,4 +127,24 @@ class UpdateFormTest extends TestCase
         $this->assertEquals(2, $question1->fresh()->order);
         $this->assertEquals(1, $question2->fresh()->order);
     }
+
+    /** @test */
+    public function a_user_cant_update_the_order_of_another_users_form()
+    {
+        $this->withExceptionHandling();
+
+        $form = create(Form::class, ['user_id' => 9999]);
+        $question1 = create(Question::class, ['form_id' => $form->id, 'order' => 1]);
+        $question2 = create(Question::class, ['form_id' => $form->id, 'order' => 2]);
+
+        $this->login()->patch('/forms/' . $form->id . '/order', [
+            'order' => [
+                ['question' => $question1->id, 'order' => 2],
+                ['question' => $question2->id, 'order' => 1],
+            ]
+        ])->assertStatus(403);
+
+        $this->assertEquals(1, $question1->fresh()->order);
+        $this->assertEquals(2, $question2->fresh()->order);
+    }
 }
