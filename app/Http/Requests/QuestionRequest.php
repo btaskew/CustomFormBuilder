@@ -52,6 +52,14 @@ class QuestionRequest extends FormRequest
     }
 
     /**
+     * @return bool
+     */
+    public function hasVisibilityRequirement(): bool
+    {
+        return $this->has('required_if') && !is_null($this->input('required_if')['question']);
+    }
+
+    /**
      * @param Collection $options
      * @return \Closure
      */

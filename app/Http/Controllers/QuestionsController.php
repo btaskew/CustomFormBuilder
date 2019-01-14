@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\QuestionFacade;
 use App\Form;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
@@ -60,18 +61,7 @@ class QuestionsController extends Controller
     {
         $this->authorize('update', $form);
 
-        //TODO wrap these in a transaction, probably in a facade
-        $question = $form->questions()->create($request->only([
-            'title', 'type', 'help_text', 'required', 'admin_only'
-        ]));
-
-        if ($question->isSelectQuestion()) {
-            $question->setOptions($request->input('options'));
-        }
-
-        if ($request->has('required_if') && !is_null($request->input('required_if')['question'])) {
-            $question->setVisibilityRequirement($request->input('required_if'));
-        }
+        QuestionFacade::createQuestion($form, $request);
     }
 
     /**
@@ -85,20 +75,7 @@ class QuestionsController extends Controller
     {
         $this->authorize('update', $question);
 
-        //TODO wrap these in a transaction, probably in a facade
-        $question->update($request->only([
-            'title', 'type', 'help_text', 'required', 'admin_only'
-        ]));
-
-        if ($question->isSelectQuestion()) {
-            $question->setOptions($request->input('options'));
-        }
-
-        if ($request->has('required_if') && !is_null($request->input('required_if')['question'])) {
-            $question->setVisibilityRequirement($request->input('required_if'));
-        } else if ($question->visibilityRequirement()->exists()) {
-            $question->visibilityRequirement->delete();
-        }
+        QuestionFacade::updateQuestion($question, $request);
 
         return $question->fresh();
     }
