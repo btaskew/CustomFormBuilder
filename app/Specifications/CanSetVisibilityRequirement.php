@@ -8,13 +8,17 @@ class CanSetVisibilityRequirement
 {
     /**
      * @param array $requirement
+     * @param int   $formId
      * @return bool
      */
-    public static function isSatisfiedBy(array $requirement): bool
+    public static function isSatisfiedBy(array $requirement, int $formId): bool
     {
-        //TODO check if question belongs to same form
         if (!static::requiredQuestionExists($requirement['question'])) {
             throw new \InvalidArgumentException("Required question does not exist");
+        }
+
+        if (!static::requiredQuestionOnSameForm($requirement['question'], $formId)) {
+            throw new \InvalidArgumentException("Required question is on a different form");
         }
 
         if (!static::requiredValueExists($requirement['question'], $requirement['value'])) {
@@ -31,6 +35,15 @@ class CanSetVisibilityRequirement
     private static function requiredQuestionExists(int $questionId): bool
     {
         return Question::where('id', $questionId)->exists();
+    }
+
+    /**
+     * @param int $questionId
+     * @return bool
+     */
+    private static function requiredQuestionOnSameForm(int $questionId, int $formId): bool
+    {
+        return Question::find($questionId)->form_id == $formId;
     }
 
     /**

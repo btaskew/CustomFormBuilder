@@ -121,7 +121,7 @@ class Question extends Model
      */
     public function setVisibilityRequirement(array $requirement): void
     {
-        if (CanSetVisibilityRequirement::isSatisfiedBy($requirement)) {
+        if (CanSetVisibilityRequirement::isSatisfiedBy($requirement, $this->form_id)) {
             $this->visibilityRequirement()->updateOrCreate([
                 'question_id' => $this->id
             ], [

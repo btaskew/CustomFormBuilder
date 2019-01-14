@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Form;
 use App\Question;
 use App\Specifications\CanSetVisibilityRequirement;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,7 +21,22 @@ class CanSetVisibilityRequirementTest extends TestCase
         CanSetVisibilityRequirement::isSatisfiedBy([
             'question' => 999,
             'value' => 'value'
-        ]);
+        ], 1);
+    }
+
+    /** @test */
+    public function throws_exception_if_required_question_belongs_to_different_form()
+    {
+        $form = create(Form::class);
+        $requiredQuestion = create(Question::class, ['type' => 'radio', 'form_id' => 9999]);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Required question is on a different form");
+
+        CanSetVisibilityRequirement::isSatisfiedBy([
+            'question' => $requiredQuestion->id,
+            'value' => 'value'
+        ], $form->id);
     }
 
     /** @test */
@@ -34,6 +50,6 @@ class CanSetVisibilityRequirementTest extends TestCase
         CanSetVisibilityRequirement::isSatisfiedBy([
             'question' => $requiredQuestion->id,
             'value' => 'value'
-        ]);
+        ], $requiredQuestion->form_id);
     }
 }

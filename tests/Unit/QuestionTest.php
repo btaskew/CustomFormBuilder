@@ -124,8 +124,8 @@ class QuestionTest extends TestCase
     /** @test */
     public function a_question_can_set_a_visibility_requirement()
     {
-        $question = create(Question::class);
-        $requiredQuestion = create(Question::class, ['type' => 'radio']);
+        $question = create(Question::class, ['form_id' => 1]);
+        $requiredQuestion = create(Question::class, ['type' => 'radio', 'form_id' => 1]);
         $option = create(SelectOption::class, ['question_id' => $requiredQuestion->id]);
 
         $question->setVisibilityRequirement([
