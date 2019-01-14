@@ -46,6 +46,9 @@ class Question extends Model
         static::deleting(function ($question) {
             /** @var Question $question */
             $question->options->each->delete();
+            if ($question->visibilityRequirement()->exists()) {
+                $question->visibilityRequirement->delete();
+            }
         });
     }
 

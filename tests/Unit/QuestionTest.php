@@ -137,4 +137,15 @@ class QuestionTest extends TestCase
 
         $this->assertDatabaseHas('visibility_requirements', ['question_id' => $question->id]);
     }
+
+    /** @test */
+    public function a_questions_visibility_requirement_is_deleted_when_the_question_is_deleted()
+    {
+        $question = create(Question::class);
+        $requirement = create(VisibilityRequirement::class, ['question_id' => $question->id]);
+
+        $question->delete();
+
+        $this->assertDatabaseMissing('visibility_requirements', ['id' => $requirement->id]);
+    }
 }
