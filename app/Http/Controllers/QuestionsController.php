@@ -92,8 +92,6 @@ class QuestionsController extends Controller
 
         if ($question->isSelectQuestion()) {
             $question->setOptions($request->input('options'));
-        } else {
-            $question->options->each->delete();
         }
 
         if ($request->has('required_if') && !is_null($request->input('required_if')['question'])) {

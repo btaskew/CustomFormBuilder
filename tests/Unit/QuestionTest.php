@@ -37,7 +37,16 @@ class QuestionTest extends TestCase
         $question = create(Question::class);
         $option = create(VisibilityRequirement::class, ['question_id' => $question->id]);
 
-        $this->assertEquals($option->id, $question->visibilityRequirement->first()->id);
+        $this->assertEquals($option->id, $question->visibilityRequirement->id);
+    }
+
+    /** @test */
+    public function a_question_can_have_visibility_requirement_dependants()
+    {
+        $question = create(Question::class);
+        $option = create(VisibilityRequirement::class, ['required_question_id' => $question->id]);
+
+        $this->assertEquals($option->id, $question->visibilityRequirementDependants->first()->id);
     }
 
     /** @test */
@@ -87,17 +96,6 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function a_questions_select_options_are_deleted_when_the_question_is_deleted()
-    {
-        $question = create(Question::class);
-        $option = create(SelectOption::class, ['question_id' => $question->id]);
-
-        $question->delete();
-
-        $this->assertDatabaseMissing('select_options', ['id' => $option->id]);
-    }
-
-    /** @test */
     public function the_order_value_is_calculated_when_the_model_is_created()
     {
         $form = create(Form::class);
@@ -136,16 +134,5 @@ class QuestionTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('visibility_requirements', ['question_id' => $question->id]);
-    }
-
-    /** @test */
-    public function a_questions_visibility_requirement_is_deleted_when_the_question_is_deleted()
-    {
-        $question = create(Question::class);
-        $requirement = create(VisibilityRequirement::class, ['question_id' => $question->id]);
-
-        $question->delete();
-
-        $this->assertDatabaseMissing('visibility_requirements', ['id' => $requirement->id]);
     }
 }

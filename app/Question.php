@@ -39,13 +39,20 @@ class Question extends Model
         parent::boot();
 
         static::creating(function ($question) {
-            /** @var Question $question */
             $question->setOrder();
         });
 
+        static::updated(function ($question) {
+            if (!$question->isSelectQuestion()) {
+                $question->options->each->delete();
+                $question->visibilityRequirementDependants->each->delete();
+            }
+        });
+
         static::deleting(function ($question) {
-            /** @var Question $question */
             $question->options->each->delete();
+            $question->visibilityRequirementDependants->each->delete();
+
             if ($question->visibilityRequirement()->exists()) {
                 $question->visibilityRequirement->delete();
             }
@@ -74,6 +81,16 @@ class Question extends Model
     public function visibilityRequirement(): HasOne
     {
         return $this->hasOne(VisibilityRequirement::class);
+    }
+
+    /**
+     * Other questions which visibility depends on this
+     *
+     * @return HasMany
+     */
+    public function visibilityRequirementDependants(): HasMany
+    {
+        return $this->hasMany(VisibilityRequirement::class, 'required_question_id');
     }
 
     /**
