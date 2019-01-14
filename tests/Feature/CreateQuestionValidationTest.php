@@ -86,4 +86,18 @@ class CreateQuestionValidationTest extends TestCase
             ->assertStatus(422)
             ->assertSee('options');
     }
+
+
+    /** @test */
+    public function a_user_cant_add_multiple_options_with_the_same_value()
+    {
+        $this->json('post', $this->uri, [
+            'title' => 'Title', 'type' => 'checkbox', 'options' => [
+                ['id' => null, 'value' => 'value', 'display_value' => 'New value'],
+                ['id' => null, 'value' => 'value', 'display_value' => 'Other new value'],
+            ]
+        ])
+            ->assertStatus(422)
+            ->assertSee('options');
+    }
 }

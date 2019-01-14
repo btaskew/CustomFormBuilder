@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
 
 class QuestionRequest extends FormRequest
 {
@@ -33,13 +35,32 @@ class QuestionRequest extends FormRequest
         ];
 
         if ($this->has('options')) {
+            $options = collect($this->input('options'));
+
             foreach ($this->get('options') as $key => $option) {
-                $rules['options.' . $key . '.value'] = 'required|string';
-                $rules['options.' . $key . '.display_value'] = 'required|string';
                 $rules['options.' . $key . '.id'] = 'nullable';
+                $rules['options.' . $key . '.display_value'] = 'required|string';
+                $rules['options.' . $key . '.value'] = [
+                    'required',
+                    'string',
+                    $this->hasUniqueValues($options)
+                ];
             }
         }
 
         return $rules;
+    }
+
+    /**
+     * @param Collection $options
+     * @return \Closure
+     */
+    private function hasUniqueValues(Collection $options): \Closure
+    {
+        return function ($attribute, $value, $fail) use ($options) {
+            if ($options->where('value', $value)->count() > 1) {
+                $fail($attribute . ' must have a unique value');
+            }
+        };
     }
 }

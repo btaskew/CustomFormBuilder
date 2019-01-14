@@ -6,7 +6,7 @@
                     Value
                 </label>
                 <input class="form-control" type="text" :value="value" @change="updateValue" id="value" name="value" required>
-                <span class="text-danger" v-if="hasValueError">Value field required</span>
+                <span class="text-danger" v-if="hasValueError">Value field required and must be unique</span>
             </div>
             <div class="col">
                 <label for="display_value" class="col-form-label" :class="{ 'has-error': hasDisplayValueError }">
