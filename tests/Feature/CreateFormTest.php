@@ -30,8 +30,10 @@ class CreateFormTest extends TestCase
     {
         $attributes = [
             'title' => 'Form Title',
+            'description' => 'Form description',
             'open_date' => '1990-01-01',
             'close_date' => '1990-01-02',
+            'active' => true
         ];
 
         $this->login()

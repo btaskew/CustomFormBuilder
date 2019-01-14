@@ -50,8 +50,10 @@ class FormController extends Controller
 
         return Form::create([
             'title' => $request->input('title'),
+            'description' => $request->input('description'),
             'open_date' => $request->input('open_date'),
             'close_date' => $request->input('close_date'),
+            'active' => $request->input('active'),
             'user_id' => auth()->user()->id
         ]);
     }
