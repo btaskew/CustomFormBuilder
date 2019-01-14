@@ -19,17 +19,16 @@ Auth::routes();
 
 Route::resource('forms', 'FormController');
 
-//TODO add route prefix to group
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth', 'prefix' => 'forms/{form}'], function () {
 
-    Route::get('forms/{form}/preview', 'FormPreviewController@show');
+    Route::get('preview', 'FormPreviewController@show');
 
-    Route::patch('forms/{form}/order', 'FormOrderController@update');
+    Route::patch('order', 'FormOrderController@update');
 
-    Route::get('forms/{form}/select-questions', 'SelectQuestionsController@index');
+    Route::get('select-questions', 'SelectQuestionsController@index');
 
-    Route::resource('forms/{form}/questions', 'QuestionsController');
+    Route::resource('questions', 'QuestionsController');
 
-    Route::delete('forms/{form}/questions/{question}/options/{option}', 'SelectOptionsController@destroy');
+    Route::delete('questions/{question}/options/{option}', 'SelectOptionsController@destroy');
 
 });
