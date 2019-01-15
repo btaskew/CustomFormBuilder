@@ -1,10 +1,10 @@
 <template>
     <div v-if="isSubmitted" class="alert alert-success animated mt" role="alert">
-        <h4>Form submitted</h4>
+        Form submitted
     </div>
 
     <div v-else-if="error" class="alert danger animated mt" role="alert">
-        <h4>Error submitting form. Please try again later</h4>
+        Error submitting form. Please try again later
     </div>
 
     <vue-form-generator v-else :schema="schema" :model="model" id="custom-form"></vue-form-generator>
