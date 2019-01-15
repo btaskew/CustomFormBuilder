@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Form;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

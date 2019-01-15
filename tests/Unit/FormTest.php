@@ -61,7 +61,7 @@ class FormTest extends TestCase
     /** @test */
     public function a_form_is_inactive_if_current_date_before_open_date()
     {
-        $form = create(Form::class, ['open_date' => '01-01-2990', 'close_date' => '02-01-2990', 'active' => true]);
+        $form = make(Form::class, ['open_date' => '01-01-2990', 'close_date' => '02-01-2990', 'active' => true]);
 
         $this->assertFalse($form->isActive());
     }
@@ -69,7 +69,7 @@ class FormTest extends TestCase
     /** @test */
     public function a_form_is_inactive_if_current_date_after_close_date()
     {
-        $form = create(Form::class, ['open_date' => '01-01-1990', 'close_date' => '02-01-1990', 'active' => true]);
+        $form = make(Form::class, ['open_date' => '01-01-1990', 'close_date' => '02-01-1990', 'active' => true]);
 
         $this->assertFalse($form->isActive());
     }
@@ -77,7 +77,7 @@ class FormTest extends TestCase
     /** @test */
     public function a_form_is_active_if_current_date_between_open_and_close_dates()
     {
-        $form = create(Form::class, ['open_date' => '01-01-1990', 'close_date' => '01-01-2990', 'active' => true]);
+        $form = make(Form::class, ['open_date' => '01-01-1990', 'close_date' => '01-01-2990', 'active' => true]);
 
         $this->assertTrue($form->isActive());
     }
@@ -86,7 +86,7 @@ class FormTest extends TestCase
     public function a_form_is_inactive_if_active_is_false()
     {
         //Even if dates are within range
-        $form = create(Form::class, ['open_date' => '01-01-1990', 'close_date' => '01-01-2990', 'active' => false]);
+        $form = make(Form::class, ['open_date' => '01-01-1990', 'close_date' => '01-01-2990', 'active' => false]);
 
         $this->assertFalse($form->isActive());
     }
@@ -104,7 +104,7 @@ class FormTest extends TestCase
     /** @test */
     public function a_forms_description_is_sanitized_when_fetched()
     {
-        $form = create(Form::class, ['description' => '<script>alert("Bad code")</script><h1>Good code</h1>']);
+        $form = make(Form::class, ['description' => '<script>alert("Bad code")</script><h1>Good code</h1>']);
 
         $this->assertEquals('<h1>Good code</h1>', $form->description);
     }

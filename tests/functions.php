@@ -15,6 +15,17 @@ function create(string $class, array $attributes = [], int $count = null)
  * @param string $class
  * @param array  $attributes
  * @param int    $count
+ * @return Illuminate\Database\Eloquent\Model
+ */
+function make(string $class, array $attributes = [], int $count = null)
+{
+    return factory($class, $count)->make($attributes);
+}
+
+/**
+ * @param string $class
+ * @param array  $attributes
+ * @param int    $count
  * @return array
  */
 function raw(string $class, array $attributes = [], int $count = null)

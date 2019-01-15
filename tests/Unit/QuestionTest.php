@@ -52,11 +52,11 @@ class QuestionTest extends TestCase
     /** @test */
     public function a_question_knows_if_it_has_options()
     {
-        $this->assertTrue((create(Question::class, ['type' => 'checkbox']))->isSelectQuestion());
-        $this->assertTrue((create(Question::class, ['type' => 'radio']))->isSelectQuestion());
-        $this->assertTrue((create(Question::class, ['type' => 'dropdown']))->isSelectQuestion());
+        $this->assertTrue((make(Question::class, ['type' => 'checkbox']))->isSelectQuestion());
+        $this->assertTrue((make(Question::class, ['type' => 'radio']))->isSelectQuestion());
+        $this->assertTrue((make(Question::class, ['type' => 'dropdown']))->isSelectQuestion());
 
-        $this->assertFalse((create(Question::class, ['type' => 'text']))->isSelectQuestion());
+        $this->assertFalse((make(Question::class, ['type' => 'text']))->isSelectQuestion());
     }
 
     /** @test */
