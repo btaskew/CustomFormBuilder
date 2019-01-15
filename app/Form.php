@@ -46,6 +46,15 @@ class Form extends Model
     }
 
     /**
+     * @param  string $description
+     * @return string
+     */
+    public function getDescriptionAttribute($description)
+    {
+        return \Purify::clean($description);
+    }
+
+    /**
      * @return BelongsTo
      */
     public function owner(): BelongsTo

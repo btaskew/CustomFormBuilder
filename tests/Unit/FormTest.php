@@ -100,4 +100,12 @@ class FormTest extends TestCase
         $this->assertEquals($question1->id, $this->form->getOrderedQuestions()->first()->id);
         $this->assertEquals($question2->id, $this->form->getOrderedQuestions()[1]->id);
     }
+
+    /** @test */
+    public function a_forms_description_is_sanitized_when_fetched()
+    {
+        $form = create(Form::class, ['description' => '<script>alert("Bad code")</script><h1>Good code</h1>']);
+
+        $this->assertEquals('<h1>Good code</h1>', $form->description);
+    }
 }
