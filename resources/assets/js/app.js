@@ -20,6 +20,9 @@ Vue.component('question-list', require('./components/QuestionList'));
 Vue.component('question-form', require('./components/QuestionForm'));
 Vue.component('form-list', require('./components/FormList'));
 Vue.component('form-builder', require('./components/FormBuilder'));
+Vue.component('rich-text-editor', require('./components/RichTextEditor'));
+
+Vue.config.ignoredElements = ['trix-editor']
 
 import VueFormGenerator from 'vue-form-generator'
 import 'vue-form-generator/dist/vfg.css'

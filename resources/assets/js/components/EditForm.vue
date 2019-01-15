@@ -13,6 +13,7 @@
                     <input class="form-control" type="text" v-model="form.title" id="title" name="title" required>
                     <span class="text-danger" v-if="form.errors.has('title')" v-text="form.errors.get('title')"></span>
                 </div>
+
                 <div class="form-group">
                     <label for="description"
                            class="col-2 col-form-label"
@@ -20,18 +21,18 @@
                     >
                         Description
                     </label>
-                    <textarea class="form-control"
-                              type="text"
-                              v-model="form.description"
-                              id="description"
-                              name="description"
-                              rows=5
-                    ></textarea>
+                    <rich-text-editor
+                            id="description"
+                            name="description"
+                            :value.sync="form.description"
+                    >
+                    </rich-text-editor>
                     <span class="text-danger"
                           v-if="form.errors.has('description')"
                           v-text="form.errors.get('description')"
                     ></span>
                 </div>
+
                 <div class="form-row">
                     <div class="col form-group">
                         <label for="open_date"
@@ -60,6 +61,7 @@
                         ></span>
                     </div>
                 </div>
+
                 <div class="form-check form-group">
                     <input type="checkbox"
                            id="active"
