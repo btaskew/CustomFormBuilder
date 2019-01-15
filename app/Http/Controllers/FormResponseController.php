@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Form;
+use App\Mappers\ResponseMapper;
 use App\Question;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,9 @@ class FormResponseController extends Controller
     public function index(Form $form)
     {
         return view('responses.index', [
-            'form' => $form->load(["responses", "questions:id,title,form_id"])
+            'responses' => (new ResponseMapper($form))->map(),
+            'form' => $form,
+            'questions' => $form->getOrderedQuestions()
         ]);
     }
 
