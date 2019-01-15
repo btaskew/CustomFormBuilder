@@ -33,4 +33,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'forms/{form}'], function () {
 
     Route::delete('questions/{question}/options/{option}', 'SelectOptionsController@destroy');
 
+    Route::get('responses', 'FormResponseController@index');
+
 });

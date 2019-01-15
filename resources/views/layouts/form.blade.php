@@ -14,6 +14,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/forms/{{ $form->id }}/preview">Preview form</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/forms/{{ $form->id }}/responses">View responses</a>
+            </li>
         </ul>
     </nav>
 

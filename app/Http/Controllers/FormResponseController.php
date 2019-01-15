@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 
 class FormResponseController extends Controller
 {
+    public function index(Form $form)
+    {
+        return view('responses.index', [
+            'form' => $form->load(["responses", "questions:id,title,form_id"])
+        ]);
+    }
+
     /**
      * @param Form    $form
      * @param Request $request

@@ -15,4 +15,9 @@ class FormResponse extends Model
         'form_id',
         'response',
     ];
+
+    public function getResponseAttribute($response)
+    {
+        return json_decode($response);
+    }
 }
