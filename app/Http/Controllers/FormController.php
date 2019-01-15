@@ -53,7 +53,7 @@ class FormController extends Controller
             'description' => $request->input('description'),
             'open_date' => $request->input('open_date'),
             'close_date' => $request->input('close_date'),
-            'active' => $request->input('active'),
+            'active' => $request->has('active') ? $request->input('active') : false,
             'user_id' => auth()->user()->id
         ]);
     }

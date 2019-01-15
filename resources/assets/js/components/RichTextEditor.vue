@@ -12,7 +12,6 @@
 
         methods: {
             updateValue(e) {
-                console.log("updating");
                 this.$emit('update:value', e.target.value);
             },
         }
