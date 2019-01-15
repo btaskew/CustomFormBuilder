@@ -7,7 +7,7 @@
         <h4>Error submitting form. Please try again later</h4>
     </div>
 
-    <vue-form-generator v-else :schema="schema" :model="model"></vue-form-generator>
+    <vue-form-generator v-else :schema="schema" :model="model" id="custom-form"></vue-form-generator>
 </template>
 
 <script>
@@ -58,3 +58,14 @@
         }
     }
 </script>
+
+<style>
+    #custom-form label {
+        display: flex;
+    }
+
+    #custom-form span.help {
+        display: flex;
+        align-items: center;
+    }
+</style>
