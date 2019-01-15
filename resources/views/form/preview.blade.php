@@ -10,10 +10,17 @@
         @endif
     </div>
 
-    <form-builder
-            :form="{{ json_encode($form->getAttributes()) }}"
-            :questions="{{ json_encode($questions) }}"
-            :is-preview="true"
-    >
-    </form-builder>
+    <div class="p-3 border rounded">
+        <h3>{{ $form['title'] }}</h3>
+        <div class="mt-3 mb-3">{!! $form['description'] !!}</div>
+
+        <div class="p-3 border rounded">
+            <form-builder
+                    :form="{{ json_encode($form->getAttributes()) }}"
+                    :questions="{{ json_encode($questions) }}"
+                    :is-preview="true"
+            >
+            </form-builder>
+        </div>
+    </div>
 @endsection
