@@ -55,9 +55,9 @@ class ResponseMapper
     private function addResponse(Question $question, FormResponse $response): void
     {
         if (isset($response->response->{$question->id})) {
-            $this->responses[$response->id]["answers"][] = $response->response->{$question->id};
+            $this->responses[$response->id]["answers"][$question->id] = $response->response->{$question->id};
         } else {
-            $this->responses[$response->id]["answers"][] = "n/a";
+            $this->responses[$response->id]["answers"][$question->id] = "n/a";
         }
     }
 }
