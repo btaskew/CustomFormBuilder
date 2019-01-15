@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\Form;
-use App\Question;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
