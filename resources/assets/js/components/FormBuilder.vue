@@ -3,6 +3,10 @@
         <h4>Form submitted</h4>
     </div>
 
+    <div v-else-if="error" class="alert danger animated mt" role="alert">
+        <h4>Error submitting form. Please try again later</h4>
+    </div>
+
     <vue-form-generator v-else :schema="schema" :model="model"></vue-form-generator>
 </template>
 
@@ -21,7 +25,8 @@
                     fields: []
                 },
 
-                isSubmitted: false
+                isSubmitted: false,
+                error: false,
             }
         },
 
@@ -47,7 +52,7 @@
                     .then(response => {
                         this.isSubmitted = true;
                     }).catch(error => {
-                    // alert("error");
+                        this.error = true;
                 });
             }
         }

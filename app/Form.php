@@ -62,6 +62,14 @@ class Form extends Model
     }
 
     /**
+     * @return HasMany
+     */
+    public function responses(): HasMany
+    {
+        return $this->hasMany(FormResponse::class);
+    }
+
+    /**
      * @return Collection
      */
     public function getOrderedQuestions(): Collection

@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Form;
+use App\FormResponse;
 use App\Question;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -36,7 +37,15 @@ class FormTest extends TestCase
     {
         $question = create(Question::class, ['form_id' => $this->form->id]);
 
-        $this->assertEquals($question->form_id, $this->form->questions->first()->id);
+        $this->assertEquals($question->id, $this->form->questions->first()->id);
+    }
+
+    /** @test */
+    public function a_form_has_responses()
+    {
+        $response = create(FormResponse::class, ['form_id' => $this->form->id]);
+
+        $this->assertEquals($response->id, $this->form->responses->first()->id);
     }
 
     /** @test */

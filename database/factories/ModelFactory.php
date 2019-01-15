@@ -70,3 +70,12 @@ $factory->define(App\VisibilityRequirement::class, function (Faker $faker) {
         'required_value' => $faker->word,
     ];
 });
+
+$factory->define(App\FormResponse::class, function (Faker $faker) {
+    return [
+        'form_id' => function () {
+            return factory(\App\Form::class)->create()->id;
+        },
+        'response' => $faker->word
+    ];
+});
