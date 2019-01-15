@@ -3,7 +3,7 @@
 @section('form_content')
     <div class="d-flex justify-content-between">
         <h3>Edit form questions</h3>
-        <a href="/forms/{{ $form->id }}/questions/create">Add question</a>
+        <a class="btn btn-primary" href="/forms/{{ $form->id }}/questions/create">Add question</a>
     </div>
 
     <div class="mt-4">
