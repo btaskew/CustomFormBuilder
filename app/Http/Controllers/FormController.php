@@ -13,7 +13,7 @@ class FormController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the form.
      *
      * @return \Illuminate\Http\Response
      */
@@ -23,7 +23,7 @@ class FormController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new form.
      *
      * @return \Illuminate\View\View
      */
@@ -33,7 +33,7 @@ class FormController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created form in storage.
      *
      * @param  \Illuminate\Http\Request $request
      * @return Form
@@ -45,6 +45,7 @@ class FormController extends Controller
             'description' => 'string|nullable',
             'open_date' => 'date',
             'close_date' => 'date',
+            'admin_email' => 'email',
             'active' => 'boolean'
         ]);
 
@@ -54,12 +55,13 @@ class FormController extends Controller
             'open_date' => $request->input('open_date'),
             'close_date' => $request->input('close_date'),
             'active' => $request->has('active') ? $request->input('active') : false,
+            'admin_email' => $request->input('admin_email'),
             'user_id' => auth()->user()->id
         ]);
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified form.
      *
      * @param Form $form
      * @return \Illuminate\View\View
@@ -78,7 +80,7 @@ class FormController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified form.
      *
      * @param Form $form
      * @return \Illuminate\View\View
@@ -89,7 +91,7 @@ class FormController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified form in storage.
      *
      * @param  \Illuminate\Http\Request $request
      * @param Form                      $form
@@ -105,14 +107,15 @@ class FormController extends Controller
             'description' => 'string|nullable',
             'open_date' => 'date',
             'close_date' => 'date',
-            'active' => 'boolean'
+            'active' => 'boolean',
+            'admin_email' => 'email'
         ]));
 
         return $form;
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified form from storage.
      *
      * @param Form $form
      * @return \Illuminate\Http\JsonResponse

@@ -21,6 +21,7 @@ class Form extends Model
         'active',
         'open_date',
         'close_date',
+        'admin_email',
         'user_id'
     ];
 

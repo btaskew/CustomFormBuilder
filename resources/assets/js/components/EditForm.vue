@@ -62,6 +62,20 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="admin_email"
+                           class="form-check-label"
+                           :class="{ 'has-error': form.errors.has('admin_email') }"
+                    >
+                        Admin email
+                    </label>
+                    <input class="form-control" type="text" v-model="form.admin_email" id="admin_email" name="admin_email" required>
+                    <span class="text-danger"
+                          v-if="form.errors.has('admin_email')"
+                          v-text="form.errors.get('admin_email')"
+                    ></span>
+                </div>
+
                 <div class="form-check form-group">
                     <input type="checkbox"
                            id="active"
@@ -104,6 +118,7 @@
                     open_date: null,
                     close_date: null,
                     active: null,
+                    admin_email: null,
                 }),
                 loading: false,
                 success: true,
@@ -119,6 +134,7 @@
                 this.form.open_date = this.formData.open_date;
                 this.form.close_date = this.formData.close_date;
                 this.form.active = this.formData.active;
+                this.form.admin_email = this.formData.admin_email;
                 this.isNewForm = false;
             }
         },

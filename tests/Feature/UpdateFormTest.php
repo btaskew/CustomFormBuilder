@@ -40,17 +40,20 @@ class UpdateFormTest extends TestCase
             'description' => 'New description',
             'open_date' => '1990-01-01',
             'close_date' => '1990-01-02',
+            'admin_email' => 'test@email.com',
             'active' => false
         ];
 
         $this->patch('/forms/' . $form->id, $attributes)
             ->assertStatus(200);
 
-        $this->assertEquals('New title', $form->fresh()->title);
-        $this->assertEquals('New description', $form->fresh()->description);
-        $this->assertEquals('1990-01-01', $form->fresh()->open_date);
-        $this->assertEquals('1990-01-02', $form->fresh()->close_date);
-        $this->assertFalse($form->fresh()->active);
+        $form = $form->fresh();
+        $this->assertEquals('New title', $form->title);
+        $this->assertEquals('New description', $form->description);
+        $this->assertEquals('1990-01-01', $form->open_date);
+        $this->assertEquals('1990-01-02', $form->close_date);
+        $this->assertEquals('test@email.com', $form->admin_email);
+        $this->assertFalse($form->active);
     }
 
     /** @test */
