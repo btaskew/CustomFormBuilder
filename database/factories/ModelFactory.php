@@ -29,6 +29,7 @@ $factory->define(App\Form::class, function (Faker $faker) {
         'active' => true,
         'open_date' => '1990-01-01',
         'close_date' => '2990-01-01',
+        'admin_email' => null,
         'user_id' => function () {
             return factory(\App\User::class)->create()->id;
         },

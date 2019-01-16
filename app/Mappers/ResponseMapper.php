@@ -38,6 +38,16 @@ class ResponseMapper
 
     /**
      * @param FormResponse $response
+     * @return array
+     */
+    public function mapResponse(FormResponse $response): array
+    {
+        $this->mapQuestions($response);
+        return $this->responses;
+    }
+
+    /**
+     * @param FormResponse $response
      */
     private function mapQuestions(FormResponse $response): void
     {
@@ -55,9 +65,9 @@ class ResponseMapper
     private function addResponse(Question $question, FormResponse $response): void
     {
         if (isset($response->response->{$question->id})) {
-            $this->responses[$response->id]["answers"][$question->id] = $response->response->{$question->id};
+            $this->responses[$response->id]["answers"][$question->title] = $response->response->{$question->id};
         } else {
-            $this->responses[$response->id]["answers"][$question->id] = "n/a";
+            $this->responses[$response->id]["answers"][$question->title] = "n/a";
         }
     }
 }

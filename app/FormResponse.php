@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class FormResponse extends Model
 {
@@ -16,8 +17,20 @@ class FormResponse extends Model
         'response',
     ];
 
+    /**
+     * @param $response
+     * @return mixed
+     */
     public function getResponseAttribute($response)
     {
         return json_decode($response);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function form(): BelongsTo
+    {
+        return $this->belongsTo(Form::class);
     }
 }

@@ -4,11 +4,13 @@ namespace Tests\Feature;
 
 use App\Form;
 use App\FormResponse;
+use App\Mail\FormResponded;
 use App\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
-class FormResponseTest extends TestCase
+class RespondToFormTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -40,5 +42,35 @@ class FormResponseTest extends TestCase
         $this->get('/forms/' . $form->id . '/responses')
             ->assertStatus(200)
             ->assertSee("value");
+    }
+    
+    /** @test */
+    public function an_email_is_sent_to_the_form_administrator_if_set_when_a_response_is_recorded()
+    {
+        Mail::fake();
+
+        $form = create(Form::class, ['admin_email' => 'admin@email.com']);
+        $question = create(Question::class, ['form_id' => $form->id]);
+
+        $this->post('/forms/' . $form->id . '/responses', [$question->id => "value"])
+            ->assertStatus(200);
+
+        Mail::assertSent(FormResponded::class, function ($mail) {
+            return $mail->hasTo('admin@email.com');
+        });
+    }
+
+    /** @test */
+    public function an_email_isnt_sent_if_the_form_doesnt_have_an_admin_email_set()
+    {
+        Mail::fake();
+
+        $form = create(Form::class, ['admin_email' => null]);
+        $question = create(Question::class, ['form_id' => $form->id]);
+
+        $this->post('/forms/' . $form->id . '/responses', [$question->id => "value"])
+            ->assertStatus(200);
+
+        Mail::assertNotSent(FormResponded::class);
     }
 }

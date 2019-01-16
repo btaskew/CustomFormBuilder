@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ResponseRecorded;
 use App\Form;
 use App\Mappers\ResponseMapper;
 use App\Question;
@@ -30,9 +31,11 @@ class FormResponseController extends Controller
             $response[$question->id] = $request->input($question->id);
         });
 
-        $form->responses()->create([
+        $response = $form->responses()->create([
             'response' => json_encode($response)
         ]);
+
+        event(new ResponseRecorded($response));
 
         return response()->json(['success' => 'Response stored']);
     }
