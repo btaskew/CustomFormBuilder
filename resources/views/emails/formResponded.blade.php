@@ -23,4 +23,8 @@
         <br />
         <br />
     @endforeach
+
+    <p>
+        <a href="{{ config('app.url') }}/forms/{{ $form->id }}/responses">View all responses</a>
+    </p>
 </div>
