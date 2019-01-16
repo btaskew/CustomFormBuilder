@@ -47,7 +47,8 @@ class FormController extends Controller
             'open_date' => 'date',
             'close_date' => 'date',
             'admin_email' => ['string', new EmailList()],
-            'active' => 'boolean'
+            'active' => 'boolean',
+            'success_text' => 'string|nullable',
         ]);
 
         return Form::create([
@@ -57,6 +58,7 @@ class FormController extends Controller
             'close_date' => $request->input('close_date'),
             'active' => $request->has('active') ? $request->input('active') : false,
             'admin_email' => $request->input('admin_email'),
+            'success_text' => $request->input('success_text'),
             'user_id' => auth()->user()->id
         ]);
     }
@@ -110,6 +112,7 @@ class FormController extends Controller
             'close_date' => 'date',
             'active' => 'boolean',
             'admin_email' => ['string', new EmailList()],
+            'success_text' => 'string|nullable',
         ]));
 
         return $form;

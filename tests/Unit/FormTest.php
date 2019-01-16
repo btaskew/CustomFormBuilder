@@ -108,4 +108,12 @@ class FormTest extends TestCase
 
         $this->assertEquals('<h1>Good code</h1>', $form->description);
     }
+
+    /** @test */
+    public function a_forms_success_text_is_sanitized_when_fetched()
+    {
+        $form = make(Form::class, ['success_text' => '<script>alert("Bad code")</script><h1>Good code</h1>']);
+
+        $this->assertEquals('<h1>Good code</h1>', $form->success_text);
+    }
 }

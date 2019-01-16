@@ -21,6 +21,7 @@ class CreateFormsTable extends Migration
             $table->date('close_date');
             $table->boolean('active')->default(false);
             $table->string('admin_email')->nullable();
+            $table->text('success_text')->nullable();
             $table->unsignedInteger('user_id');
             $table->timestamps();
         });

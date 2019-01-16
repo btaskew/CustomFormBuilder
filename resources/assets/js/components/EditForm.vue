@@ -69,10 +69,29 @@
                     >
                         Admin emails
                     </label>
-                    <input class="form-control" type="text" v-model="form.admin_email" id="admin_email" name="admin_email" required>
+                    <input class="form-control" type="text" v-model="form.admin_email" id="admin_email" name="admin_email">
                     <span class="text-danger"
                           v-if="form.errors.has('admin_email')"
                           v-text="form.errors.get('admin_email')"
+                    ></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="success_text"
+                           class="col-2 col-form-label"
+                           :class="{ 'has-error': form.errors.has('success_text') }"
+                    >
+                        Success text
+                    </label>
+                    <rich-text-editor
+                            id="success_text"
+                            name="success_text"
+                            :value.sync="form.success_text"
+                    >
+                    </rich-text-editor>
+                    <span class="text-danger"
+                          v-if="form.errors.has('success_text')"
+                          v-text="form.errors.get('success_text')"
                     ></span>
                 </div>
 
@@ -119,6 +138,7 @@
                     close_date: null,
                     active: null,
                     admin_email: null,
+                    success_text: null,
                 }),
                 loading: false,
                 success: true,
@@ -135,6 +155,7 @@
                 this.form.close_date = this.formData.close_date;
                 this.form.active = this.formData.active;
                 this.form.admin_email = this.formData.admin_email;
+                this.form.success_text = this.formData.success_text;
                 this.isNewForm = false;
             }
         },

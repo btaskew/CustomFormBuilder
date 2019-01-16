@@ -41,6 +41,7 @@ class UpdateFormTest extends TestCase
             'open_date' => '1990-01-01',
             'close_date' => '1990-01-02',
             'admin_email' => 'test@email.com',
+            'success_text' => 'Form submitted',
             'active' => false
         ];
 
@@ -53,6 +54,7 @@ class UpdateFormTest extends TestCase
         $this->assertEquals('1990-01-01', $form->open_date);
         $this->assertEquals('1990-01-02', $form->close_date);
         $this->assertEquals('test@email.com', $form->admin_email);
+        $this->assertEquals('Form submitted', $form->success_text);
         $this->assertFalse($form->active);
     }
 

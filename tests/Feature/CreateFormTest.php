@@ -33,7 +33,8 @@ class CreateFormTest extends TestCase
             'open_date' => '1990-01-01',
             'close_date' => '1990-01-02',
             'active' => true,
-            'admin_email' => 'test@email.com;foo@email.com'
+            'admin_email' => 'test@email.com;foo@email.com',
+            'success_text' => 'Form submitted'
         ];
 
         $this->login()

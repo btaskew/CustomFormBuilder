@@ -1,6 +1,7 @@
 <template>
-    <div v-if="isSubmitted" class="alert alert-success mt" role="alert">
-        Form submitted
+    <div v-if="isSubmitted" class="alert mt" role="alert">
+        <span v-if="this.form.success_text" v-html="this.form.success_text"></span>
+        <span v-else>Form submitted</span>
     </div>
 
     <div v-else-if="error" class="alert alert-danger mt" role="alert">

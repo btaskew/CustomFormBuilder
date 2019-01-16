@@ -22,6 +22,7 @@ class Form extends Model
         'open_date',
         'close_date',
         'admin_email',
+        'success_text',
         'user_id'
     ];
 
@@ -53,6 +54,15 @@ class Form extends Model
     public function getDescriptionAttribute($description)
     {
         return \Purify::clean($description);
+    }
+
+    /**
+     * @param  string $text
+     * @return string
+     */
+    public function getSuccessTextAttribute($text)
+    {
+        return \Purify::clean($text);
     }
 
     /**
