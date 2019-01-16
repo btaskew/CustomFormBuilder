@@ -30,6 +30,10 @@ class FormResponseController extends Controller
      */
     public function store(Form $form, Request $request)
     {
+        if (!$form->isActive()) {
+            return response()->json(['error' => 'This form is not currently accepting responses'], 403);
+        }
+
         $response = [];
         $form->questions->each(function (Question $question) use ($request, &$response) {
             $response[$question->id] = $request->input($question->id);

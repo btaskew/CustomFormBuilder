@@ -1,9 +1,9 @@
 <template>
-    <div v-if="isSubmitted" class="alert alert-success animated mt" role="alert">
+    <div v-if="isSubmitted" class="alert alert-success mt" role="alert">
         Form submitted
     </div>
 
-    <div v-else-if="error" class="alert danger animated mt" role="alert">
+    <div v-else-if="error" class="alert alert-danger mt" role="alert">
         Error submitting form. Please try again later
     </div>
 

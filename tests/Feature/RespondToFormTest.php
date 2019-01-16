@@ -58,4 +58,19 @@ class RespondToFormTest extends TestCase
             return $mail->hasTo('admin@email.com');
         });
     }
+
+    /** @test */
+    public function responses_cant_be_made_against_inactive_forms()
+    {
+        $form = create(Form::class, ['active' => false]);
+        $question = create(Question::class, ['form_id' => $form->id]);
+
+        $this->post('/forms/' . $form->id . '/responses', [$question->id => "value"])
+            ->assertStatus(403);
+
+        $this->assertDatabaseMissing('form_responses', [
+            'form_id' => $form->id,
+            'response' => '{"' . $question->id . '":"value"}'
+        ]);
+    }
 }
