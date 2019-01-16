@@ -50,27 +50,12 @@ class RespondToFormTest extends TestCase
         Mail::fake();
 
         $form = create(Form::class, ['admin_email' => 'admin@email.com']);
-        $question = create(Question::class, ['form_id' => $form->id]);
 
-        $this->post('/forms/' . $form->id . '/responses', [$question->id => "value"])
+        $this->post('/forms/' . $form->id . '/responses', [1 => "value"])
             ->assertStatus(200);
 
         Mail::assertSent(FormResponded::class, function ($mail) {
             return $mail->hasTo('admin@email.com');
         });
-    }
-
-    /** @test */
-    public function an_email_isnt_sent_if_the_form_doesnt_have_an_admin_email_set()
-    {
-        Mail::fake();
-
-        $form = create(Form::class, ['admin_email' => null]);
-        $question = create(Question::class, ['form_id' => $form->id]);
-
-        $this->post('/forms/' . $form->id . '/responses', [$question->id => "value"])
-            ->assertStatus(200);
-
-        Mail::assertNotSent(FormResponded::class);
     }
 }

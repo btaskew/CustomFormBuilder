@@ -67,7 +67,7 @@
                            class="form-check-label"
                            :class="{ 'has-error': form.errors.has('admin_email') }"
                     >
-                        Admin email
+                        Admin emails
                     </label>
                     <input class="form-control" type="text" v-model="form.admin_email" id="admin_email" name="admin_email" required>
                     <span class="text-danger"

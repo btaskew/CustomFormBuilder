@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class FormResponseController extends Controller
 {
+    /**
+     * @param Form $form
+     * @return \Illuminate\View\View
+     */
     public function index(Form $form)
     {
         return view('responses.index', [

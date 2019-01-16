@@ -20,8 +20,25 @@ class SendFormRespondedNotification
             return;
         }
 
-        Mail::to($event->form->admin_email)->send(
+        Mail::to($this->setMailTo($event->form->admin_email))->send(
             new FormResponded($event->form, $event->response)
         );
+    }
+
+    /**
+     * @param string $adminEmails
+     * @return array
+     */
+    private function setMailTo(string $adminEmails): array
+    {
+        $emails = [];
+
+        foreach(explode(";", $adminEmails) as $email) {
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $emails[] = $email;
+            }
+        }
+
+        return $emails;
     }
 }

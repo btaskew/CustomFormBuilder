@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Form;
+use App\Rules\EmailList;
 use Illuminate\Http\Request;
 
 class FormController extends Controller
@@ -45,7 +46,7 @@ class FormController extends Controller
             'description' => 'string|nullable',
             'open_date' => 'date',
             'close_date' => 'date',
-            'admin_email' => 'email',
+            'admin_email' => ['string', new EmailList()],
             'active' => 'boolean'
         ]);
 
@@ -108,7 +109,7 @@ class FormController extends Controller
             'open_date' => 'date',
             'close_date' => 'date',
             'active' => 'boolean',
-            'admin_email' => 'email'
+            'admin_email' => ['string', new EmailList()],
         ]));
 
         return $form;
