@@ -21,6 +21,7 @@ Vue.component('question-form', require('./components/QuestionForm'));
 Vue.component('form-list', require('./components/FormList'));
 Vue.component('form-builder', require('./components/FormBuilder'));
 Vue.component('rich-text-editor', require('./components/RichTextEditor'));
+Vue.component('question-bank', require('./components/QuestionBank'));
 
 Vue.config.ignoredElements = ['trix-editor']
 

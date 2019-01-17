@@ -20,5 +20,11 @@ class SampleDataSeeder extends Seeder
                 'form_id' => $form->id
             ]);
         });
+
+        factory(Question::class, 3)->create([
+            'form_id' => null,
+            'order' => 0,
+            'in_question_bank' => true
+        ]);
     }
 }
