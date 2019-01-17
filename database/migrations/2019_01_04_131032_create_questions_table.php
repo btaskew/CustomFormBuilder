@@ -37,7 +37,7 @@ class CreateQuestionsTable extends Migration
             $table->boolean('required')->default(false);
             $table->boolean('admin_only')->default(false);
             $table->boolean('in_question_bank')->default(false);
-            $table->unsignedInteger('order');
+            $table->unsignedInteger('order')->nullable();
             $table->timestamps();
         });
     }

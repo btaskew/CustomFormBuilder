@@ -30,16 +30,23 @@
             </tr>
             </tbody>
         </table>
+        <button class="btn btn-primary"
+                @click="addQuestions"
+                :disabled="loading"
+                v-text="loading ? 'Loading' : 'Add questions to form'"
+        ></button>
     </div>
 </template>
 
 <script>
+    import axios from "axios";
     export default {
-        props: ["questions"],
+        props: ["questions", "formId"],
 
         data() {
             return {
-                'questionsToAdd': []
+                'questionsToAdd': [],
+                'loading': false
             }
         },
 
@@ -47,6 +54,23 @@
             isSelectQuestion(type) {
                 return type === 'checkbox' || type === 'radio' || type === 'dropdown';
             },
+
+            addQuestions() {
+                // TODO validate if array empty
+                this.loading = true;
+                const data = {
+                    'questions': this.questionsToAdd
+                };
+
+                axios.post(`/forms/${this.formId}/questions/bank`, data)
+                    .then(response => {
+                        this.loading = false;
+                        flash("Questions added to form");
+                    }).catch(error => {
+                        this.loading = false;
+                        flash("Error adding questions. Please try again later");
+                });
+            }
         }
     }
 </script>

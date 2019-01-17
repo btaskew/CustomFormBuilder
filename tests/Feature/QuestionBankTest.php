@@ -14,7 +14,7 @@ class QuestionBankTest extends TestCase
     /** @test */
     public function a_user_can_view_all_the_questions_in_the_question_bank()
     {
-        $form = $this->loginUserWithForm();
+        $this->loginUserWithForm();
         $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
@@ -22,5 +22,17 @@ class QuestionBankTest extends TestCase
             ->assertStatus(200)
             ->assertSee($question->title)
             ->assertSee($option->value);
+    }
+
+    /** @test */
+    public function a_user_can_add_a_question_bank_question_to_their_form()
+    {
+        $form = $this->loginUserWithForm();
+        $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
+
+        $this->post('/forms/' . $form->id . '/questions/bank', ['questions' => [$question->id]])
+            ->assertStatus(200);
+
+        $this->assertTrue($form->questions->contains('title', $question->title));
     }
 }

@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'forms/{form}'], function () {
     Route::get('select-questions', 'SelectQuestionsController@index');
 
     Route::get('questions/bank', 'QuestionBankController@index');
+    Route::post('questions/bank', 'QuestionBankController@store');
 
     Route::resource('questions', 'QuestionsController');
 

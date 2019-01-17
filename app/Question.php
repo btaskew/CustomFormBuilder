@@ -127,7 +127,7 @@ class Question extends Model
     /**
      * Set question to be last in form
      */
-    private function setOrder(): void
+    public function setOrder(): void
     {
         if (isset($this->order)) {
             return;

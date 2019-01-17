@@ -5,5 +5,5 @@
         <h3>Add questions from question bank</h3>
     </div>
 
-    <question-bank :questions="{{ $questions }}"></question-bank>
+    <question-bank :questions="{{ $questions }}" :form-id="{{ $form->id }}"></question-bank>
 @endsection
