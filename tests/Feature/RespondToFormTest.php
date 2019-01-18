@@ -60,6 +60,22 @@ class RespondToFormTest extends TestCase
     }
 
     /** @test */
+    public function an_email_is_sent_to_the_responder_if_the_form_allows()
+    {
+        Mail::fake();
+
+        $form = create(Form::class, ['response_email' => 'Thanks for responding!', 'response_email_field' => 1]);
+        create(Question::class, ['form_id' => $form->id]);
+
+        $this->post('/forms/' . $form->id . '/responses', [1 => "test@email.com"])
+            ->assertStatus(200);
+
+        Mail::assertSent(\App\Mail\FormResponse::class, function ($mail) {
+            return $mail->hasTo('test@email.com');
+        });
+    }
+
+    /** @test */
     public function responses_cant_be_made_against_inactive_forms()
     {
         $form = create(Form::class, ['active' => false]);

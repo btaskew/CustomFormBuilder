@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Events\ResponseRecorded;
 use App\Listeners\SendFormRespondedNotification;
+use App\Listeners\SendFormResponseMail;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -15,7 +16,8 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         ResponseRecorded::class => [
-            SendFormRespondedNotification::class
+            SendFormRespondedNotification::class,
+            SendFormResponseMail::class
         ]
     ];
 
