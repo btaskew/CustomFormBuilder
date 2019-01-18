@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\ResponseRecorded;
 use App\FormResponse;
+use App\Specifications\CanSendResponseEmail;
 use Illuminate\Support\Facades\Mail;
 
 class SendFormResponseMail
@@ -13,8 +14,7 @@ class SendFormResponseMail
      */
     public function handle(ResponseRecorded $event)
     {
-        // TODO test & refactor, maybe policy?
-        if (is_null($event->form->response_email_field) || is_null($event->form->response_email)) {
+        if (!CanSendResponseEmail::isSatisfiedBy($event->form, $event->response)) {
             return;
         }
 
