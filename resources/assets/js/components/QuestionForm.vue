@@ -84,26 +84,6 @@
                 <div class="col">
                     <div class="form-check form-group">
                         <input type="checkbox"
-                               id="admin_only"
-                               name="admin_only"
-                               class="form-check-input"
-                               v-model="form.admin_only"
-                               :true-value="true"
-                               :false-value="false"
-                        >
-                        <label for="type"
-                               class="form-check-label"
-                               :class="{ 'has-error': form.errors.has('admin_only') }"
-                        >
-                            Admin only field
-                        </label>
-                        <span class="text-danger"
-                              v-if="form.errors.has('admin_only')"
-                              v-text="form.errors.get('admin_only')"
-                        ></span>
-                    </div>
-                    <div class="form-check form-group">
-                        <input type="checkbox"
                                id="required"
                                name="required"
                                class="form-check-input"
@@ -178,7 +158,6 @@
                     type: null,
                     help_text: null,
                     required: false,
-                    admin_only: false,
                     options: [],
                     required_if: {
                         question: null,
@@ -222,7 +201,6 @@
                     type: question.type,
                     help_text: question.help_text,
                     required: question.required,
-                    admin_only: question.admin_only,
                     options: question.options,
                     required_if: {
                         question: null,
