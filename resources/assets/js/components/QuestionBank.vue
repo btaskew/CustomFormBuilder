@@ -32,7 +32,7 @@
         </table>
         <button class="btn btn-primary"
                 @click="addQuestions"
-                :disabled="loading"
+                :disabled="loading || this.questionsToAdd.length < 1"
                 v-text="loading ? 'Loading' : 'Add questions to form'"
         ></button>
     </div>
@@ -56,7 +56,6 @@
             },
 
             addQuestions() {
-                // TODO validate if array empty
                 this.loading = true;
                 const data = {
                     'questions': this.questionsToAdd
@@ -65,6 +64,7 @@
                 axios.post(`/forms/${this.formId}/questions/bank`, data)
                     .then(response => {
                         this.loading = false;
+                        this.questionsToAdd = [];
                         flash("Questions added to form");
                     }).catch(error => {
                         this.loading = false;
@@ -74,6 +74,3 @@
         }
     }
 </script>
-
-<style>
-</style>
