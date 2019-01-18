@@ -24,9 +24,12 @@ class QuestionBankController extends Controller
      * @param Form    $form
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Form $form, Request $request)
     {
+        $this->authorize('update', $form);
+
         foreach ($request->input('questions') as $questionId) {
             $question = Question::findOrFail($questionId)->replicate();
             $question->form_id = $form->id;

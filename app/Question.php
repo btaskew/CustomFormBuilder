@@ -25,6 +25,15 @@ class Question extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'in_question_bank' => 'boolean'
+    ];
+
+    /**
      * Boot the model
      */
     protected static function boot()

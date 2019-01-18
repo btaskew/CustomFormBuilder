@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Form;
 use App\Question;
 use App\SelectOption;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -33,6 +34,22 @@ class QuestionBankTest extends TestCase
         $this->post('/forms/' . $form->id . '/questions/bank', ['questions' => [$question->id]])
             ->assertStatus(200);
 
-        $this->assertTrue($form->questions->contains('title', $question->title));
+        $this->assertEquals($question->title, $form->questions->first()->title);
+        $this->assertFalse($form->questions->first()->in_question_bank);
+    }
+
+    /** @test */
+    public function a_user_cant_add_a_question_bank_question_to_another_users_form()
+    {
+        $this->withExceptionHandling();
+
+        $form = create(Form::class);
+        $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
+
+        $this->login()
+            ->post('/forms/' . $form->id . '/questions/bank', ['questions' => [$question->id]])
+            ->assertStatus(403);
+
+        $this->assertFalse($form->questions->contains('title', $question->title));
     }
 }
