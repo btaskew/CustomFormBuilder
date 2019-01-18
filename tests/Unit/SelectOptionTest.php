@@ -15,8 +15,8 @@ class SelectOptionTest extends TestCase
     public function a_select_option_belongs_to_a_question()
     {
         $question = create(Question::class);
-        $option = create(SelectOption::class, ['question_id' => $question->id]);
+        $option = make(SelectOption::class, ['question_id' => $question->id]);
 
-        $this->assertEquals($question->id, $option->question->id);
+        $this->assertTrue($option->question->is($question));
     }
 }

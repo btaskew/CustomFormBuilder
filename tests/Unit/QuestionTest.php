@@ -17,9 +17,9 @@ class QuestionTest extends TestCase
     public function a_question_has_a_form()
     {
         $form = create(Form::class);
-        $question = create(Question::class, ['form_id' => $form->id]);
+        $question = make(Question::class, ['form_id' => $form->id]);
 
-        $this->assertEquals($form->id, $question->form->id);
+        $this->assertTrue($question->form->is($form));
     }
 
     /** @test */
@@ -28,25 +28,25 @@ class QuestionTest extends TestCase
         $question = create(Question::class);
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
-        $this->assertEquals($option->id, $question->options->first()->id);
+        $this->assertTrue($question->options->first()->is($option));
     }
 
     /** @test */
     public function a_question_can_have_a_visibility_requirement()
     {
         $question = create(Question::class);
-        $option = create(VisibilityRequirement::class, ['question_id' => $question->id]);
+        $requirement = create(VisibilityRequirement::class, ['question_id' => $question->id]);
 
-        $this->assertEquals($option->id, $question->visibilityRequirement->id);
+        $this->assertTrue($question->visibilityRequirement->is($requirement));
     }
 
     /** @test */
     public function a_question_can_have_visibility_requirement_dependants()
     {
         $question = create(Question::class);
-        $option = create(VisibilityRequirement::class, ['required_question_id' => $question->id]);
+        $requirement = create(VisibilityRequirement::class, ['required_question_id' => $question->id]);
 
-        $this->assertEquals($option->id, $question->visibilityRequirementDependants->first()->id);
+        $this->assertTrue($question->visibilityRequirementDependants->first()->is($requirement));
     }
 
     /** @test */

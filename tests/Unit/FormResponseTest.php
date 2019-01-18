@@ -15,8 +15,8 @@ class FormResponseTest extends TestCase
     public function a_response_belongs_to_a_form()
     {
         $form = create(Form::class);
-        $response = create(FormResponse::class, ['form_id' => $form->id]);
+        $response = make(FormResponse::class, ['form_id' => $form->id]);
 
-        $this->assertEquals($form->id, $response->form->id);
+        $this->assertTrue($response->form->is($form));
     }
 }

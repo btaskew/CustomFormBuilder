@@ -17,6 +17,6 @@ class UserTest extends TestCase
         $user = create(User::class);
         $form = create(Form::class, ['user_id' => $user->id]);
 
-        $this->assertEquals($form->id, $user->forms->first()->id);
+        $this->assertTrue($user->forms->first()->is($form));
     }
 }

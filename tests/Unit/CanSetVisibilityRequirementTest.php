@@ -27,7 +27,6 @@ class CanSetVisibilityRequirementTest extends TestCase
     /** @test */
     public function throws_exception_if_required_question_belongs_to_different_form()
     {
-        $form = create(Form::class);
         $requiredQuestion = create(Question::class, ['type' => 'radio', 'form_id' => 9999]);
 
         $this->expectException(\InvalidArgumentException::class);
@@ -36,7 +35,7 @@ class CanSetVisibilityRequirementTest extends TestCase
         CanSetVisibilityRequirement::isSatisfiedBy([
             'question' => $requiredQuestion->id,
             'value' => 'value'
-        ], $form->id);
+        ], 1);
     }
 
     /** @test */

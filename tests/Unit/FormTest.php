@@ -37,7 +37,7 @@ class FormTest extends TestCase
     {
         $question = create(Question::class, ['form_id' => $this->form->id]);
 
-        $this->assertEquals($question->id, $this->form->questions->first()->id);
+        $this->assertTrue($this->form->questions->first()->is($question));
     }
 
     /** @test */
@@ -45,7 +45,7 @@ class FormTest extends TestCase
     {
         $response = create(FormResponse::class, ['form_id' => $this->form->id]);
 
-        $this->assertEquals($response->id, $this->form->responses->first()->id);
+        $this->assertTrue($this->form->responses->first()->is($response));
     }
 
     /** @test */
