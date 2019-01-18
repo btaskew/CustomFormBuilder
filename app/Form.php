@@ -23,6 +23,8 @@ class Form extends Model
         'close_date',
         'admin_email',
         'success_text',
+        'response_email',
+        'response_email_field',
         'user_id'
     ];
 

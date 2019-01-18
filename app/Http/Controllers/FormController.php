@@ -49,6 +49,7 @@ class FormController extends Controller
             'admin_email' => ['string', new EmailList()],
             'active' => 'boolean',
             'success_text' => 'string|nullable',
+            'response_email' => 'string|nullable',
         ]);
 
         return Form::create([
@@ -59,6 +60,7 @@ class FormController extends Controller
             'active' => $request->has('active') ? $request->input('active') : false,
             'admin_email' => $request->input('admin_email'),
             'success_text' => $request->input('success_text'),
+            'response_email' => $request->input('response_email'),
             'user_id' => auth()->user()->id
         ]);
     }
@@ -105,6 +107,13 @@ class FormController extends Controller
     {
         $this->authorize('update', $form);
 
+        if ($request->has('response_email_field')
+            &&
+            !$form->questions->contains('id', $request->input('response_email_field'))
+        ) {
+            return response()->json(['error' => 'Question for the response email field not present on form'], 422);
+        }
+
         $form->update($request->validate([
             'title' => 'string|required',
             'description' => 'string|nullable',
@@ -113,6 +122,8 @@ class FormController extends Controller
             'active' => 'boolean',
             'admin_email' => ['string', new EmailList()],
             'success_text' => 'string|nullable',
+            'response_email' => 'string|nullable',
+            'response_email_field' => 'integer|nullable',
         ]));
 
         return $form;

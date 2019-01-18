@@ -34,6 +34,7 @@ class UpdateFormTest extends TestCase
     public function a_user_can_edit_their_form()
     {
         $form = $this->loginUserWithForm();
+        $question = create(Question::class, ['form_id' => $form->id]);
 
         $attributes = [
             'title' => 'New title',
@@ -42,6 +43,8 @@ class UpdateFormTest extends TestCase
             'close_date' => '1990-01-02',
             'admin_email' => 'test@email.com',
             'success_text' => 'Form submitted',
+            'response_email' => 'Response text',
+            'response_email_field' => $question->id,
             'active' => false
         ];
 
@@ -55,6 +58,8 @@ class UpdateFormTest extends TestCase
         $this->assertEquals('1990-01-02', $form->close_date);
         $this->assertEquals('test@email.com', $form->admin_email);
         $this->assertEquals('Form submitted', $form->success_text);
+        $this->assertEquals('Response text', $form->response_email);
+        $this->assertEquals($question->id, $form->response_email_field);
         $this->assertFalse($form->active);
     }
 
@@ -67,6 +72,27 @@ class UpdateFormTest extends TestCase
             ->assertStatus(200);
 
         $this->assertEquals('', $form->fresh()->description);
+    }
+
+    /** @test */
+    public function an_error_is_returned_if_setting_response_email_field_for_non_existing_question()
+    {
+        $form = $this->loginUserWithForm();
+
+        $this->patch('/forms/' . $form->id, ['title' => 'New title', 'response_email_field' => 1])
+            ->assertStatus(422)
+            ->assertJsonFragment(['error' => 'Question for the response email field not present on form']);
+    }
+
+    /** @test */
+    public function an_error_is_returned_if_setting_response_email_field_for_question_on_different_form()
+    {
+        $form = $this->loginUserWithForm();
+        $question = create(Question::class, ['form_id' => 999]);
+
+        $this->patch('/forms/' . $form->id, ['title' => 'New title', 'response_email_field' => $question->id])
+            ->assertStatus(422)
+            ->assertJsonFragment(['error' => 'Question for the response email field not present on form']);
     }
 
     /** @test */
