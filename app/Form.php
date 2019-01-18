@@ -66,6 +66,15 @@ class Form extends Model
     }
 
     /**
+     * @param  string $email
+     * @return string
+     */
+    public function getResponseEmailAttribute($email)
+    {
+        return \Purify::clean($email);
+    }
+
+    /**
      * @return BelongsTo
      */
     public function owner(): BelongsTo

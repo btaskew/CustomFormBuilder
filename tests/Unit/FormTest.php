@@ -116,4 +116,12 @@ class FormTest extends TestCase
 
         $this->assertEquals('<h1>Good code</h1>', $form->success_text);
     }
+
+    /** @test */
+    public function a_forms_response_email_field_is_sanitized_when_fetched()
+    {
+        $form = make(Form::class, ['response_email' => '<script>alert("Bad code")</script><h1>Good code</h1>']);
+
+        $this->assertEquals('<h1>Good code</h1>', $form->response_email);
+    }
 }

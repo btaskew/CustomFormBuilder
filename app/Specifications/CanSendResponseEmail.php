@@ -31,7 +31,7 @@ class CanSendResponseEmail
      */
     private static function formFieldsNotSet(Form $form): bool
     {
-        return is_null($form->response_email_field) || is_null($form->response_email);
+        return is_null($form->response_email_field) || is_null($form->response_email) || $form->response_email == '';
     }
 
     /**
