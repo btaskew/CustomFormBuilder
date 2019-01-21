@@ -28,7 +28,7 @@ class FormRequest extends LaravelFormRequest
             'title' => 'string|required|max:255',
             'description' => 'string|nullable',
             'open_date' => 'date',
-            'close_date' => 'date',
+            'close_date' => 'date|after_or_equal:open_date',
             'admin_email' => ['string', new EmailList()],
             'active' => 'boolean',
             'success_text' => 'string|nullable',

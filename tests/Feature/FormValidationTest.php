@@ -35,6 +35,15 @@ class FormValidationTest extends TestCase
     }
 
     /** @test */
+    public function the_open_date_must_be_before_the_close_date()
+    {
+        $this->login()
+            ->json('post', '/forms', ['title' => 'title', 'open_date' => '1990-02-02', 'close_date' => '1990-02-01'])
+            ->assertStatus(422)
+            ->assertSee('close_date');
+    }
+
+    /** @test */
     public function the_admin_email_field_must_be_a_valid_email_address()
     {
         $this->login()
