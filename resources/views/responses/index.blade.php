@@ -13,5 +13,9 @@
 
         @include('responses._responseTable')
 
+        <div class="d-flex justify-content-center">
+            {{ $paginatedResponses }}
+        </div>
+
     @endif
 @endsection

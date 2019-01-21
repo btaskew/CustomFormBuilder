@@ -16,8 +16,11 @@ class FormResponseController extends Controller
      */
     public function index(Form $form)
     {
+        $paginatedResponses = $form->responses()->paginate(20);
+
         return view('responses.index', [
-            'responses' => (new ResponseMapper($form))->map(),
+            'responses' => (new ResponseMapper($form))->map(collect($paginatedResponses->items())),
+            'paginatedResponses' => $paginatedResponses,
             'form' => $form,
             'questions' => $form->getOrderedQuestions()
         ]);

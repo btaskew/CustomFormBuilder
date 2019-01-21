@@ -5,6 +5,7 @@ namespace App\Mappers;
 use App\Form;
 use App\FormResponse;
 use App\Question;
+use Illuminate\Support\Collection;
 
 class ResponseMapper
 {
@@ -27,9 +28,13 @@ class ResponseMapper
         $this->form = $form;
     }
 
-    public function map(): array
+    /**
+     * @param Collection $responses
+     * @return array
+     */
+    public function map(Collection $responses): array
     {
-        $this->form->responses->each(function ($response) {
+        $responses->each(function ($response) {
             $this->mapQuestions($response);
         });
 
