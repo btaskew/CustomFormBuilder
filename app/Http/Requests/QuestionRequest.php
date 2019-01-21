@@ -25,7 +25,7 @@ class QuestionRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'title' => 'string|required',
+            'title' => 'string|required|max:255',
             'type' => 'string|required|in:text,email,password,hidden,textarea,number,file,url,tel,date,datetime-local,time,checkbox,radio,dropdown',
             'help_text' => 'string|nullable',
             'required' => 'boolean',

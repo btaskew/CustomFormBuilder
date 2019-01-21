@@ -64,38 +64,6 @@ class UpdateFormTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_clear_the_description_field()
-    {
-        $form = $this->loginUserWithForm();
-
-        $this->patch('/forms/' . $form->id, ['title' => 'New title', 'description' => ''])
-            ->assertStatus(200);
-
-        $this->assertEquals('', $form->fresh()->description);
-    }
-
-    /** @test */
-    public function an_error_is_returned_if_setting_response_email_field_for_non_existing_question()
-    {
-        $form = $this->loginUserWithForm();
-
-        $this->patch('/forms/' . $form->id, ['title' => 'New title', 'response_email_field' => 1])
-            ->assertStatus(422)
-            ->assertJsonFragment(['error' => 'Question for the response email field not present on form']);
-    }
-
-    /** @test */
-    public function an_error_is_returned_if_setting_response_email_field_for_question_on_different_form()
-    {
-        $form = $this->loginUserWithForm();
-        $question = create(Question::class, ['form_id' => 999]);
-
-        $this->patch('/forms/' . $form->id, ['title' => 'New title', 'response_email_field' => $question->id])
-            ->assertStatus(422)
-            ->assertJsonFragment(['error' => 'Question for the response email field not present on form']);
-    }
-
-    /** @test */
     public function a_user_cant_edit_another_users_form()
     {
         $this->withExceptionHandling();

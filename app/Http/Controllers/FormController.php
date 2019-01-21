@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Form;
+use App\Http\Requests\FormRequest;
 use App\Rules\EmailList;
 use Illuminate\Http\Request;
 
@@ -36,22 +37,11 @@ class FormController extends Controller
     /**
      * Store a newly created form in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param FormRequest $request
      * @return Form
      */
-    public function store(Request $request)
+    public function store(FormRequest $request)
     {
-        $request->validate([
-            'title' => 'string|required',
-            'description' => 'string|nullable',
-            'open_date' => 'date',
-            'close_date' => 'date',
-            'admin_email' => ['string', new EmailList()],
-            'active' => 'boolean',
-            'success_text' => 'string|nullable',
-            'response_email' => 'string|nullable',
-        ]);
-
         return Form::create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
@@ -98,12 +88,12 @@ class FormController extends Controller
     /**
      * Update the specified form in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param Form                      $form
+     * @param FormRequest $request
+     * @param Form        $form
      * @return Form
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, Form $form)
+    public function update(FormRequest $request, Form $form)
     {
         $this->authorize('update', $form);
 
@@ -114,16 +104,16 @@ class FormController extends Controller
             return response()->json(['error' => 'Question for the response email field not present on form'], 422);
         }
 
-        $form->update($request->validate([
-            'title' => 'string|required',
-            'description' => 'string|nullable',
-            'open_date' => 'date',
-            'close_date' => 'date',
-            'active' => 'boolean',
-            'admin_email' => ['string', new EmailList()],
-            'success_text' => 'string|nullable',
-            'response_email' => 'string|nullable',
-            'response_email_field' => 'integer|nullable',
+        $form->update($request->only([
+            'title',
+            'description',
+            'open_date',
+            'close_date',
+            'active',
+            'admin_email',
+            'success_text',
+            'response_email',
+            'response_email_field',
         ]));
 
         return $form;

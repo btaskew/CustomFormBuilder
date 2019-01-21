@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class CreateQuestionValidationTest extends TestCase
+class QuestionValidationTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -21,9 +21,20 @@ class CreateQuestionValidationTest extends TestCase
     }
 
     /** @test */
-    public function a_title_is_required()
+    public function a_question_title_is_required()
     {
         $this->json('post', $this->uri, ['type' => 'text'])
+            ->assertStatus(422)
+            ->assertSee('title');
+    }
+
+    /** @test */
+    public function a_question_title_cannot_be_too_long()
+    {
+        $this->json('post', $this->uri, [
+            'type' => 'text',
+            'title' => str_repeat('t', 260)
+        ])
             ->assertStatus(422)
             ->assertSee('title');
     }
