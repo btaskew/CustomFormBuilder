@@ -34,7 +34,7 @@
         created() {
             this.model = FormBuilder.buildModel(this.questions);
             this.schema.fields = FormBuilder.buildFields(this.questions);
-            this.schema.fields.push({type: "submit", onSubmit: this.submitForm});
+            this.schema.fields.push({type: "submit", buttonText: "Submit", onSubmit: this.submitForm});
         },
 
         methods: {
