@@ -3,6 +3,7 @@ import CheckboxField from "./fields/CheckboxField";
 import RadioField from "./fields/RadioField";
 import DropdownField from "./fields/DropdownField";
 import TextAreaField from "./fields/TextAreaField";
+import LabelField from "./fields/LabelField";
 
 class FieldFactory
 {
@@ -16,6 +17,8 @@ class FieldFactory
                 return new DropdownField(question);
             case "textarea":
                 return new TextAreaField(question);
+            case "label":
+                return new LabelField(question);
             default:
                 return new InputField(question);
         }

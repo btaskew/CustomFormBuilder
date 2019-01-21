@@ -46,6 +46,7 @@
                             <option value="email">Email</option>
                             <option value="password">Password</option>
                             <option value="textarea">Text area</option>
+                            <option value="label">Label</option>
                             <option value="number">Number</option>
                             <option value="file">File upload</option>
                             <option value="url">URL</option>
@@ -58,6 +59,7 @@
                             <option value="dropdown">Dropdown select</option>
                         </select>
                         <span class="text-danger" v-if="form.errors.has('type')" v-text="form.errors.get('type')"></span>
+                        <span v-if="form.type == 'label'">Please use the help text field for the label text</span>
                     </div>
 
                     <div v-if="isSelectQuestion">

@@ -22,6 +22,7 @@ class CreateQuestionsTable extends Migration
                 'email',
                 'password',
                 'textarea',
+                'label',
                 'number',
                 'file',
                 'url',
