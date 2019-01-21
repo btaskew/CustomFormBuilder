@@ -7,14 +7,18 @@
         </div>
     @else
 
-        <a class="btn btn-primary float-right mb-3" href="/forms/{{ $form->id }}/responses/export" role="button">
-            Export as spreadsheet
-        </a>
+        <div class="d-flex justify-content-between">
+            <span>Response count: {{ $paginatedResponses->total() }}</span>
+
+            <a class="btn btn-primary mb-3" href="/forms/{{ $form->id }}/responses/export" role="button">
+                Export as spreadsheet
+            </a>
+        </div>
 
         @include('responses._responseTable')
 
         <div class="d-flex justify-content-center">
-            {{ $paginatedResponses }}
+            {{ $paginatedResponses->links() }}
         </div>
 
     @endif
