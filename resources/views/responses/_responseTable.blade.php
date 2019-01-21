@@ -1,4 +1,4 @@
-<table class="table table-striped table-sm">
+<table class="table table-responsive table-striped table-sm">
     <thead>
     <tr>
         <th scope="col" class="table-active p-2 align-text-top">Response ID</th>

@@ -14,7 +14,7 @@ class CanSendResponseEmail
      */
     public static function isSatisfiedBy(Form $form, FormResponse $response): bool
     {
-        if (self::formFieldsNotSet($form)) {
+        if (static::formFieldsNotSet($form)) {
             return false;
         }
 
