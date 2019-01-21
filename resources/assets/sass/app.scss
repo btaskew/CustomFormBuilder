@@ -15,7 +15,7 @@ i {
 }
 
 .nav-item .active {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .navbar-laravel {
@@ -45,6 +45,29 @@ i {
 
 .has-error {
   color: darkred;
+}
+
+.navbar-laravel {
+  background-color: #005DAB;
+  color: white !important;
+}
+
+.app-name {
+  color: white !important;
+  font-weight: bold;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: white;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color: white;
+}
+
+a:hover {
+  font-weight: bold;
+  text-decoration: none;
 }
 
 #form-nav {
