@@ -18,7 +18,7 @@ class QuestionSearchController extends Controller
         ]);
 
         return Question::where('in_question_bank', true)
-            ->where('title', 'like', '%' . $request->input('title') . '%')
+            ->where('title', 'like', '%' . filter_var($request->input('title'), FILTER_SANITIZE_STRING) . '%')
             ->get();
     }
 }

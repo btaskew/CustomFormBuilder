@@ -64,4 +64,16 @@ class QuestionBankTest extends TestCase
             ->assertSee($question->type);
     }
 
+    /** @test */
+    public function search_input_is_sanitised_before_searching()
+    {
+        $question = create(Question::class, ['title' => 'title', 'form_id' => null, 'in_question_bank' => true]);
+
+        // If the input is sanitised then the search will find the record
+        $this->login()
+            ->get('/questions/bank/search?title=<h1>title&blahblah</h1>')
+            ->assertStatus(200)
+            ->assertSee($question->type);
+    }
+
 }
