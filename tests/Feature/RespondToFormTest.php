@@ -76,7 +76,7 @@ class RespondToFormTest extends TestCase
             ->assertStatus(200)
             ->assertDontSee($labelQuestion->title);
     }
-    
+
     /** @test */
     public function an_email_is_sent_to_the_form_administrator_if_set_when_a_response_is_recorded()
     {
