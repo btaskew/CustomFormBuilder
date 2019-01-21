@@ -28,7 +28,7 @@ class SendFormRespondedNotificationTest extends TestCase
 
         Mail::assertNotSent(FormResponded::class);
     }
-    
+
     /** @test */
     public function multiple_admin_emails_can_be_used_for_response_email()
     {

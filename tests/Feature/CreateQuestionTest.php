@@ -60,7 +60,7 @@ class CreateQuestionTest extends TestCase
         $this->assertDatabaseHas('questions', ['title' => 'First question']);
         $this->assertDatabaseHas('select_options', ['value' => 'a', 'display_value' => 'Value a']);
     }
-    
+
     /** @test */
     public function a_user_can_create_a_question_with_a_visibility_requirement()
     {

@@ -23,7 +23,7 @@ class UpdateFormTest extends TestCase
     public function a_guest_cant_edit_a_form()
     {
         $this->withExceptionHandling();
-        
+
         $form = create(Form::class);
 
         $this->patch('/forms/' . $form->id, ['title' => 'New title'])

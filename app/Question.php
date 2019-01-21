@@ -19,7 +19,7 @@ class Question extends Model
         'title',
         'type',
         'help_text',
-        'required' ,
+        'required',
         'admin_only',
         'order'
     ];
