@@ -76,4 +76,14 @@ class QuestionBankTest extends TestCase
             ->assertSee($question->type);
     }
 
+    /** @test */
+    public function the_search_results_size_is_limited()
+    {
+        create(Question::class, ['title' => 'title', 'form_id' => null, 'in_question_bank' => true], 30);
+
+        $result = $this->login()->get('/questions/bank/search?title=title')->json();
+
+        $this->assertCount(25, $result);
+    }
+
 }
