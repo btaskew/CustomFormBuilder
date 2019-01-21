@@ -17,7 +17,9 @@ class FormResponseController extends Controller
     public function index(Form $form)
     {
         $paginatedResponses = $form->responses()->paginate(25);
-        $questions = $form->getOrderedQuestions();
+        $questions = $form->getOrderedQuestions()->reject(function ($question) {
+            return $question->type == 'label';
+        });
 
         return view('responses.index', [
             'responses' => (new ResponseMapper($form, $questions))->map(collect($paginatedResponses->items())),
@@ -38,13 +40,16 @@ class FormResponseController extends Controller
             return response()->json(['error' => 'This form is not currently accepting responses'], 403);
         }
 
-        $response = [];
-        $form->questions->each(function (Question $question) use ($request, &$response) {
-            $response[$question->id] = $request->input($question->id);
+        $responseData = [];
+
+        $form->questions->reject(function ($question) {
+            return $question->type == 'label';
+        })->each(function (Question $question) use ($request, &$responseData) {
+            $responseData[$question->id] = $request->input($question->id);
         });
 
         $response = $form->responses()->create([
-            'response' => json_encode($response)
+            'response' => json_encode($responseData)
         ]);
 
         event(new ResponseRecorded($response));

@@ -43,6 +43,39 @@ class RespondToFormTest extends TestCase
             ->assertStatus(200)
             ->assertSee("value");
     }
+
+    /** @test */
+    public function a_label_field_stores_no_data()
+    {
+        $form = create(Form::class);
+        $question = create(Question::class, ['form_id' => $form->id]);
+        $labelQuestion = create(Question::class, ['form_id' => $form->id, 'type' => 'label']);
+
+        $this->post('/forms/' . $form->id . '/responses', [$question->id => "value", $labelQuestion->id => "label value"])
+            ->assertStatus(200);
+
+        $this->assertDatabaseHas('form_responses', [
+            'form_id' => $form->id,
+            'response' => '{"' . $question->id . '":"value"}'
+        ]);
+    }
+
+    /** @test */
+    public function viewing_form_responses_doesnt_show_label_fields()
+    {
+        $form = $this->loginUserWithForm();
+        $question = create(Question::class, ['form_id' => $form->id]);
+        $labelQuestion = create(Question::class, ['form_id' => $form->id, 'type' => 'label']);
+
+        create(FormResponse::class, [
+            'form_id' => $form->id,
+            'response' => '{"' . $question->id . '":"value"}'
+        ]);
+
+        $this->get('/forms/' . $form->id . '/responses')
+            ->assertStatus(200)
+            ->assertDontSee($labelQuestion->title);
+    }
     
     /** @test */
     public function an_email_is_sent_to_the_form_administrator_if_set_when_a_response_is_recorded()
