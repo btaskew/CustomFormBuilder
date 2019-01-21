@@ -17,9 +17,7 @@ class FormResponseController extends Controller
     public function index(Form $form)
     {
         $paginatedResponses = $form->responses()->paginate(25);
-        $questions = $form->getOrderedQuestions()->reject(function ($question) {
-            return $question->type == 'label';
-        });
+        $questions = $form->getAnswerableQuestions();
 
         return view('responses.index', [
             'responses' => (new ResponseMapper($form, $questions))->map(collect($paginatedResponses->items())),
@@ -42,9 +40,7 @@ class FormResponseController extends Controller
 
         $responseData = [];
 
-        $form->questions->reject(function ($question) {
-            return $question->type == 'label';
-        })->each(function (Question $question) use ($request, &$responseData) {
+        $form->getAnswerableQuestions()->each(function (Question $question) use ($request, &$responseData) {
             $responseData[$question->id] = $request->input($question->id);
         });
 

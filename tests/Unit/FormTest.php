@@ -102,6 +102,16 @@ class FormTest extends TestCase
     }
 
     /** @test */
+    public function a_form_can_get_its_answerable_questions()
+    {
+        $question = create(Question::class, ['form_id' => $this->form->id]);
+        $labelQuestion = create(Question::class, ['form_id' => $this->form->id, 'type' => 'label']);
+
+        $this->assertTrue($this->form->getAnswerableQuestions()->contains($question));
+        $this->assertFalse($this->form->getAnswerableQuestions()->contains($labelQuestion));
+    }
+
+    /** @test */
     public function a_forms_description_is_sanitized_when_fetched()
     {
         $form = make(Form::class, ['description' => '<script>alert("Bad code")</script><h1>Good code</h1>']);

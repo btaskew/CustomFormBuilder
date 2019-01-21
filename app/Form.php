@@ -112,6 +112,16 @@ class Form extends Model
     }
 
     /**
+     * @return Collection
+     */
+    public function getAnswerableQuestions(): Collection
+    {
+        return $this->getOrderedQuestions()->reject(function (Question $question) {
+            return $question->type == 'label';
+        });
+    }
+
+    /**
      * @return bool
      */
     public function isActive(): bool
