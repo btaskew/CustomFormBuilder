@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Form;
+use App\Mappers\QuestionBankMapper;
 use App\Question;
+use App\SelectOption;
 use Illuminate\Http\Request;
 
 class QuestionBankController extends Controller
@@ -32,13 +34,7 @@ class QuestionBankController extends Controller
     {
         $this->authorize('update', $form);
 
-        foreach ($request->input('questions') as $questionId) {
-            $question = Question::findOrFail($questionId)->replicate();
-            $question->form_id = $form->id;
-            $question->in_question_bank = false;
-            $question->setOrder();
-            $question->save();
-        }
+        (new QuestionBankMapper())->map($request->input('questions'), $form->id);
 
         return response()->json(['success' => 'Questions added to form']);
     }

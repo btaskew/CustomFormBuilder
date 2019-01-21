@@ -39,6 +39,20 @@ class QuestionBankTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_add_a_select_question_bank_question_to_their_form_with_its_options()
+    {
+        $form = $this->loginUserWithForm();
+        $question = create(Question::class, ['type' => 'radio', 'form_id' => null, 'in_question_bank' => true]);
+        $option = create(SelectOption::class, ['question_id' => $question]);
+
+        $this->post('/forms/' . $form->id . '/questions/bank', ['questions' => [$question->id]])
+            ->assertStatus(200);
+
+        $this->assertEquals($question->title, $form->questions->first()->title);
+        $this->assertEquals($option->value, $form->questions->first()->options->first()->value);
+    }
+
+    /** @test */
     public function a_user_cant_add_a_question_bank_question_to_another_users_form()
     {
         $this->withExceptionHandling();
