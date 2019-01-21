@@ -42,6 +42,8 @@
                 :disabled="loading || this.questionsToAdd.length < 1"
                 v-text="loading ? 'Loading' : 'Add questions to form'"
         ></button>
+
+        <slot v-if="!showingSearchResults" name="pagination"></slot>
     </div>
 </template>
 
@@ -54,7 +56,8 @@
             return {
                 'questionList': this.questions,
                 'questionsToAdd': [],
-                'loading': false
+                'loading': false,
+                'showingSearchResults': false
             }
         },
 
@@ -85,12 +88,14 @@
 
                 if (!title || title === '') {
                     this.questionList = this.questions;
+                    this.showingSearchResults = false;
                     return;
                 }
 
                 axios.get(`/questions/bank/search?title=` + title)
                     .then(response => {
                         this.questionList = response.data;
+                        this.showingSearchResults = true;
                     }).catch(error => {});
             }
         }
