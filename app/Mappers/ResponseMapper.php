@@ -20,12 +20,19 @@ class ResponseMapper
     private $form;
 
     /**
-     * @param Form $form
+     * @var Collection
      */
-    public function __construct(Form $form)
+    private $questions;
+
+    /**
+     * @param Form       $form
+     * @param Collection $questions
+     */
+    public function __construct(Form $form, Collection $questions)
     {
         $this->responses = [];
         $this->form = $form;
+        $this->questions = $questions;
     }
 
     /**
@@ -35,7 +42,7 @@ class ResponseMapper
     public function map(Collection $responses): array
     {
         $responses->each(function ($response) {
-            $this->mapQuestions($response);
+            $this->mapResponse($response);
         });
 
         return $this->responses;
@@ -47,20 +54,12 @@ class ResponseMapper
      */
     public function mapResponse(FormResponse $response): array
     {
-        $this->mapQuestions($response);
-        return $this->responses;
-    }
-
-    /**
-     * @param FormResponse $response
-     */
-    private function mapQuestions(FormResponse $response): void
-    {
-        $this->form->getOrderedQuestions()->each(function ($question) use ($response) {
+        $this->questions->each(function ($question) use ($response) {
             $this->responses[$response->id]["id"] = $response->id;
             $this->responses[$response->id]["created_at"] = $response->created_at;
             $this->addResponse($question, $response);
         });
+        return $this->responses;
     }
 
     /**

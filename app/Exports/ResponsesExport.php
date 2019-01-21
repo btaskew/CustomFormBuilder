@@ -27,8 +27,10 @@ class ResponsesExport implements FromView
      */
     public function view(): View
     {
+        $responses = (new ResponseMapper($this->form, $this->form->getOrderedQuestions()))->map($this->form->responses);
+
         return view('responses._responseTable', [
-            'responses' => (new ResponseMapper($this->form))->map($this->form->responses),
+            'responses' => $responses,
             'questions' => $this->form->getOrderedQuestions()
         ]);
     }

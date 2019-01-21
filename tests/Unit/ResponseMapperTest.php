@@ -46,7 +46,7 @@ class ResponseMapperTest extends TestCase
             ],
         ];
 
-        $this->assertEquals($expectedResult, (new ResponseMapper($form))->map($form->responses));
+        $this->assertEquals($expectedResult, (new ResponseMapper($form, $form->getOrderedQuestions()))->map($form->responses));
     }
 
     /** @test */
@@ -70,6 +70,6 @@ class ResponseMapperTest extends TestCase
             ],
         ];
 
-        $this->assertEquals($expectedResult, (new ResponseMapper($form))->map($form->responses));
+        $this->assertEquals($expectedResult, (new ResponseMapper($form, $form->getOrderedQuestions()))->map($form->responses));
     }
 }
