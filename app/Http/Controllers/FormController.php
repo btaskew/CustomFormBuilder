@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Form;
 use App\Http\Requests\FormRequest;
-use App\Rules\EmailList;
-use Illuminate\Http\Request;
 
 class FormController extends Controller
 {

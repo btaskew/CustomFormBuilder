@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Form;
 use App\Mappers\QuestionBankMapper;
 use App\Question;
-use App\SelectOption;
 use Illuminate\Http\Request;
 
 class QuestionBankController extends Controller

@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use App\Form;
 use App\FormResponse;
-use App\Question;
 use App\Specifications\CanSendResponseEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

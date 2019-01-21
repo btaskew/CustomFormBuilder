@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Form;
 use App\Question;
 use App\Specifications\CanSetVisibilityRequirement;
 use Illuminate\Foundation\Testing\RefreshDatabase;
