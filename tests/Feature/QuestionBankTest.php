@@ -52,4 +52,16 @@ class QuestionBankTest extends TestCase
 
         $this->assertFalse($form->questions->contains('title', $question->title));
     }
+
+    /** @test */
+    public function a_user_can_search_for_a_question_in_the_question_bank()
+    {
+        $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
+
+        $this->login()
+            ->get('/questions/bank/search?title=' . $question->title)
+            ->assertStatus(200)
+            ->assertSee($question->type);
+    }
+
 }

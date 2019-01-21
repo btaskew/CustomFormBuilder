@@ -21,22 +21,27 @@ Route::resource('forms', 'FormController');
 
 Route::post('forms/{form}/responses', 'FormResponseController@store');
 
-Route::group(['middleware' => 'auth', 'prefix' => 'forms/{form}'], function () {
+Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('preview', 'FormPreviewController@show');
+    Route::get('questions/bank/search', 'QuestionSearchController@show');
 
-    Route::patch('order', 'FormOrderController@update');
+    Route::group(['prefix' => 'forms/{form}'], function () {
 
-    Route::get('select-questions', 'SelectQuestionsController@index');
+        Route::get('preview', 'FormPreviewController@show');
 
-    Route::get('questions/bank', 'QuestionBankController@index');
-    Route::post('questions/bank', 'QuestionBankController@store');
+        Route::patch('order', 'FormOrderController@update');
 
-    Route::resource('questions', 'QuestionsController');
+        Route::get('select-questions', 'SelectQuestionsController@index');
 
-    Route::delete('questions/{question}/options/{option}', 'SelectOptionsController@destroy');
+        Route::get('questions/bank', 'QuestionBankController@index');
+        Route::post('questions/bank', 'QuestionBankController@store');
 
-    Route::get('responses', 'FormResponseController@index');
-    Route::get('responses/export', 'ResponseExportController@index');
+        Route::resource('questions', 'QuestionsController');
 
+        Route::delete('questions/{question}/options/{option}', 'SelectOptionsController@destroy');
+
+        Route::get('responses', 'FormResponseController@index');
+        Route::get('responses/export', 'ResponseExportController@index');
+
+    });
 });

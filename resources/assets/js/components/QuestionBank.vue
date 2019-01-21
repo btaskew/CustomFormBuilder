@@ -1,6 +1,13 @@
 <template>
     <div class="mt-3">
-        <table class="table">
+        <div class="d-flex justify-content-between">
+            <h3>Add questions from question bank</h3>
+            <div>
+                Search questions: <input id="search" class="form-control ml-2" type="text" @input="searchQuestions">
+            </div>
+        </div>
+
+        <table class="table mt-3">
             <thead>
             <tr>
                 <th scope="col" style="width:5%">Include</th>
@@ -10,7 +17,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="question in this.questions">
+            <tr v-for="question in questionList">
                 <td>
                     <input
                         type="checkbox"
@@ -26,7 +33,7 @@
                         {{ option.value }} - {{ option.display_value }} |
                     </span>
                 </td>
-                <td v-else="isSelectQuestion(question.type)">N/A</td>
+                <td v-else>N/A</td>
             </tr>
             </tbody>
         </table>
@@ -45,6 +52,7 @@
 
         data() {
             return {
+                'questionList': this.questions,
                 'questionsToAdd': [],
                 'loading': false
             }
@@ -70,7 +78,28 @@
                         this.loading = false;
                         flash("Error adding questions. Please try again later");
                 });
+            },
+
+            searchQuestions(e) {
+                const title = e.target.value;
+
+                if (!title || title === '') {
+                    this.questionList = this.questions;
+                    return;
+                }
+
+                axios.get(`/questions/bank/search?title=` + title)
+                    .then(response => {
+                        this.questionList = response.data;
+                    }).catch(error => {});
             }
         }
     }
 </script>
+
+<style>
+    #search {
+        width: auto;
+        display: inline-block;
+    }
+</style>
