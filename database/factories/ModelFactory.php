@@ -88,3 +88,14 @@ $factory->define(App\Folder::class, function (Faker $faker) {
         'name' => $faker->word
     ];
 });
+
+$factory->define(App\FormUser::class, function (Faker $faker) {
+    return [
+        'user_id' => function () {
+            return factory(\App\User::class)->create()->id;
+        },
+        'form_id' => function () {
+            return factory(\App\Form::class)->create()->id;
+        },
+    ];
+});
