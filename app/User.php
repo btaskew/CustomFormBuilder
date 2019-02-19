@@ -53,4 +53,15 @@ class User extends Authenticatable
     {
         return $this->forms->merge($this->accessibleForms);
     }
+
+    /**
+     * @param Form $form
+     * @return bool
+     */
+    public function hasAccessTo(Form $form): bool
+    {
+        return (
+            $this->id == $form->user_id || FormUser::where(['user_id' => $this->id, 'form_id' => $form->id])->exists()
+        );
+    }
 }

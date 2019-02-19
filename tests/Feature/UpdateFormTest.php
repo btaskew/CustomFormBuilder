@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Form;
+use App\FormUser;
 use App\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -61,6 +62,28 @@ class UpdateFormTest extends TestCase
         $this->assertEquals('Response text', $form->response_email);
         $this->assertEquals($question->id, $form->response_email_field);
         $this->assertFalse($form->active);
+    }
+
+    /** @test */
+    public function a_user_can_edit_another_users_form_that_they_have_access_to()
+    {
+        $this->withExceptionHandling();
+        $this->login();
+        $form = create(Form::class, ['user_id' => 999]);
+        create(FormUser::class, [
+            'user_id' => auth()->user()->id,
+            'form_id' => $form->id
+        ]);
+
+        $attributes = [
+            'title' => 'New title',
+            'open_date' => '1990-01-01',
+            'close_date' => '1990-01-02',
+            'active' => false
+        ];
+
+        $this->patch('/forms/' . $form->id, $attributes)
+            ->assertStatus(200);
     }
 
     /** @test */

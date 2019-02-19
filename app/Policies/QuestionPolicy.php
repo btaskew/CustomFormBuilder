@@ -17,6 +17,6 @@ class QuestionPolicy
      */
     public function update(User $user, Question $question): bool
     {
-        return $user->id == $question->form->user_id;
+        return $user->hasAccessTo($question->form);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Form;
+use App\FormUser;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -20,6 +21,6 @@ class FormPolicy
      */
     public function update(User $user, Form $form): bool
     {
-        return $user->id == $form->user_id;
+        return $user->hasAccessTo($form);
     }
 }

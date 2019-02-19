@@ -49,4 +49,21 @@ class UserTest extends TestCase
         $this->assertTrue($forms->contains($form));
         $this->assertTrue($forms->contains($form2));
     }
+
+    /** @test */
+    public function a_user_can_determine_if_it_has_access_to_a_form()
+    {
+        $user = create(User::class);
+        $form = create(Form::class, ['user_id' => $user->id]);
+        $this->assertTrue($user->hasAccessTo($form));
+
+        $form2 = create(Form::class, ['user_id' => 999]);
+        $this->assertFalse($user->hasAccessTo($form2));
+
+        create(FormUser::class, [
+            'user_id' => $user->id,
+            'form_id' => $form2->id
+        ]);
+        $this->assertTrue($user->hasAccessTo($form2));
+    }
 }

@@ -17,6 +17,6 @@ class SelectOptionPolicy
      */
     public function update(User $user, SelectOption $option): bool
     {
-        return $user->id == $option->question->form->user_id;
+        return $user->hasAccessTo($option->question->form);
     }
 }

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Form;
+use App\FormUser;
 use App\Question;
 use App\SelectOption;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,10 +17,16 @@ class ViewFormTest extends TestCase
     public function a_user_can_view_all_their_forms()
     {
         $form = $this->loginUserWithForm();
+        $form2 = create(Form::class, ['user_id' => 9999]);
+        create(FormUser::class, [
+            'user_id' => $form->user_id,
+            'form_id' => $form2->id
+        ]);
 
         $this->json('get', '/forms')
             ->assertStatus(200)
-            ->assertSee($form->title);
+            ->assertSee($form->title)
+            ->assertSee($form2->title);
     }
 
     /** @test */

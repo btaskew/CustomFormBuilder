@@ -20,10 +20,8 @@ class FormController extends Controller
      */
     public function index()
     {
-        $folders = Form::where('user_id', auth()->user()->id)
-            ->with('folder:id,name')
-            ->get()
-            ->groupBy('folder.name');
+        $forms = auth()->user()->getAllForms();
+        $folders = $forms->load('folder:id,name')->groupBy('folder.name');
 
         return view('form.index', compact('folders'));
     }
