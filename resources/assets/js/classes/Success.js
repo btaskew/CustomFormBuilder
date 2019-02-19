@@ -1,5 +1,4 @@
-export default class Success
-{
+export default class Success {
     /**
      * Create a new Errors instance.
      */
@@ -7,12 +6,12 @@ export default class Success
         this.message = '';
     }
 
-    setMessage(message){
+    setMessage(message) {
         this.message = message;
     }
 
-    hasMessage(){
-        if(this.message != ''){
+    hasMessage() {
+        if (this.message != '') {
             return true;
         }
 

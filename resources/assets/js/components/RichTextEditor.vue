@@ -7,12 +7,13 @@
 
 <script>
     import Trix from "trix";
+
     export default {
         props: ['value', 'name'],
 
         computed: {
             inputId() {
-                return this.name + "-trix";
+                return this.name + '-trix';
             }
         },
 

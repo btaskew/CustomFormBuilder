@@ -24,11 +24,12 @@
     export default {
 
         methods: {
-            close: function () {}
+            close: function () {
+            }
         },
 
         mounted: function () {
-            document.addEventListener("keydown", (e) => {
+            document.addEventListener('keydown', (e) => {
                 if (this.show && e.keyCode == 27) {
                     this.close();
                 }
@@ -70,6 +71,7 @@
     .fade-enter-active, .fade-leave-active {
         transition: opacity .5s
     }
+
     .fade-enter, .fade-leave-active {
         opacity: 0
     }

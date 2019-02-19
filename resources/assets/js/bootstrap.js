@@ -1,4 +1,5 @@
-import "babel-polyfill";
+import 'babel-polyfill';
+
 window._ = require('lodash');
 
 /**
@@ -28,6 +29,6 @@ if (token) {
 window.Vue = require('vue');
 window.events = new Vue();
 
-window.flash = function(message, level = 'success') {
-    window.events.$emit('flash', { message, level });
+window.flash = function (message, level = 'success') {
+    window.events.$emit('flash', {message, level});
 };

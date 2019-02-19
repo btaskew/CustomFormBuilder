@@ -19,12 +19,7 @@
             <tbody>
             <tr v-for="question in questionList">
                 <td>
-                    <input
-                        type="checkbox"
-                        :value="question.id"
-                        :id="question.id"
-                        v-model="questionsToAdd"
-                    >
+                    <input type="checkbox" :value="question.id" :id="question.id" v-model="questionsToAdd">
                 </td>
                 <td>{{ question.title }}</td>
                 <td>{{ question.type }}</td>
@@ -48,9 +43,10 @@
 </template>
 
 <script>
-    import axios from "axios";
+    import axios from 'axios';
+
     export default {
-        props: ["questions", "formId"],
+        props: ['questions', 'formId'],
 
         data() {
             return {
@@ -76,10 +72,10 @@
                     .then(response => {
                         this.loading = false;
                         this.questionsToAdd = [];
-                        flash("Questions added to form");
+                        flash('Questions added to form');
                     }).catch(error => {
-                        this.loading = false;
-                        flash("Error adding questions. Please try again later");
+                    this.loading = false;
+                    flash('Error adding questions. Please try again later');
                 });
             },
 
@@ -96,7 +92,8 @@
                     .then(response => {
                         this.questionList = response.data;
                         this.showingSearchResults = true;
-                    }).catch(error => {});
+                    }).catch(error => {
+                });
             }
         }
     }

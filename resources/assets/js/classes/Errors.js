@@ -1,5 +1,4 @@
-export default class Errors
-{
+export default class Errors {
     /**
      * Create a new Errors instance.
      */
@@ -50,7 +49,7 @@ export default class Errors
      */
     clear(field) {
         if (field !== undefined) {
-            if(field.target !== undefined){
+            if (field.target !== undefined) {
                 field = field.target.name;
             }
             delete this.errors[field];

@@ -6,7 +6,8 @@
 
         <div v-else>
             <p>
-                To change the order of questions, drag and drop them into the correct order then click the "Save order" button
+                To change the order of questions, drag and drop them into the correct order then click the "Save order"
+                button
             </p>
 
             <draggable v-model="displayQuestions" :options="dragOptions">
@@ -37,7 +38,7 @@
 
     export default {
         props: {
-            questions: { default: [] },
+            questions: {default: []},
             formId: {}
         },
 
@@ -48,7 +49,7 @@
                 visibleQuestion: null,
                 displayQuestions: this.questions,
                 loading: false,
-                dragOptions: {ghostClass: "ghost"}
+                dragOptions: {ghostClass: 'ghost'}
             };
         },
 
@@ -70,16 +71,16 @@
                 const order = [];
 
                 this.displayQuestions.forEach((question, index) => {
-                    order.push({question:question.id, order:index});
+                    order.push({question: question.id, order: index});
                 });
-                
-                axios.patch(`/forms/${this.formId}/order`, {'order':order})
+
+                axios.patch(`/forms/${this.formId}/order`, {'order': order})
                     .then(response => {
-                        flash("Order updated");
+                        flash('Order updated');
                         this.loading = false;
                     }).catch(error => {
                     this.loading = false;
-                    flash("Error updating order. Please try again later", "danger");
+                    flash('Error updating order. Please try again later', 'danger');
                 });
             }
         }

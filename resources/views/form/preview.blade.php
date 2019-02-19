@@ -13,7 +13,7 @@
     <div class="p-3 border rounded">
         <h3>{{ $form['title'] }}</h3>
         <div class="mt-3 mb-2">{!! $form['description'] !!}</div>
-        <hr/>
+        <hr />
         <form-builder
                 :form="{{ json_encode($form->getAttributes()) }}"
                 :questions="{{ json_encode($questions) }}"

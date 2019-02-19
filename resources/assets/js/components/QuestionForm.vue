@@ -13,7 +13,8 @@
                             Title
                         </label>
                         <input class="form-control" type="text" v-model="form.title" id="title" name="title" required>
-                        <span class="text-danger" v-if="form.errors.has('title')" v-text="form.errors.get('title')"></span>
+                        <span class="text-danger" v-if="form.errors.has('title')" v-text="form.errors.get('title')">
+                        </span>
                     </div>
 
                     <div class="form-group">
@@ -58,7 +59,8 @@
                             <option value="radio">Radio buttons</option>
                             <option value="dropdown">Dropdown select</option>
                         </select>
-                        <span class="text-danger" v-if="form.errors.has('type')" v-text="form.errors.get('type')"></span>
+                        <span class="text-danger" v-if="form.errors.has('type')" v-text="form.errors.get('type')">
+                        </span>
                         <span v-if="form.type == 'label'">Please use the help text field for the label text</span>
                     </div>
 
@@ -78,7 +80,8 @@
                             </options-form>
                             <button class="btn btn-raised btn-primary m-2" @click="addOption">Add option</button>
                         </div>
-                        <span class="text-danger" v-if="form.errors.has('options')" v-text="form.errors.get('options')"></span>
+                        <span class="text-danger" v-if="form.errors.has('options')" v-text="form.errors.get('options')">
+                        </span>
                     </div>
 
                 </div>
@@ -136,8 +139,8 @@
                     :disabled="loading"
                     v-text="loading ? 'Loading' : 'Save question'"
             >
-
             </button>
+
         </form>
     </div>
 </template>
@@ -146,8 +149,8 @@
     import axios from 'axios';
     import {filter} from 'lodash';
     import Form from '../classes/Form';
-    import OptionsForm from "./OptionsForm";
-    import VisibilityRequirementForm from "./VisibilityRequirementForm";
+    import OptionsForm from './OptionsForm';
+    import VisibilityRequirementForm from './VisibilityRequirementForm';
 
     export default {
         components: {VisibilityRequirementForm, OptionsForm},
@@ -240,20 +243,20 @@
                         window.location = `/forms/${this.formId}/questions`;
                     }).catch(error => {
                     this.loading = false;
-                    flash("Error updating form. Please try again later", "danger");
+                    flash('Error updating form. Please try again later', 'danger');
                 });
             },
 
             submitUpdate() {
                 this.form.patch(`/forms/${this.formId}/questions/${this.questionId}`)
                     .then(response => {
-                        flash("Question updated");
+                        flash('Question updated');
                         this.$emit('questionUpdated', response.title);
                         this.mapQuestion(response);
                         this.loading = false;
                     }).catch(error => {
                     this.loading = false;
-                    flash("Error updating form. Please try again later", "danger");
+                    flash('Error updating form. Please try again later', 'danger');
                 });
             },
 
@@ -269,18 +272,18 @@
             deleteOption(id) {
                 if (!id) {
                     // User is deleting an empty option, so just remove from local data
-                    this.form.options = filter(this.form.options, option =>  option.id !== null);
+                    this.form.options = filter(this.form.options, option => option.id !== null);
                     return;
                 }
 
                 axios.delete(`/forms/${this.formId}/questions/${this.questionId}/options/${id}`)
                     .then(response => {
                         this.loading = false;
-                        flash("Option deleted");
+                        flash('Option deleted');
                         this.form.options = filter(this.form.options, option => option.id !== id);
                     }).catch(error => {
                     this.loading = false;
-                    flash("Error deleting option. Please try again later", "danger");
+                    flash('Error deleting option. Please try again later', 'danger');
                 });
             },
 

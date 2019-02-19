@@ -1,5 +1,4 @@
-export default class Field
-{
+export default class Field {
     constructor(question) {
         this.question = question;
         this.properties = {};

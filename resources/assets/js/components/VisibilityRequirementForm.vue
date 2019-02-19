@@ -13,8 +13,14 @@
                 <label for="question">
                     Question
                 </label>
-                <select class="form-control" type="text" v-model="selectedQuestion" @change="updateQuestion"
-                        id="question" name="question" required>
+                <select class="form-control"
+                        type="text"
+                        v-model="selectedQuestion"
+                        @change="updateQuestion"
+                        id="question"
+                        name="question"
+                        required
+                >
                     <option v-for="question in questions" :value="question.id">{{ question.title }}</option>
                 </select>
             </div>
@@ -22,8 +28,14 @@
                 <label for="value">
                     Value
                 </label>
-                <select class="form-control" type="text" v-model="selectedValue" @change="updateValue" id="value"
-                        name="value" required>
+                <select class="form-control"
+                        type="text"
+                        v-model="selectedValue"
+                        @change="updateValue"
+                        id="value"
+                        name="value"
+                        required
+                >
                     <option v-for="option in selectedQuestionOptions" :value="option.value">{{ option.value }}</option>
                 </select>
             </div>
@@ -32,10 +44,10 @@
 </template>
 
 <script>
-    import axios from "axios";
+    import axios from 'axios';
 
     export default {
-        props: ["formId", "question", "value"],
+        props: ['formId', 'question', 'value'],
 
         data() {
             return {

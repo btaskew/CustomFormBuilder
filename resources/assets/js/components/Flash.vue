@@ -4,7 +4,8 @@
              style="right: 25px; bottom: 25px;"
              role="alert"
              v-show="show"
-             v-text="body">
+             v-text="body"
+        >
         </div>
     </transition>
 </template>

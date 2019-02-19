@@ -16,7 +16,7 @@
     import FormBuilder from './../classes/FormBuilder';
 
     export default {
-        props: ["form", "questions", "isPreview"],
+        props: ['form', 'questions', 'isPreview'],
 
         data() {
             return {
@@ -34,7 +34,7 @@
         created() {
             this.model = FormBuilder.buildModel(this.questions);
             this.schema.fields = FormBuilder.buildFields(this.questions);
-            this.schema.fields.push({type: "submit", buttonText: "Submit", onSubmit: this.submitForm});
+            this.schema.fields.push({type: 'submit', buttonText: 'Submit', onSubmit: this.submitForm});
         },
 
         methods: {
@@ -42,7 +42,7 @@
                 if (this.isPreview) {
                     return (this.isSubmitted = true);
                 }
-                
+
                 const formData = new FormData();
 
                 for (const field in this.model) {
@@ -53,7 +53,7 @@
                     .then(response => {
                         this.isSubmitted = true;
                     }).catch(error => {
-                        this.error = true;
+                    this.error = true;
                 });
             }
         }

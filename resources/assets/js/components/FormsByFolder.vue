@@ -32,7 +32,6 @@
             displayForms() {
                 return this.folders[this.selectedFolder];
             },
-
         },
 
         methods: {

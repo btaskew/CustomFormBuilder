@@ -1,7 +1,6 @@
 import FieldFactory from './FieldFactory';
 
-class FormBuilder
-{
+class FormBuilder {
     buildModel(questions) {
         const model = {};
 

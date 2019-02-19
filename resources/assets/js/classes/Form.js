@@ -2,8 +2,7 @@ import Errors from '../classes/Errors';
 import Success from '../classes/Success';
 import axios from 'axios';
 
-export default class Form
-{
+export default class Form {
     /**
      * Create a new Form instance.
      *
@@ -127,7 +126,7 @@ export default class Form
      * @param {object} errors
      */
     onFail(errors) {
-        if (errors === "") {
+        if (errors === '') {
             return;
         }
         this.errors = new Errors();

@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -24,11 +23,12 @@ Vue.component('rich-text-editor', require('./components/RichTextEditor'));
 Vue.component('question-bank', require('./components/QuestionBank'));
 Vue.component('forms-by-folder', require('./components/FormsByFolder'));
 
-Vue.config.ignoredElements = ['trix-editor']
+Vue.config.ignoredElements = ['trix-editor'];
 
 import VueFormGenerator from 'vue-form-generator'
 import 'vue-form-generator/dist/vfg.css'
-Vue.use(VueFormGenerator)
+
+Vue.use(VueFormGenerator);
 
 const app = new Vue({
     el: '#app'

@@ -52,7 +52,7 @@
         components: {Modal},
 
         props: {
-            forms: { default: [] }
+            forms: {default: []}
         },
 
         data() {
