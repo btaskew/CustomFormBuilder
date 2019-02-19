@@ -6,5 +6,6 @@
         <a href="/forms/create">Add form</a>
     </div>
 
-    <form-list :forms="{{ $forms }}"></form-list>
+    <forms-by-folder :folders="{{ $folders }}"></forms-by-folder>
+    {{--<form-list :forms="{{ $forms }}"></form-list>--}}
 @endsection

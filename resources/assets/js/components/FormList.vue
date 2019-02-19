@@ -57,11 +57,16 @@
 
         data() {
             return {
-                displayForms: this.forms,
                 formToDelete: null,
                 showConfirmModal: false,
                 loading: false
             };
+        },
+
+        computed: {
+            displayForms() {
+                return this.forms;
+            }
         },
 
         methods: {
