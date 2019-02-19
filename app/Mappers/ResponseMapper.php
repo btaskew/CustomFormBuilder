@@ -73,11 +73,11 @@ class ResponseMapper
         if (isset($response->response->{$question->id})) {
             $this->responses[$response->id]
             ["answers"]
-            [$question->order + 1 . '. ' . $question->title] = $response->response->{$question->id};
+            [$question->getFullTitle()] = $response->response->{$question->id};
         } else {
             $this->responses[$response->id]
             ["answers"]
-            [$question->order + 1 . '. ' . $question->title] = "n/a";
+            [$question->getFullTitle()] = "n/a";
         }
     }
 }

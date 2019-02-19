@@ -135,4 +135,15 @@ class QuestionTest extends TestCase
 
         $this->assertDatabaseHas('visibility_requirements', ['question_id' => $question->id]);
     }
+
+    /** @test */
+    public function a_question_can_get_its_full_unique_title()
+    {
+        $question = create(Question::class, [
+            'order' => 0,
+            'title' => 'Title'
+        ]);
+
+        $this->assertEquals('1. Title', $question->getFullTitle());
+    }
 }

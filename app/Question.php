@@ -150,4 +150,12 @@ class Question extends Model
             $this->order = $highestOrder + 1;
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getFullTitle(): string
+    {
+        return $this->order + 1 . '. ' . $this->title;
+    }
 }

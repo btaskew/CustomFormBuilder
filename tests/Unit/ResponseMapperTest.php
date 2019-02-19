@@ -32,16 +32,16 @@ class ResponseMapperTest extends TestCase
                 "id" => $response1->id,
                 "created_at" => $response1->created_at,
                 "answers" => [
-                    $questions[0]->order + 1 . '. ' . $questions[0]->title => "r1q1",
-                    $questions[1]->order + 1 . '. ' . $questions[1]->title => "r1q2",
+                    $questions[0]->getFullTitle() => "r1q1",
+                    $questions[1]->getFullTitle() => "r1q2",
                 ]
             ],
             $response2->id => [
                 "id" => $response2->id,
                 "created_at" => $response2->created_at,
                 "answers" => [
-                    $questions[0]->order + 1 . '. ' . $questions[0]->title => "r2q1",
-                    $questions[1]->order + 1 . '. ' . $questions[1]->title => "r2q2",
+                    $questions[0]->getFullTitle() => "r2q1",
+                    $questions[1]->getFullTitle() => "r2q2",
                 ]
             ],
         ];
@@ -64,8 +64,8 @@ class ResponseMapperTest extends TestCase
                 "id" => $response->id,
                 "created_at" => $response->created_at,
                 "answers" => [
-                    $questions[0]->order + 1 . '. ' . $questions[0]->title => "r1q1",
-                    $questions[1]->order + 1 . '. ' . $questions[1]->title => "n/a",
+                    $questions[0]->getFullTitle() => "r1q1",
+                    $questions[1]->getFullTitle() => "n/a",
                 ]
             ],
         ];
