@@ -134,7 +134,7 @@ class Question extends Model
     }
 
     /**
-     * Set question to be last in form
+     * Set question to be last in form if new
      */
     public function setOrder(): void
     {

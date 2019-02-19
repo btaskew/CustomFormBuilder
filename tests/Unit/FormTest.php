@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Folder;
 use App\Form;
 use App\FormResponse;
 use App\Question;
@@ -46,6 +47,15 @@ class FormTest extends TestCase
         $response = create(FormResponse::class, ['form_id' => $this->form->id]);
 
         $this->assertTrue($this->form->responses->first()->is($response));
+    }
+
+    /** @test */
+    public function a_form_belongs_to_a_folder()
+    {
+        $folder = create(Folder::class);
+        $form = make(Form::class, ['folder_id' => $folder->id]);
+
+        $this->assertTrue($form->folder->is($folder));
     }
 
     /** @test */

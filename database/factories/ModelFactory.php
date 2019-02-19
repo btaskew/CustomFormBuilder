@@ -33,6 +33,9 @@ $factory->define(App\Form::class, function (Faker $faker) {
         'user_id' => function () {
             return factory(\App\User::class)->create()->id;
         },
+        'folder_id' => function () {
+            return factory(\App\Folder::class)->create()->id;
+        },
     ];
 });
 
@@ -77,5 +80,11 @@ $factory->define(App\FormResponse::class, function (Faker $faker) {
             return factory(\App\Form::class)->create()->id;
         },
         'response' => $faker->word
+    ];
+});
+
+$factory->define(App\Folder::class, function (Faker $faker) {
+    return [
+        'name' => $faker->word
     ];
 });

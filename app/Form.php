@@ -101,6 +101,14 @@ class Form extends Model
     }
 
     /**
+     * @return BelongsTo
+     */
+    public function folder(): BelongsTo
+    {
+        return $this->belongsTo(Folder::class);
+    }
+
+    /**
      * @return Collection
      */
     public function getOrderedQuestions(): Collection

@@ -25,6 +25,7 @@ class CreateFormsTable extends Migration
             $table->unsignedInteger('response_email_field')->nullable();
             $table->text('success_text')->nullable();
             $table->unsignedInteger('user_id');
+            $table->unsignedInteger('folder_id');
             $table->timestamps();
         });
     }
