@@ -55,6 +55,7 @@ class FormResponded extends Mailable
      */
     private function getResponse(): array
     {
-        return (new ResponseMapper($this->form))->mapResponse($this->response)[$this->response->id];
+        return (new ResponseMapper($this->form, $this->form->getAnswerableQuestions()))
+            ->mapResponse($this->response)[$this->response->id];
     }
 }

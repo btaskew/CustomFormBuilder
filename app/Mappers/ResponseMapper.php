@@ -54,11 +54,13 @@ class ResponseMapper
      */
     public function mapResponse(FormResponse $response): array
     {
-        $this->questions->each(function ($question) use ($response) {
-            $this->responses[$response->id]["id"] = $response->id;
-            $this->responses[$response->id]["created_at"] = $response->created_at;
+        $this->responses[$response->id]["id"] = $response->id;
+        $this->responses[$response->id]["created_at"] = $response->created_at;
+
+        $this->questions->each(function ($question) use ($response, &$count) {
             $this->addResponse($question, $response);
         });
+
         return $this->responses;
     }
 
@@ -69,9 +71,13 @@ class ResponseMapper
     private function addResponse(Question $question, FormResponse $response): void
     {
         if (isset($response->response->{$question->id})) {
-            $this->responses[$response->id]["answers"][$question->title] = $response->response->{$question->id};
+            $this->responses[$response->id]
+            ["answers"]
+            [$question->order + 1 . '. ' . $question->title] = $response->response->{$question->id};
         } else {
-            $this->responses[$response->id]["answers"][$question->title] = "n/a";
+            $this->responses[$response->id]
+            ["answers"]
+            [$question->order + 1 . '. ' . $question->title] = "n/a";
         }
     }
 }

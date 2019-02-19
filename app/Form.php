@@ -116,9 +116,10 @@ class Form extends Model
      */
     public function getAnswerableQuestions(): Collection
     {
-        return $this->getOrderedQuestions()->reject(function (Question $question) {
-            return $question->type == 'label';
-        });
+        return $this->questions()
+            ->where('type', '!=', 'label')
+            ->orderBy('order')
+            ->get();
     }
 
     /**
