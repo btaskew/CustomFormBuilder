@@ -84,9 +84,12 @@ class FormController extends Controller
      *
      * @param Form $form
      * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Form $form)
     {
+        $this->authorize('update', $form);
+
         return view('form.edit', compact('form'));
     }
 
