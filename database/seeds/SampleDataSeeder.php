@@ -1,5 +1,6 @@
 <?php
 
+use App\Folder;
 use App\Form;
 use App\Question;
 use Illuminate\Database\Seeder;
@@ -13,7 +14,12 @@ class SampleDataSeeder extends Seeder
      */
     public function run()
     {
-        $forms = factory(Form::class, 3)->create(['user_id' => 1]);
+        $folders = factory(Folder::class, 3)->create();
+
+        $forms = factory(Form::class, 3)->create([
+            'user_id' => 1,
+            'folder_id' => $folders[0]->id
+        ]);
 
         $forms->each(function (Form $form) {
             factory(Question::class, 4)->create([

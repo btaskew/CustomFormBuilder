@@ -3,5 +3,5 @@
 @section('content')
     <h3>Create a new form</h3>
 
-    <edit-form></edit-form>
+    <edit-form :folders="{{ json_encode($folders) }}"></edit-form>
 @endsection

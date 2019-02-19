@@ -25,7 +25,8 @@ class Form extends Model
         'success_text',
         'response_email',
         'response_email_field',
-        'user_id'
+        'user_id',
+        'folder_id'
     ];
 
     /**

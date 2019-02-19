@@ -33,6 +33,20 @@
                     ></span>
                 </div>
 
+                <!--Only show folder selection when creating-->
+                <div v-if="this.folders" class="form-group">
+                    <label for="folder_id" :class="{ 'has-error': form.errors.has('folder_id') }">
+                        Folder
+                    </label>
+                    <select class="form-control" v-model="form.folder_id" id="folder_id" name="folder_id" required>
+                        <option v-for="folder in this.folders" :value="folder.id">{{ folder.name }}</option>
+                    </select>
+                    <span class="text-danger"
+                          v-if="form.errors.has('folder_id')"
+                          v-text="form.errors.get('folder_id')"
+                    ></span>
+                </div>
+
                 <div class="form-row">
                     <div class="col form-group">
                         <label for="open_date"
@@ -41,7 +55,13 @@
                         >
                             Open date
                         </label>
-                        <input class="form-control" type="date" v-model="form.open_date" id="open_date" name="open_date" required>
+                        <input class="form-control"
+                               type="date"
+                               v-model="form.open_date"
+                               id="open_date"
+                               name="open_date"
+                               required
+                        >
                         <span class="text-danger"
                               v-if="form.errors.has('open_date')"
                               v-text="form.errors.get('open_date')"
@@ -54,7 +74,13 @@
                         >
                             Closing date
                         </label>
-                        <input class="form-control" type="date" v-model="form.close_date" id="close_date" name="close_date" required>
+                        <input class="form-control"
+                               type="date"
+                               v-model="form.close_date"
+                               id="close_date"
+                               name="close_date"
+                               required
+                        >
                         <span class="text-danger"
                               v-if="form.errors.has('close_date')"
                               v-text="form.errors.get('close_date')"
@@ -69,7 +95,12 @@
                     >
                         Admin emails
                     </label>
-                    <input class="form-control" type="text" v-model="form.admin_email" id="admin_email" name="admin_email">
+                    <input class="form-control"
+                           type="text"
+                           v-model="form.admin_email"
+                           id="admin_email"
+                           name="admin_email"
+                    >
                     <span class="text-danger"
                           v-if="form.errors.has('admin_email')"
                           v-text="form.errors.get('admin_email')"
@@ -127,7 +158,10 @@
     import Form from '../classes/Form';
 
     export default {
-        props: {formData: {default: null}},
+        props: {
+            formData: {default: null},
+            folders: {default: null},
+        },
 
         data() {
             return {
@@ -139,6 +173,7 @@
                     active: null,
                     admin_email: null,
                     success_text: null,
+                    folder_id: null,
                 }),
                 loading: false,
                 success: true,
@@ -156,6 +191,7 @@
                 this.form.active = this.formData.active;
                 this.form.admin_email = this.formData.admin_email;
                 this.form.success_text = this.formData.success_text;
+                this.form.folder_id = this.formData.folder_id;
                 this.isNewForm = false;
             }
         },
@@ -178,7 +214,7 @@
                         window.location = `/forms/${response.id}/edit`;
                     }).catch(error => {
                     this.loading = false;
-                    flash("Error saving form. Please try again later", "danger");
+                    flash('Error saving form. Please try again later', 'danger');
                 });
             },
 
@@ -186,16 +222,12 @@
                 this.form.patch(`/forms/${this.formData.id}`)
                     .then(response => {
                         this.loading = false;
-                        flash("Form updated");
+                        flash('Form updated');
                     }).catch(error => {
                     this.loading = false;
-                    flash("Error updating form. Please try again later", "danger");
+                    flash('Error updating form. Please try again later', 'danger');
                 });
             }
         }
     }
 </script>
-
-<style scoped>
-
-</style>

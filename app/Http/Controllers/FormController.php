@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Folder;
 use App\Form;
 use App\Http\Requests\FormRequest;
 
@@ -29,7 +30,9 @@ class FormController extends Controller
      */
     public function create()
     {
-        return view('form.create');
+        $folders = Folder::all();
+
+        return view('form.create', compact('folders'));
     }
 
     /**
@@ -49,6 +52,7 @@ class FormController extends Controller
             'admin_email' => $request->input('admin_email'),
             'success_text' => $request->input('success_text'),
             'response_email' => $request->input('response_email'),
+            'folder_id' => $request->input('folder_id'),
             'user_id' => auth()->user()->id
         ]);
     }

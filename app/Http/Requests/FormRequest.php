@@ -33,6 +33,7 @@ class FormRequest extends LaravelFormRequest
             'active' => 'boolean',
             'success_text' => 'string|nullable',
             'response_email' => 'string|nullable',
+            'folder_id' => 'integer',
         ];
     }
 }

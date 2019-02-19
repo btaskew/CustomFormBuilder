@@ -35,7 +35,8 @@ class CreateFormTest extends TestCase
             'active' => true,
             'admin_email' => 'test@email.com;foo@email.com',
             'success_text' => 'Form submitted',
-            'response_email' => 'Response text'
+            'response_email' => 'Response text',
+            'folder_id' => 1
         ];
 
         $this->login()
