@@ -38,12 +38,12 @@ class FormAccessController extends Controller
             return response()->json(['error' => 'Given user was not found in the database'], 404);
         }
 
-        FormUser::create([
+        $user->pivot = FormUser::create([
             'user_id' => $user->id,
             'form_id' => $form->id
         ]);
 
-        return response()->json(['success' => 'Access to form granted']);
+        return $user;
     }
 
     /**

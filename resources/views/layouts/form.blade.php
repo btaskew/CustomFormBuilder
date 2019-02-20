@@ -32,6 +32,11 @@
                     View responses
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ setActive('forms/*/access') }}" href="/forms/{{ $form->id }}/access">
+                    Edit access
+                </a>
+            </li>
         </ul>
     </nav>
 

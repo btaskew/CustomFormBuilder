@@ -8,7 +8,7 @@ use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UserAccessTest extends TestCase
+class FormUserAccessTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -28,7 +28,8 @@ class UserAccessTest extends TestCase
         $user = create(User::class);
 
         $this->post('forms/' . $form->id . '/access', ['username' => $user->username])
-            ->assertStatus(200);
+            ->assertStatus(200)
+            ->assertSee($user->username);
 
         $this->assertDatabaseHas('form_user', [
             'form_id' => $form->id,

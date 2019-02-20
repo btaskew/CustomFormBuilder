@@ -126,7 +126,7 @@ export default class Form {
      * @param {object} errors
      */
     onFail(errors) {
-        if (errors === '') {
+        if (!errors || errors === '') {
             return;
         }
         this.errors = new Errors();

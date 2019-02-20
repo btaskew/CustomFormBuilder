@@ -6,7 +6,7 @@
             No additional users with access
         </div>
 
-        <table v-else class="table">
+        <table v-else class="table mt-3">
             <thead>
             <tr>
                 <th scope="col">Name</th>
