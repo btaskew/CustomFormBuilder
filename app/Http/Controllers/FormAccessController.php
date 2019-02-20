@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
 class FormAccessController extends Controller
 {
     /**
+     * @param Form $form
+     */
+    public function index(Form $form)
+    {
+        return $form->usersWithAccess;
+    }
+
+    /**
      * @param Request $request
      * @param Form    $form
      * @return \Illuminate\Http\JsonResponse
@@ -32,5 +40,20 @@ class FormAccessController extends Controller
         ]);
 
         return response()->json(['success' => 'Access to form granted']);
+    }
+
+    /**
+     * @param Form     $form
+     * @param FormUser $formUser
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function destroy(Form $form, FormUser $formUser)
+    {
+        $this->authorize('update', $form);
+
+        $formUser->delete();
+
+        return response()->json(['success' => 'Access to form removed']);
     }
 }

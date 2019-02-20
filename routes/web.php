@@ -43,7 +43,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('responses', 'FormResponseController@index');
         Route::get('responses/export', 'ResponseExportController@index');
 
+        Route::get('access', 'FormAccessController@index');
         Route::post('access', 'FormAccessController@store');
+        Route::delete('access/{formUser}', 'FormAccessController@destroy');
 
     });
 

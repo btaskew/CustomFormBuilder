@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Form;
+use App\FormUser;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -55,5 +56,43 @@ class UserAccessTest extends TestCase
         $this->post('forms/' . $form->id . '/access', ['username' => 'ab123'])
             ->assertStatus(404)
             ->assertJsonFragment(['error' => 'Given user was not found in the database']);
+    }
+
+    /** @test */
+    public function a_user_can_view_all_users_who_have_access_to_a_given_form()
+    {
+        $form = $this->loginUserWithForm();
+        $user = create(User::class);
+        create(FormUser::class, ['form_id' => $form->id, 'user_id' => $user->id]);
+
+        $this->get('forms/' . $form->id . '/access')
+            ->assertStatus(200)
+            ->assertSee($user->username);
+    }
+
+    /** @test */
+    public function a_user_can_remove_another_users_access_to_their_form()
+    {
+        $form = $this->loginUserWithForm();
+        $user = create(User::class);
+        $userAcccess = create(FormUser::class, ['form_id' => $form->id, 'user_id' => $user->id]);
+
+        $this->delete('forms/' . $form->id . '/access/' . $userAcccess->id)
+            ->assertStatus(200);
+
+        $this->assertDatabaseMissing('form_user', ['id' => $userAcccess->id]);
+    }
+
+    /** @test */
+    public function a_user_cant_remove_a_users_access_to_another_users_form()
+    {
+        $this->withExceptionHandling();
+
+        $form = create(Form::class, ['user_id' => 999]);
+        $userAcccess = create(FormUser::class, ['form_id' => $form->id, 'user_id' => 123]);
+
+        $this->login()
+            ->delete('forms/' . $form->id . '/access/' . $userAcccess->id)
+            ->assertStatus(403);
     }
 }
