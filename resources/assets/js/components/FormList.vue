@@ -8,9 +8,12 @@
             <ul class="list-group">
                 <li v-for="form in displayForms" class="list-group-item d-flex justify-content-between">
                     <span>{{ form.title }}</span>
-                    <div>
+                    <div v-if="form.editAccess">
                         <a href="#" class="mr-3" @click="confirmDelete(form.id)">Delete</a>
-                        <a :href="editUrl(form.id)">Edit</a>
+                        <a :href="`/forms/${form.id}/edit`">Edit</a>
+                    </div>
+                    <div v-else>
+                        <a :href="`/forms/${form.id}/preview`">View</a>
                     </div>
                 </li>
             </ul>
@@ -60,10 +63,6 @@
         },
 
         methods: {
-            editUrl(id) {
-                return `/forms/${id}/edit`;
-            },
-
             confirmDelete(id) {
                 this.formToDelete = id;
                 this.showConfirmModal = true;
