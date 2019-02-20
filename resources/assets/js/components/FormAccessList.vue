@@ -89,8 +89,9 @@
                 axios.delete(`/forms/${this.formId}/access/${this.userToDelete}`)
                     .then(response => {
                         this.loading = false;
-                        this.userToDelete = null;
                         flash('User\'s access removed');
+                        this.$emit('userRemoved', this.userToDelete);
+                        this.userToDelete = null;
                     }).catch(error => {
                     this.loading = false;
                     this.userToDelete = null;
