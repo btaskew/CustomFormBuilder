@@ -66,7 +66,7 @@ class FormValidationTest extends TestCase
     {
         $form = $this->loginUserWithForm();
 
-        $this->patch('/forms/' . $form->id, ['title' => 'New title', 'description' => ''])
+        $this->patch(formPath($form), ['title' => 'New title', 'description' => ''])
             ->assertStatus(200);
 
         $this->assertEquals('', $form->fresh()->description);
@@ -77,7 +77,7 @@ class FormValidationTest extends TestCase
     {
         $form = $this->loginUserWithForm();
 
-        $this->patch('/forms/' . $form->id, ['title' => 'New title', 'response_email_field' => 1])
+        $this->patch(formPath($form), ['title' => 'New title', 'response_email_field' => 1])
             ->assertStatus(422)
             ->assertJsonFragment(['error' => 'Question for the response email field not present on form']);
     }
@@ -88,7 +88,7 @@ class FormValidationTest extends TestCase
         $form = $this->loginUserWithForm();
         $question = create(Question::class, ['form_id' => 999]);
 
-        $this->patch('/forms/' . $form->id, ['title' => 'New title', 'response_email_field' => $question->id])
+        $this->patch(formPath($form), ['title' => 'New title', 'response_email_field' => $question->id])
             ->assertStatus(422)
             ->assertJsonFragment(['error' => 'Question for the response email field not present on form']);
     }

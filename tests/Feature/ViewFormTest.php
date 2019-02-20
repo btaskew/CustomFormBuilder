@@ -35,7 +35,7 @@ class ViewFormTest extends TestCase
         $form = $this->loginUserWithForm();
         $question = create(Question::class, ['form_id' => $form->id]);
 
-        $this->json('get', '/forms/' . $form->id . '/questions')
+        $this->json('get', formPath($form) . '/questions')
             ->assertStatus(200)
             ->assertSee($question->title);
     }
@@ -49,7 +49,7 @@ class ViewFormTest extends TestCase
         $form = create(Form::class, ['user_id' => 999]);
         create(Question::class, ['form_id' => $form->id]);
 
-        $this->get('/forms/' . $form->id . '/questions')
+        $this->get(formPath($form) . '/questions')
             ->assertStatus(403);
     }
 
@@ -59,7 +59,7 @@ class ViewFormTest extends TestCase
         $form = $this->loginUserWithForm();
         $question = create(Question::class, ['form_id' => $form->id]);
 
-        $this->get('/forms/' . $form->id . '/preview')
+        $this->get(formPath($form) . '/preview')
             ->assertStatus(200)
             ->assertSee($form->title)
             ->assertSee($question->title);
@@ -71,7 +71,7 @@ class ViewFormTest extends TestCase
         $form = create(Form::class);
         $question = create(Question::class, ['form_id' => $form->id]);
 
-        $this->get('/forms/' . $form->id)
+        $this->get(formPath($form))
             ->assertStatus(200)
             ->assertSee($form->title)
             ->assertSee($question->title);
@@ -84,7 +84,7 @@ class ViewFormTest extends TestCase
         $question = create(Question::class, ['form_id' => $form->id, 'type' => 'radio']);
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
-        $this->get('/forms/' . $form->id)
+        $this->get(formPath($form))
             ->assertStatus(200)
             ->assertSee($question->title)
             ->assertSee($option->display_value);
@@ -95,7 +95,7 @@ class ViewFormTest extends TestCase
     {
         $form = create(Form::class, ['active' => false]);
 
-        $this->get('/forms/' . $form->id)
+        $this->get(formPath($form))
             ->assertStatus(200)
             ->assertSee('This form is not currently active');
     }

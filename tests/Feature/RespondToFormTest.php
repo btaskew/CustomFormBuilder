@@ -20,7 +20,7 @@ class RespondToFormTest extends TestCase
         $form = create(Form::class);
         $question = create(Question::class, ['form_id' => $form->id]);
 
-        $this->post('/forms/' . $form->id . '/responses', [$question->id => "value"])
+        $this->post(formPath($form) . '/responses', [$question->id => "value"])
             ->assertStatus(200);
 
         $this->assertDatabaseHas('form_responses', [
@@ -39,7 +39,7 @@ class RespondToFormTest extends TestCase
             'response' => '{"' . $question->id . '":"value"}'
         ]);
 
-        $this->get('/forms/' . $form->id . '/responses')
+        $this->get(formPath($form) . '/responses')
             ->assertStatus(200)
             ->assertSee("value");
     }
@@ -51,7 +51,7 @@ class RespondToFormTest extends TestCase
         $question = create(Question::class, ['form_id' => $form->id]);
         $labelQuestion = create(Question::class, ['form_id' => $form->id, 'type' => 'label']);
 
-        $this->post('/forms/' . $form->id . '/responses', [$question->id => "value", $labelQuestion->id => "label value"])
+        $this->post(formPath($form) . '/responses', [$question->id => "value", $labelQuestion->id => "label value"])
             ->assertStatus(200);
 
         $this->assertDatabaseHas('form_responses', [
@@ -72,7 +72,7 @@ class RespondToFormTest extends TestCase
             'response' => '{"' . $question->id . '":"value"}'
         ]);
 
-        $this->get('/forms/' . $form->id . '/responses')
+        $this->get(formPath($form) . '/responses')
             ->assertStatus(200)
             ->assertDontSee($labelQuestion->title);
     }
@@ -84,7 +84,7 @@ class RespondToFormTest extends TestCase
 
         $form = create(Form::class, ['admin_email' => 'admin@email.com']);
 
-        $this->post('/forms/' . $form->id . '/responses', [1 => "value"])
+        $this->post(formPath($form) . '/responses', [1 => "value"])
             ->assertStatus(200);
 
         Mail::assertSent(FormResponded::class, function ($mail) {
@@ -100,7 +100,7 @@ class RespondToFormTest extends TestCase
         $form = create(Form::class, ['response_email' => 'Thanks for responding!', 'response_email_field' => 1]);
         create(Question::class, ['form_id' => $form->id]);
 
-        $this->post('/forms/' . $form->id . '/responses', [1 => "test@email.com"])
+        $this->post(formPath($form) . '/responses', [1 => "test@email.com"])
             ->assertStatus(200);
 
         Mail::assertSent(\App\Mail\FormResponse::class, function ($mail) {
@@ -114,7 +114,7 @@ class RespondToFormTest extends TestCase
         $form = create(Form::class, ['active' => false]);
         $question = create(Question::class, ['form_id' => $form->id]);
 
-        $this->post('/forms/' . $form->id . '/responses', [$question->id => "value"])
+        $this->post(formPath($form) . '/responses', [$question->id => "value"])
             ->assertStatus(403);
 
         $this->assertDatabaseMissing('form_responses', [

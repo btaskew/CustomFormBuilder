@@ -33,7 +33,7 @@ class CreateQuestionTest extends TestCase
             'required' => true,
         ];
 
-        $this->post('/forms/' . $form->id . '/questions', $attributes)
+        $this->post(formPath($form) . '/questions', $attributes)
             ->assertStatus(200);
 
         $this->assertDatabaseHas('questions', $attributes);
@@ -54,7 +54,7 @@ class CreateQuestionTest extends TestCase
             ]
         ];
 
-        $this->post('/forms/' . $form->id . '/questions', $attributes)
+        $this->post(formPath($form) . '/questions', $attributes)
             ->assertStatus(200);
 
         $this->assertDatabaseHas('questions', ['title' => 'First question']);
@@ -79,7 +79,7 @@ class CreateQuestionTest extends TestCase
             ]
         ];
 
-        $this->post('/forms/' . $form->id . '/questions', $attributes)
+        $this->post(formPath($form) . '/questions', $attributes)
             ->assertStatus(200);
 
         $this->assertDatabaseHas('questions', ['title' => 'First question']);
@@ -95,7 +95,7 @@ class CreateQuestionTest extends TestCase
         $attributes = raw(Question::class);
 
         $this->login()
-            ->post('/forms/' . $form->id . '/questions', $attributes)
+            ->post(formPath($form) . '/questions', $attributes)
             ->assertStatus(403);
     }
 }

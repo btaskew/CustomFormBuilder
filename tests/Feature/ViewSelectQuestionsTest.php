@@ -19,7 +19,7 @@ class ViewSelectQuestionsTest extends TestCase
         $option = create(SelectOption::class, ['question_id' => $selectQuestion->id]);
         $otherQuestion = create(Question::class, ['type' => 'text', 'form_id' => $form->id]);
 
-        $this->get('/forms/' . $form->id . '/select-questions')
+        $this->get(formPath($form) . '/select-questions')
             ->assertStatus(200)
             ->assertSee($selectQuestion->title)
             ->assertSee($option->value)

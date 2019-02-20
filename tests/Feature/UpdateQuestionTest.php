@@ -60,7 +60,7 @@ class UpdateQuestionTest extends TestCase
         $question = create(Question::class, ['title' => 'Old title', 'type' => 'text', 'form_id' => $form->id]);
 
         $this->login()
-            ->patch('/forms/' . $form->id . '/questions/' . $question->id, [
+            ->patch(formPath($form) . '/questions/' . $question->id, [
                 'title' => 'New title', 'type' => 'text', 'order' => 1
             ])
             ->assertStatus(403);

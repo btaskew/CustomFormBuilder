@@ -18,7 +18,7 @@ class ExportResponsesTest extends TestCase
 
         $form = $this->loginUserWithForm();
 
-        $this->get('/forms/' . $form->id . '/responses/export')->assertStatus(200);
+        $this->get(formPath($form) . '/responses/export')->assertStatus(200);
 
         Excel::assertDownloaded('responses.xlsx');
     }
@@ -30,7 +30,7 @@ class ExportResponsesTest extends TestCase
 
         $form = create(Form::class, ['user_id' => 9999]);
 
-        $this->login()->get('/forms/' . $form->id . '/responses/export')->assertStatus(403);
+        $this->login()->get(formPath($form) . '/responses/export')->assertStatus(403);
     }
 
     /** @test */
@@ -40,6 +40,6 @@ class ExportResponsesTest extends TestCase
 
         $form = create(Form::class);
 
-        $this->get('/forms/' . $form->id . '/responses/export')->assertRedirect('login');
+        $this->get(formPath($form) . '/responses/export')->assertRedirect('login');
     }
 }

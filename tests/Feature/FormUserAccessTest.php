@@ -27,7 +27,7 @@ class FormUserAccessTest extends TestCase
         $form = $this->loginUserWithForm();
         $user = create(User::class);
 
-        $this->post('forms/' . $form->id . '/access', ['username' => $user->username])
+        $this->post(formPath($form) . '/access', ['username' => $user->username])
             ->assertStatus(200)
             ->assertSee($user->username);
 
@@ -45,7 +45,7 @@ class FormUserAccessTest extends TestCase
         $form = create(Form::class, ['user_id' => 999]);
 
         $this->login()
-            ->post('forms/' . $form->id . '/access', ['username' => 'ab123'])
+            ->post(formPath($form) . '/access', ['username' => 'ab123'])
             ->assertStatus(403);
     }
 
@@ -54,7 +54,7 @@ class FormUserAccessTest extends TestCase
     {
         $form = $this->loginUserWithForm();
 
-        $this->post('forms/' . $form->id . '/access', ['username' => 'ab123'])
+        $this->post(formPath($form) . '/access', ['username' => 'ab123'])
             ->assertStatus(404)
             ->assertJsonFragment(['error' => 'Given user was not found in the database']);
     }
@@ -64,7 +64,7 @@ class FormUserAccessTest extends TestCase
     {
         $form = $this->loginUserWithForm();
 
-        $this->post('forms/' . $form->id . '/access', ['username' => $form->owner->username])
+        $this->post(formPath($form) . '/access', ['username' => $form->owner->username])
             ->assertStatus(422)
             ->assertJsonFragment(['error' => 'Can\'t grant access to self']);
     }
@@ -76,7 +76,7 @@ class FormUserAccessTest extends TestCase
         $user = create(User::class);
         create(FormUser::class, ['form_id' => $form->id, 'user_id' => $user->id]);
 
-        $this->get('forms/' . $form->id . '/access')
+        $this->get(formPath($form) . '/access')
             ->assertStatus(200)
             ->assertSee($user->username);
     }
@@ -88,7 +88,7 @@ class FormUserAccessTest extends TestCase
         $user = create(User::class);
         $userAcccess = create(FormUser::class, ['form_id' => $form->id, 'user_id' => $user->id]);
 
-        $this->delete('forms/' . $form->id . '/access/' . $userAcccess->id)
+        $this->delete(formPath($form) . '/access/' . $userAcccess->id)
             ->assertStatus(200);
 
         $this->assertDatabaseMissing('form_user', ['id' => $userAcccess->id]);
@@ -103,7 +103,7 @@ class FormUserAccessTest extends TestCase
         $userAcccess = create(FormUser::class, ['form_id' => $form->id, 'user_id' => 123]);
 
         $this->login()
-            ->delete('forms/' . $form->id . '/access/' . $userAcccess->id)
+            ->delete(formPath($form) . '/access/' . $userAcccess->id)
             ->assertStatus(403);
     }
 }

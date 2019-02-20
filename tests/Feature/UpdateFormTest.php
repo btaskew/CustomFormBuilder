@@ -17,7 +17,7 @@ class UpdateFormTest extends TestCase
     {
         $form = $this->loginUserWithForm();
 
-        $this->get('/forms/' . $form->id . '/edit')->assertSee($form->title);
+        $this->get(formPath($form) . '/edit')->assertSee($form->title);
     }
 
     /** @test */
@@ -27,7 +27,7 @@ class UpdateFormTest extends TestCase
 
         $form = create(Form::class);
 
-        $this->patch('/forms/' . $form->id, ['title' => 'New title'])
+        $this->patch(formPath($form), ['title' => 'New title'])
             ->assertRedirect('login');
     }
 
@@ -49,7 +49,7 @@ class UpdateFormTest extends TestCase
             'active' => false
         ];
 
-        $this->patch('/forms/' . $form->id, $attributes)
+        $this->patch(formPath($form), $attributes)
             ->assertStatus(200);
 
         $form = $form->fresh();
@@ -81,7 +81,7 @@ class UpdateFormTest extends TestCase
             'active' => false
         ];
 
-        $this->patch('/forms/' . $form->id, $attributes)
+        $this->patch(formPath($form), $attributes)
             ->assertStatus(200);
     }
 
@@ -93,7 +93,7 @@ class UpdateFormTest extends TestCase
         $form = create(Form::class, ['user_id' => 999]);
 
         $this->login()
-            ->patch('/forms/' . $form->id, ['title' => 'New title'])
+            ->patch(formPath($form), ['title' => 'New title'])
             ->assertStatus(403);
     }
 
@@ -104,7 +104,7 @@ class UpdateFormTest extends TestCase
 
         $form = create(Form::class);
 
-        $this->delete('/forms/' . $form->id)->assertRedirect('login');
+        $this->delete(formPath($form))->assertRedirect('login');
 
         $this->assertDatabaseHas('forms', ['id' => $form->id]);
     }
@@ -114,7 +114,7 @@ class UpdateFormTest extends TestCase
     {
         $form = $this->loginUserWithForm();
 
-        $this->delete('/forms/' . $form->id)->assertStatus(200);
+        $this->delete(formPath($form))->assertStatus(200);
 
         $this->assertDatabaseMissing('forms', ['id' => $form->id]);
     }
@@ -126,7 +126,7 @@ class UpdateFormTest extends TestCase
 
         $form = create(Form::class, ['user_id' => 9999]);
 
-        $this->login()->delete('/forms/' . $form->id)->assertStatus(403);
+        $this->login()->delete(formPath($form))->assertStatus(403);
 
         $this->assertDatabaseHas('forms', ['id' => $form->id]);
     }
@@ -138,7 +138,7 @@ class UpdateFormTest extends TestCase
         $question1 = create(Question::class, ['form_id' => $form->id, 'order' => 1]);
         $question2 = create(Question::class, ['form_id' => $form->id, 'order' => 2]);
 
-        $this->patch('/forms/' . $form->id . '/order', [
+        $this->patch(formPath($form) . '/order', [
             'order' => [
                 ['question' => $question1->id, 'order' => 2],
                 ['question' => $question2->id, 'order' => 1],
@@ -158,7 +158,7 @@ class UpdateFormTest extends TestCase
         $question1 = create(Question::class, ['form_id' => $form->id, 'order' => 1]);
         $question2 = create(Question::class, ['form_id' => $form->id, 'order' => 2]);
 
-        $this->login()->patch('/forms/' . $form->id . '/order', [
+        $this->login()->patch(formPath($form) . '/order', [
             'order' => [
                 ['question' => $question1->id, 'order' => 2],
                 ['question' => $question2->id, 'order' => 1],

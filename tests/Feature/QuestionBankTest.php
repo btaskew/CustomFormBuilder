@@ -31,7 +31,7 @@ class QuestionBankTest extends TestCase
         $form = $this->loginUserWithForm();
         $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
 
-        $this->post('/forms/' . $form->id . '/questions/bank', ['questions' => [$question->id]])
+        $this->post(formPath($form) . '/questions/bank', ['questions' => [$question->id]])
             ->assertStatus(200);
 
         $this->assertEquals($question->title, $form->questions->first()->title);
@@ -45,7 +45,7 @@ class QuestionBankTest extends TestCase
         $question = create(Question::class, ['type' => 'radio', 'form_id' => null, 'in_question_bank' => true]);
         $option = create(SelectOption::class, ['question_id' => $question]);
 
-        $this->post('/forms/' . $form->id . '/questions/bank', ['questions' => [$question->id]])
+        $this->post(formPath($form) . '/questions/bank', ['questions' => [$question->id]])
             ->assertStatus(200);
 
         $this->assertEquals($question->title, $form->questions->first()->title);
@@ -61,7 +61,7 @@ class QuestionBankTest extends TestCase
         $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
 
         $this->login()
-            ->post('/forms/' . $form->id . '/questions/bank', ['questions' => [$question->id]])
+            ->post(formPath($form) . '/questions/bank', ['questions' => [$question->id]])
             ->assertStatus(403);
 
         $this->assertFalse($form->questions->contains('title', $question->title));

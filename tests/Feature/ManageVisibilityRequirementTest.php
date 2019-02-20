@@ -112,7 +112,7 @@ class ManageVisibilityRequirementTest extends TestCase
         $requirement = create(VisibilityRequirement::class, ['required_question_id' => $requiredQuestion->id]);
 
         $this->patch(
-            '/forms/' . $form->id . '/questions/' . $requiredQuestion->id,
+            formPath($form) . '/questions/' . $requiredQuestion->id,
             ['title' => 'New title', 'type' => 'text', 'help_text' => '']
         )->assertStatus(200);
 

@@ -17,7 +17,7 @@ class ViewQuestionTest extends TestCase
         $form = $this->loginUserWithForm();
         $question = create(Question::class, ['title' => 'Old title', 'form_id' => $form->id]);
 
-        $this->get('/forms/' . $form->id . '/questions/' . $question->id)
+        $this->get(formPath($form) . '/questions/' . $question->id)
             ->assertStatus(200)
             ->assertSee($question->title);
     }
@@ -31,7 +31,7 @@ class ViewQuestionTest extends TestCase
         $form = create(Form::class, ['user_id' => 999]);
         $question = create(Question::class, ['form_id' => $form->id]);
 
-        $this->get('/forms/' . $form->id . '/questions/' . $question->id)
+        $this->get(formPath($form) . '/questions/' . $question->id)
             ->assertStatus(403);
     }
 }

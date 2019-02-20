@@ -32,3 +32,12 @@ function raw(string $class, array $attributes = [], int $count = null)
 {
     return factory($class, $count)->raw($attributes);
 }
+
+/**
+ * @param \App\Form $form
+ * @return string
+ */
+function formPath(\App\Form $form): string
+{
+    return 'forms/' . $form->id;
+}

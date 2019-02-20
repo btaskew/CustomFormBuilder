@@ -17,7 +17,7 @@ class QuestionValidationTest extends TestCase
         $this->withExceptionHandling();
 
         $form = $this->loginUserWithForm();
-        $this->uri = '/forms/' . $form->id . '/questions';
+        $this->uri = formPath($form) . '/questions';
     }
 
     /** @test */

@@ -133,7 +133,7 @@ class ManageSelectOptionsTest extends TestCase
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
         $this->patch(
-            '/forms/' . $form->id . '/questions/' . $question->id,
+            formPath($form) . '/questions/' . $question->id,
             ['title' => 'New title', 'type' => 'text', 'help_text' => '']
         )->assertStatus(200);
 
