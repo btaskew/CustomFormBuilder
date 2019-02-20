@@ -19,6 +19,8 @@ class CreateSelectOptionsTable extends Migration
             $table->string('value');
             $table->string('display_value');
             $table->timestamps();
+
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
 

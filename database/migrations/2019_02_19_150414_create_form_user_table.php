@@ -20,6 +20,9 @@ class CreateFormUserTable extends Migration
             $table->timestamps();
 
             $table->unique(['user_id', 'form_id']);
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
         });
     }
 

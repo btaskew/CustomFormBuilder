@@ -19,6 +19,9 @@ class CreateVisibilityRequirementsTable extends Migration
             $table->unsignedInteger('required_question_id');
             $table->string('required_value');
             $table->timestamps();
+
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
+            $table->foreign('required_question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
 

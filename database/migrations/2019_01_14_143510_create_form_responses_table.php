@@ -18,6 +18,8 @@ class CreateFormResponsesTable extends Migration
             $table->unsignedInteger('form_id');
             $table->json('response');
             $table->timestamps();
+
+            $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
         });
     }
 

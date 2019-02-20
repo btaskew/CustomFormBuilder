@@ -39,6 +39,8 @@ class CreateQuestionsTable extends Migration
             $table->boolean('in_question_bank')->default(false);
             $table->unsignedInteger('order')->nullable();
             $table->timestamps();
+
+            $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
         });
     }
 
