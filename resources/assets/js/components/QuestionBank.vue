@@ -44,6 +44,7 @@
 
 <script>
     import axios from 'axios';
+    import {debounce} from 'lodash';
 
     export default {
         props: ['questions', 'formId'],
@@ -79,7 +80,7 @@
                 });
             },
 
-            searchQuestions(e) {
+            searchQuestions:debounce(function(e) {
                 const title = e.target.value;
 
                 if (!title || title === '') {
@@ -94,7 +95,7 @@
                         this.showingSearchResults = true;
                     }).catch(error => {
                 });
-            }
+            }, 250)
         }
     }
 </script>
