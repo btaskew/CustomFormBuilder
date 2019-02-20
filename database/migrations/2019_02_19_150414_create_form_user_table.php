@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFormUsersTable extends Migration
+class CreateFormUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFormUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('form_users', function (Blueprint $table) {
+        Schema::create('form_user', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('form_id');
@@ -30,6 +30,6 @@ class CreateFormUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_users');
+        Schema::dropIfExists('form_user');
     }
 }

@@ -5,10 +5,10 @@ namespace Tests\Unit;
 use App\Folder;
 use App\Form;
 use App\FormResponse;
+use App\FormUser;
 use App\Question;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Kris\LaravelFormBuilder\Facades\FormBuilder;
 use Tests\TestCase;
 
 class FormTest extends TestCase
@@ -59,6 +59,15 @@ class FormTest extends TestCase
     }
 
     /** @test */
+    public function a_form_has_users_with_access()
+    {
+        $user = create(User::class);
+        create(FormUser::class, ['form_id' => $this->form->id, 'user_id' => $user->id]);
+
+        $this->assertTrue($this->form->usersWithAccess->first()->is($user));
+    }
+
+    /** @test */
     public function a_forms_questions_are_deleted_when_the_form_is_deleted()
     {
         $question = create(Question::class, ['form_id' => $this->form->id]);
@@ -66,6 +75,16 @@ class FormTest extends TestCase
         $this->form->delete();
 
         $this->assertDatabaseMissing('questions', ['id' => $question->id]);
+    }
+
+    /** @test */
+    public function a_forms_accessible_users_are_deleted_when_the_form_is_deleted()
+    {
+        $user = create(FormUser::class, ['form_id' => $this->form->id]);
+
+        $this->form->delete();
+
+        $this->assertDatabaseMissing('form_user', ['id' => $user->id]);
     }
 
     /** @test */

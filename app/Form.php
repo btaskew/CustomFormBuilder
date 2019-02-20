@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
@@ -47,6 +48,9 @@ class Form extends Model
 
         static::deleting(function ($form) {
             $form->questions->each->delete();
+            $form->usersWithAccess->each(function (User $user) {
+                $user->pivot->delete();
+            });
         });
     }
 
@@ -107,6 +111,14 @@ class Form extends Model
     public function folder(): BelongsTo
     {
         return $this->belongsTo(Folder::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function usersWithAccess(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
     }
 
     /**

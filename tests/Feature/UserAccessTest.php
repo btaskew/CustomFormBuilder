@@ -29,7 +29,7 @@ class UserAccessTest extends TestCase
         $this->post('forms/' . $form->id . '/access', ['username' => $user->username])
             ->assertStatus(200);
 
-        $this->assertDatabaseHas('form_users', [
+        $this->assertDatabaseHas('form_user', [
             'form_id' => $form->id,
             'user_id' => $user->id
         ]);

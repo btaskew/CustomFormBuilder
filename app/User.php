@@ -2,8 +2,8 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
@@ -39,11 +39,11 @@ class User extends Authenticatable
     }
 
     /**
-     * @return HasManyThrough
+     * @return BelongsToMany
      */
-    public function accessibleForms(): HasManyThrough
+    public function accessibleForms(): BelongsToMany
     {
-        return $this->hasManyThrough(Form::class, FormUser::class, 'user_id', 'id', 'id', 'form_id');
+        return $this->belongsToMany(Form::class);
     }
 
     /**

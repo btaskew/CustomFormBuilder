@@ -67,7 +67,6 @@ class UpdateFormTest extends TestCase
     /** @test */
     public function a_user_can_edit_another_users_form_that_they_have_access_to()
     {
-        $this->withExceptionHandling();
         $this->login();
         $form = create(Form::class, ['user_id' => 999]);
         create(FormUser::class, [
