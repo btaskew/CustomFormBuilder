@@ -55,15 +55,29 @@ class UserTest extends TestCase
     {
         $user = create(User::class);
         $form = create(Form::class, ['user_id' => $user->id]);
-        $this->assertTrue($user->hasAccessTo($form));
+        $this->assertTrue($user->hasAccessTo('view', $form));
 
         $form2 = create(Form::class, ['user_id' => 999]);
-        $this->assertFalse($user->hasAccessTo($form2));
+        $this->assertFalse($user->hasAccessTo('view', $form2));
 
         create(FormUser::class, [
             'user_id' => $user->id,
-            'form_id' => $form2->id
+            'form_id' => $form2->id,
+            'access' => 'view'
         ]);
-        $this->assertTrue($user->hasAccessTo($form2));
+        $this->assertTrue($user->hasAccessTo('view', $form2));
+    }
+
+    /** @test */
+    public function if_a_user_has_edit_access_they_also_have_view_access()
+    {
+        $user = create(User::class);
+        $form = create(Form::class, ['user_id' => 999]);
+        create(FormUser::class, [
+            'user_id' => $user->id,
+            'form_id' => $form->id,
+            'access' => 'edit'
+        ]);
+        $this->assertTrue($user->hasAccessTo('view', $form));
     }
 }

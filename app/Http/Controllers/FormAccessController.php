@@ -16,6 +16,8 @@ class FormAccessController extends Controller
      */
     public function index(Form $form)
     {
+        $this->authorize('edit', $form);
+
         return view('form.users', [
             'form' => $form,
             'users' => $form->usersWithAccess
@@ -30,7 +32,12 @@ class FormAccessController extends Controller
      */
     public function store(Request $request, Form $form)
     {
-        $this->authorize('update', $form);
+        $request->validate([
+            'username' => 'string|required',
+            'access' => 'string|required|in:view,edit'
+        ]);
+
+        $this->authorize('edit', $form);
 
         if ($request->input('username') == auth()->user()->username) {
             return response()->json(['error' => "Can't grant access to self"], 422);
@@ -44,7 +51,8 @@ class FormAccessController extends Controller
 
         $user->pivot = FormUser::create([
             'user_id' => $user->id,
-            'form_id' => $form->id
+            'form_id' => $form->id,
+            'access' => $request->input('access')
         ]);
 
         return $user;
@@ -58,7 +66,7 @@ class FormAccessController extends Controller
      */
     public function destroy(Form $form, FormUser $formUser)
     {
-        $this->authorize('update', $form);
+        $this->authorize('edit', $form);
 
         $formUser->delete();
 

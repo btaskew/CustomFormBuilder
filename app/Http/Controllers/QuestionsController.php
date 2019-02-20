@@ -16,7 +16,7 @@ class QuestionsController extends Controller
      */
     public function index(Form $form)
     {
-        $this->authorize('update', $form);
+        $this->authorize('edit', $form);
 
         $questions = $form->questions()->orderBy('order')->get(['id', 'title']);
 
@@ -38,7 +38,7 @@ class QuestionsController extends Controller
      */
     public function show(Form $form, Question $question)
     {
-        $this->authorize('update', $form);
+        $this->authorize('edit', $form);
 
         return $question->load(['options', 'visibilityRequirement']);
     }
@@ -46,9 +46,12 @@ class QuestionsController extends Controller
     /**
      * @param Form $form
      * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create(Form $form)
     {
+        $this->authorize('edit', $form);
+
         return view('questions.create', compact('form'));
     }
 
@@ -59,7 +62,7 @@ class QuestionsController extends Controller
      */
     public function store(Form $form, QuestionRequest $request)
     {
-        $this->authorize('update', $form);
+        $this->authorize('edit', $form);
 
         QuestionFacade::createQuestion($form, $request);
     }
@@ -73,7 +76,7 @@ class QuestionsController extends Controller
      */
     public function update($form, Question $question, QuestionRequest $request)
     {
-        $this->authorize('update', $question);
+        $this->authorize('edit', $question);
 
         QuestionFacade::updateQuestion($question, $request);
 
@@ -88,7 +91,7 @@ class QuestionsController extends Controller
      */
     public function destroy($form, Question $question)
     {
-        $this->authorize('update', $question);
+        $this->authorize('edit', $question);
 
         $question->delete();
 

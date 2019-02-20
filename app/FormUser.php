@@ -20,6 +20,7 @@ class FormUser extends Model
      */
     protected $fillable = [
         'user_id',
-        'form_id'
+        'form_id',
+        'access'
     ];
 }

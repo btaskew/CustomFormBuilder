@@ -31,7 +31,7 @@ class QuestionBankController extends Controller
      */
     public function store(Form $form, Request $request)
     {
-        $this->authorize('update', $form);
+        $this->authorize('edit', $form);
 
         (new QuestionBankMapper())->map($request->input('questions'), $form->id);
 

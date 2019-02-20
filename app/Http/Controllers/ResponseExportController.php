@@ -15,7 +15,7 @@ class ResponseExportController extends Controller
      */
     public function index(Form $form)
     {
-        $this->authorize('update', $form);
+        $this->authorize('view', $form);
 
         return Excel::download(new ResponsesExport($form), 'responses.xlsx');
     }

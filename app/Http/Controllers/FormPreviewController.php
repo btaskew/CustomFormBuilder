@@ -11,9 +11,12 @@ class FormPreviewController extends Controller
      *
      * @param Form $form
      * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Form $form)
     {
+        $this->authorize('view', $form);
+
         return view('form.preview', [
             'form' => $form,
             'questions' => $form->getOrderedQuestions(),

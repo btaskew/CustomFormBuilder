@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Form;
-use App\FormResponse;
 use App\Mail\FormResponded;
 use App\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -30,21 +29,6 @@ class RespondToFormTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_their_forms_responses()
-    {
-        $form = $this->loginUserWithForm();
-        $question = create(Question::class, ['form_id' => $form->id]);
-        create(FormResponse::class, [
-            'form_id' => $form->id,
-            'response' => '{"' . $question->id . '":"value"}'
-        ]);
-
-        $this->get(formPath($form) . '/responses')
-            ->assertStatus(200)
-            ->assertSee("value");
-    }
-
-    /** @test */
     public function a_label_field_stores_no_data()
     {
         $form = create(Form::class);
@@ -58,23 +42,6 @@ class RespondToFormTest extends TestCase
             'form_id' => $form->id,
             'response' => '{"' . $question->id . '":"value"}'
         ]);
-    }
-
-    /** @test */
-    public function viewing_form_responses_doesnt_show_label_fields()
-    {
-        $form = $this->loginUserWithForm();
-        $question = create(Question::class, ['form_id' => $form->id]);
-        $labelQuestion = create(Question::class, ['form_id' => $form->id, 'type' => 'label']);
-
-        create(FormResponse::class, [
-            'form_id' => $form->id,
-            'response' => '{"' . $question->id . '":"value"}'
-        ]);
-
-        $this->get(formPath($form) . '/responses')
-            ->assertStatus(200)
-            ->assertDontSee($labelQuestion->title);
     }
 
     /** @test */

@@ -55,13 +55,38 @@ class User extends Authenticatable
     }
 
     /**
-     * @param Form $form
+     * @param string $access
+     * @param Form   $form
      * @return bool
      */
-    public function hasAccessTo(Form $form): bool
+    public function hasAccessTo(string $access, Form $form): bool
     {
-        return (
-            $this->id == $form->user_id || FormUser::where(['user_id' => $this->id, 'form_id' => $form->id])->exists()
-        );
+        return $this->id == $form->user_id || $this->hasBeenGrantedAccess($access, $form);
+    }
+
+    /**
+     * @param string $access
+     * @param Form   $form
+     * @return bool
+     */
+    private function hasBeenGrantedAccess(string $access, Form $form): bool
+    {
+        $userAccess = FormUser::where([
+            'user_id' => $this->id,
+            'form_id' => $form->id,
+            'access' => $access
+        ]);
+
+
+        if ($access == 'view') {
+            $userAccess = $userAccess
+                ->orWhere('access', 'edit')
+                ->where([
+                    'user_id' => $this->id,
+                    'form_id' => $form->id,
+                ]);
+        }
+
+        return $userAccess->exists();
     }
 }

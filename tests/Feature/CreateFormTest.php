@@ -10,9 +10,16 @@ class CreateFormTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function can_view_the_create_form_page()
+    public function a_user_can_view_the_create_form_page()
     {
         $this->login()->get('/forms/create')->assertSee('Create a new form');
+    }
+
+    /** @test */
+    public function a_guest_cant_view_the_create_form_page()
+    {
+        $this->withExceptionHandling();
+        $this->get('/forms/create')->assertRedirect('login');
     }
 
     /** @test */

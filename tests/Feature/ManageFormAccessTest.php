@@ -8,7 +8,7 @@ use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class FormUserAccessTest extends TestCase
+class ManageFormAccessTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -27,13 +27,14 @@ class FormUserAccessTest extends TestCase
         $form = $this->loginUserWithForm();
         $user = create(User::class);
 
-        $this->post(formPath($form) . '/access', ['username' => $user->username])
+        $this->post(formPath($form) . '/access', ['username' => $user->username, 'access' => 'view'])
             ->assertStatus(200)
             ->assertSee($user->username);
 
         $this->assertDatabaseHas('form_user', [
             'form_id' => $form->id,
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'access' => 'view'
         ]);
     }
 
@@ -45,7 +46,7 @@ class FormUserAccessTest extends TestCase
         $form = create(Form::class, ['user_id' => 999]);
 
         $this->login()
-            ->post(formPath($form) . '/access', ['username' => 'ab123'])
+            ->post(formPath($form) . '/access', ['username' => 'ab123', 'access' => 'view'])
             ->assertStatus(403);
     }
 
@@ -54,7 +55,7 @@ class FormUserAccessTest extends TestCase
     {
         $form = $this->loginUserWithForm();
 
-        $this->post(formPath($form) . '/access', ['username' => 'ab123'])
+        $this->post(formPath($form) . '/access', ['username' => 'ab123', 'access' => 'view'])
             ->assertStatus(404)
             ->assertJsonFragment(['error' => 'Given user was not found in the database']);
     }
@@ -64,7 +65,7 @@ class FormUserAccessTest extends TestCase
     {
         $form = $this->loginUserWithForm();
 
-        $this->post(formPath($form) . '/access', ['username' => $form->owner->username])
+        $this->post(formPath($form) . '/access', ['username' => $form->owner->username, 'access' => 'view'])
             ->assertStatus(422)
             ->assertJsonFragment(['error' => 'Can\'t grant access to self']);
     }

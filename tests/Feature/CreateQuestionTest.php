@@ -13,6 +13,23 @@ class CreateQuestionTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function a_user_can_view_the_create_question_page_for_their_form()
+    {
+        $form = $this->loginUserWithForm();
+
+        $this->get(formPath($form) . '/questions/create')->assertSee('Create form question');
+    }
+
+    /** @test */
+    public function a_user_cant_view_the_create_question_page_for_another_users_form()
+    {
+        $this->withExceptionHandling();
+        $form = create(Form::class, ['user_id' => 999]);
+
+        $this->login()->get(formPath($form) . '/questions/create')->assertStatus(403);
+    }
+
+    /** @test */
     public function a_guest_cant_add_questions()
     {
         $this->withExceptionHandling();

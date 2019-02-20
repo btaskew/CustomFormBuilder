@@ -54,18 +54,6 @@ class ViewFormTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_preview_their_complete_form()
-    {
-        $form = $this->loginUserWithForm();
-        $question = create(Question::class, ['form_id' => $form->id]);
-
-        $this->get(formPath($form) . '/preview')
-            ->assertStatus(200)
-            ->assertSee($form->title)
-            ->assertSee($question->title);
-    }
-
-    /** @test */
     public function anyone_can_view_a_complete_form()
     {
         $form = create(Form::class);

@@ -13,9 +13,12 @@ class FormResponseController extends Controller
     /**
      * @param Form $form
      * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Form $form)
     {
+        $this->authorize('view', $form);
+
         $paginatedResponses = $form->responses()->paginate(25);
         $questions = $form->getAnswerableQuestions();
 

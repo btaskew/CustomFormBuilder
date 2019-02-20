@@ -17,6 +17,10 @@ class CreateFormUserTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('form_id');
+            $table->enum('access', [
+                'view',
+                'edit'
+            ]);
             $table->timestamps();
 
             $table->unique(['user_id', 'form_id']);

@@ -17,7 +17,7 @@ class SelectOptionsController extends Controller
      */
     public function destroy($form, $question, SelectOption $option)
     {
-        $this->authorize('update', $option);
+        $this->authorize('edit', $option);
 
         $option->delete();
 

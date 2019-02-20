@@ -15,8 +15,8 @@ class QuestionPolicy
      * @param Question $question
      * @return bool
      */
-    public function update(User $user, Question $question): bool
+    public function edit(User $user, Question $question): bool
     {
-        return $user->hasAccessTo($question->form);
+        return $user->hasAccessTo('edit', $question->form);
     }
 }

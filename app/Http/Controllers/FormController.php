@@ -88,7 +88,7 @@ class FormController extends Controller
      */
     public function edit(Form $form)
     {
-        $this->authorize('update', $form);
+        $this->authorize('edit', $form);
 
         return view('form.edit', compact('form'));
     }
@@ -103,7 +103,7 @@ class FormController extends Controller
      */
     public function update(FormRequest $request, Form $form)
     {
-        $this->authorize('update', $form);
+        $this->authorize('edit', $form);
 
         if ($request->has('response_email_field')
             &&
@@ -136,7 +136,7 @@ class FormController extends Controller
      */
     public function destroy(Form $form)
     {
-        $this->authorize('update', $form);
+        $this->authorize('edit', $form);
 
         $form->delete();
 

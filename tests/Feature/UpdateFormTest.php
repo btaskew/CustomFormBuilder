@@ -13,11 +13,21 @@ class UpdateFormTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function can_view_edit_form_page()
+    public function a_user_can_view_the_edit_form_page_for_their_form()
     {
         $form = $this->loginUserWithForm();
 
         $this->get(formPath($form) . '/edit')->assertSee($form->title);
+    }
+
+    /** @test */
+    public function a_user_cant_view_the_edit_form_page_for_another_users_form()
+    {
+        $this->withExceptionHandling();
+
+        $form = create(Form::class, ['user_id' => 999]);
+
+        $this->login()->get(formPath($form) . '/edit')->assertStatus(403);
     }
 
     /** @test */
@@ -65,13 +75,26 @@ class UpdateFormTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_edit_another_users_form_that_they_have_access_to()
+    public function a_user_cant_edit_another_users_form()
+    {
+        $this->withExceptionHandling();
+
+        $form = create(Form::class, ['user_id' => 999]);
+
+        $this->login()
+            ->patch(formPath($form), ['title' => 'New title'])
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    public function a_user_can_edit_another_users_form_that_they_have_edit_access_to()
     {
         $this->login();
         $form = create(Form::class, ['user_id' => 999]);
         create(FormUser::class, [
             'user_id' => auth()->user()->id,
-            'form_id' => $form->id
+            'form_id' => $form->id,
+            'access' => 'edit'
         ]);
 
         $attributes = [
@@ -86,49 +109,27 @@ class UpdateFormTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cant_edit_another_users_form()
+    public function a_user_cant_edit_another_users_form_that_they_have_view_access_to()
     {
         $this->withExceptionHandling();
 
+        $this->login();
         $form = create(Form::class, ['user_id' => 999]);
+        create(FormUser::class, [
+            'user_id' => auth()->user()->id,
+            'form_id' => $form->id,
+            'access' => 'view'
+        ]);
 
-        $this->login()
-            ->patch(formPath($form), ['title' => 'New title'])
+        $attributes = [
+            'title' => 'New title',
+            'open_date' => '1990-01-01',
+            'close_date' => '1990-01-02',
+            'active' => false
+        ];
+
+        $this->patch(formPath($form), $attributes)
             ->assertStatus(403);
-    }
-
-    /** @test */
-    public function a_guest_cant_delete_a_form()
-    {
-        $this->withExceptionHandling();
-
-        $form = create(Form::class);
-
-        $this->delete(formPath($form))->assertRedirect('login');
-
-        $this->assertDatabaseHas('forms', ['id' => $form->id]);
-    }
-
-    /** @test */
-    public function a_user_can_delete_a_form()
-    {
-        $form = $this->loginUserWithForm();
-
-        $this->delete(formPath($form))->assertStatus(200);
-
-        $this->assertDatabaseMissing('forms', ['id' => $form->id]);
-    }
-
-    /** @test */
-    public function a_user_cant_delete_another_users_form()
-    {
-        $this->withExceptionHandling();
-
-        $form = create(Form::class, ['user_id' => 9999]);
-
-        $this->login()->delete(formPath($form))->assertStatus(403);
-
-        $this->assertDatabaseHas('forms', ['id' => $form->id]);
     }
 
     /** @test */
@@ -167,5 +168,29 @@ class UpdateFormTest extends TestCase
 
         $this->assertEquals(1, $question1->fresh()->order);
         $this->assertEquals(2, $question2->fresh()->order);
+    }
+
+    /** @test */
+    public function a_user_can_update_the_order_of_a_forms_questions_they_have_access_to()
+    {
+        $this->login();
+        $form = create(Form::class, ['user_id' => 999]);
+        create(FormUser::class, [
+            'user_id' => auth()->user()->id,
+            'form_id' => $form->id,
+            'access' => 'edit'
+        ]);
+        $question1 = create(Question::class, ['form_id' => $form->id, 'order' => 1]);
+        $question2 = create(Question::class, ['form_id' => $form->id, 'order' => 2]);
+
+        $this->patch(formPath($form) . '/order', [
+            'order' => [
+                ['question' => $question1->id, 'order' => 2],
+                ['question' => $question2->id, 'order' => 1],
+            ]
+        ])->assertStatus(200);
+
+        $this->assertEquals(2, $question1->fresh()->order);
+        $this->assertEquals(1, $question2->fresh()->order);
     }
 }

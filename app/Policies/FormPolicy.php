@@ -19,8 +19,18 @@ class FormPolicy
      * @param Form $form
      * @return bool
      */
-    public function update(User $user, Form $form): bool
+    public function edit(User $user, Form $form): bool
     {
-        return $user->hasAccessTo($form);
+        return $user->hasAccessTo('edit', $form);
+    }
+
+    /**
+     * @param User $user
+     * @param Form $form
+     * @return bool
+     */
+    public function view(User $user, Form $form): bool
+    {
+        return $user->hasAccessTo('view', $form);
     }
 }

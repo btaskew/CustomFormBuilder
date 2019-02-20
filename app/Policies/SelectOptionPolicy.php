@@ -15,8 +15,8 @@ class SelectOptionPolicy
      * @param SelectOption $option
      * @return bool
      */
-    public function update(User $user, SelectOption $option): bool
+    public function edit(User $user, SelectOption $option): bool
     {
-        return $user->hasAccessTo($option->question->form);
+        return $user->hasAccessTo('edit', $option->question->form);
     }
 }
