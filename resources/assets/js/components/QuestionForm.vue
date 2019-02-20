@@ -133,13 +133,11 @@
 
             </div>
 
-            <button
-                    type="submit"
+            <button type="submit"
                     class="btn btn-raised btn-primary mt"
                     :disabled="loading"
                     v-text="loading ? 'Loading' : 'Save question'"
-            >
-            </button>
+            ></button>
 
         </form>
     </div>

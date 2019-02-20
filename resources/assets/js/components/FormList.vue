@@ -40,8 +40,8 @@
 <script>
     import axios from 'axios';
     import {filter} from 'lodash';
-    import Modal from './modal';
-    import LoadingModal from './LoadingModal';
+    import Modal from './Utils/modal';
+    import LoadingModal from './Utils/LoadingModal';
 
     export default {
         components: {LoadingModal, Modal},

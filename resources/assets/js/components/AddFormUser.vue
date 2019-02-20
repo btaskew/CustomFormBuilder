@@ -26,8 +26,7 @@
                             class="btn btn-raised btn-primary"
                             :disabled="loading"
                             v-text="loading ? 'Loading' : 'Add user'"
-                    >
-                    </button>
+                    ></button>
                 </div>
             </div>
 
