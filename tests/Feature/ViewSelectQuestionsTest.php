@@ -25,4 +25,19 @@ class ViewSelectQuestionsTest extends TestCase
             ->assertSee($option->value)
             ->assertDontSee($otherQuestion->title);
     }
+
+    /** @test */
+    public function a_user_can_exclude_a_particular_question_from_the_results()
+    {
+        $form = $this->loginUserWithForm();
+        $selectQuestion = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
+        $option = create(SelectOption::class, ['question_id' => $selectQuestion->id]);
+        $questionToExclude = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
+
+        $this->get(formPath($form) . '/select-questions?exclude_question=' . $questionToExclude->id)
+            ->assertStatus(200)
+            ->assertSee($selectQuestion->title)
+            ->assertSee($option->value)
+            ->assertDontSee($questionToExclude->title);
+    }
 }

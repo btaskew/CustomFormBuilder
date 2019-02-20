@@ -125,6 +125,7 @@
                     <visibility-requirement-form
                             v-if="hasVisibilityRequirement"
                             :form-id="this.formId"
+                            :question-id="this.questionId"
                             :question.sync="form.required_if.question"
                             :value.sync="form.required_if.value"
                     >

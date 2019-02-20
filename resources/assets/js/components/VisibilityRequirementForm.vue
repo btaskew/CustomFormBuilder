@@ -5,7 +5,8 @@
         <span v-else-if="error">Error loading questions</span>
 
         <span v-else-if="noQuestions">
-            No questions available to select. Only questions of type radio, checkbox or dropdown can be used to set a visibility requirement against.
+            No questions available to select. Only other questions of type radio, checkbox or dropdown can be used to
+            set a visibility requirement against.
         </span>
 
         <div v-else>
@@ -47,7 +48,7 @@
     import axios from 'axios';
 
     export default {
-        props: ['formId', 'question', 'value'],
+        props: ['formId', 'question', 'value', 'questionId'],
 
         data() {
             return {
@@ -73,7 +74,7 @@
         },
 
         created() {
-            axios.get(`/forms/${this.formId}/select-questions`)
+            axios.get(`/forms/${this.formId}/select-questions?exclude_question=${this.questionId}`)
                 .then(response => {
                     if (response.data.length < 1) {
                         this.noQuestions = true;

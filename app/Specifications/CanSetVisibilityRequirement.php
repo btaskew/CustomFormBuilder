@@ -7,17 +7,21 @@ use App\Question;
 class CanSetVisibilityRequirement
 {
     /**
-     * @param array $requirement
-     * @param int   $formId
+     * @param array    $requirement
+     * @param Question $question
      * @return bool
      */
-    public static function isSatisfiedBy(array $requirement, int $formId): bool
+    public static function isSatisfiedBy(array $requirement, Question $question): bool
     {
+        if (static::settingRequirementAgainstSelf($requirement['question'], $question->id)) {
+            throw new \InvalidArgumentException("Can't set requirement against self");
+        }
+
         if (!static::requiredQuestionExists($requirement['question'])) {
             throw new \InvalidArgumentException("Required question does not exist");
         }
 
-        if (!static::requiredQuestionOnSameForm($requirement['question'], $formId)) {
+        if (!static::requiredQuestionOnSameForm($requirement['question'], $question->form_id)) {
             throw new \InvalidArgumentException("Required question is on a different form");
         }
 
@@ -26,6 +30,16 @@ class CanSetVisibilityRequirement
         }
 
         return true;
+    }
+
+    /**
+     * @param int $requiredQuestionId
+     * @param int $questionId
+     * @return bool
+     */
+    private static function settingRequirementAgainstSelf(int $requiredQuestionId, int $questionId)
+    {
+        return $requiredQuestionId === $questionId;
     }
 
     /**
