@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="displayQuestions.length < 1" class="alert alert-info animated mt" role="alert">
+        <div v-if="displayQuestions.length < 1" class="alert alert-info mt" role="alert">
             No questions found for current form
         </div>
 

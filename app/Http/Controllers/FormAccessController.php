@@ -12,10 +12,14 @@ class FormAccessController extends Controller
 {
     /**
      * @param Form $form
+     * @return \Illuminate\View\View
      */
     public function index(Form $form)
     {
-        return $form->usersWithAccess;
+        return view('form.users', [
+            'form' => $form,
+            'users' => $form->usersWithAccess
+        ]);
     }
 
     /**

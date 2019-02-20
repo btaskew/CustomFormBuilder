@@ -118,7 +118,7 @@ class Form extends Model
      */
     public function usersWithAccess(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withPivot('id', 'created_at');
     }
 
     /**
