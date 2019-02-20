@@ -60,6 +60,16 @@ class FormUserAccessTest extends TestCase
     }
 
     /** @test */
+    public function a_user_cant_grant_access_to_themselves()
+    {
+        $form = $this->loginUserWithForm();
+
+        $this->post('forms/' . $form->id . '/access', ['username' => $form->owner->username])
+            ->assertStatus(422)
+            ->assertJsonFragment(['error' => 'Can\'t grant access to self']);
+    }
+
+    /** @test */
     public function a_user_can_view_all_users_who_have_access_to_a_given_form()
     {
         $form = $this->loginUserWithForm();

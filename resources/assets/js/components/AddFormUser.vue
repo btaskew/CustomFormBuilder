@@ -60,8 +60,8 @@
                     }).catch(error => {
                     this.loading = false;
 
-                    if (error.data.error === 'Given user was not found in the database') {
-                        return flash('Given user was not found in the database', 'danger');
+                    if (error.data.error) {
+                        return flash(error.data.error, 'danger');
                     }
 
                     flash('Error adding user. Please try again later', 'danger');

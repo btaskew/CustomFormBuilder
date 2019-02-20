@@ -32,6 +32,10 @@ class FormAccessController extends Controller
     {
         $this->authorize('update', $form);
 
+        if ($request->input('username') == auth()->user()->username) {
+            return response()->json(['error' => "Can't grant access to self"], 422);
+        }
+
         try {
             $user = User::where('username', $request->input('username'))->firstOrFail();
         } catch (ModelNotFoundException $exception) {
