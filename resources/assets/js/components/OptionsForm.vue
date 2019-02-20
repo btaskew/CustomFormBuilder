@@ -1,5 +1,5 @@
 <template>
-    <form method="GET" @submit.prevent class="border p-2 options-form">
+    <form method="GET" @submit.prevent class="p-2 options-form">
         <div class="form-row">
             <div class="col">
                 <label for="value" class="col-form-label" :class="{ 'has-error': hasValueError }">
@@ -60,5 +60,6 @@
 <style>
     .options-form {
         padding-top: 0 !important;
+        border-bottom: 1px solid #dee2e6 !important;
     }
 </style>
