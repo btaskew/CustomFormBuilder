@@ -37,7 +37,8 @@ class SampleDataSeeder extends Seeder
 
         factory(FormUser::class)->create([
             'user_id' => 2,
-            'form_id' => $forms[0]->id
+            'form_id' => $forms[0]->id,
+            'view'
         ]);
     }
 }

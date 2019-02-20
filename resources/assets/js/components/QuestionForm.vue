@@ -42,7 +42,7 @@
                         <label for="type" :class="{ 'has-error': form.errors.has('type') }">
                             Question type
                         </label>
-                        <select class="form-control" type="text" v-model="form.type" id="type" name="type" required>
+                        <select class="form-control" v-model="form.type" id="type" name="type" required>
                             <option value="text">Text</option>
                             <option value="email">Email</option>
                             <option value="password">Password</option>

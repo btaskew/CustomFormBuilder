@@ -8,10 +8,10 @@
               @keydown="form.errors.clear($event)"
               class="mt-3"
         >
-            <label for="username" :class="{ 'has-error': form.errors.has('username') }">
-                Username
-            </label>
-            <div class="input-group" id="username-input">
+            <div class="form-group">
+                <label for="username" :class="{ 'has-error': form.errors.has('username') }">
+                    Username
+                </label>
                 <input class="form-control"
                        type="text"
                        v-model="form.username"
@@ -20,15 +20,24 @@
                        required
                 >
                 <span class="text-danger" v-if="form.errors.has('username')" v-text="form.errors.get('username')">
-            </span>
-                <div class="input-group-append">
-                    <button type="submit"
-                            class="btn btn-raised btn-primary"
-                            :disabled="loading"
-                            v-text="loading ? 'Loading' : 'Add user'"
-                    ></button>
-                </div>
+                </span>
             </div>
+            <div class="form-group">
+                <label for="access" :class="{ 'has-error': form.errors.has('access') }">
+                    Access type
+                </label>
+                <select class="form-control" v-model="form.access" id="access" name="access" required>
+                    <option value="view">View</option>
+                    <option value="edit">Edit</option>
+                </select>
+                <span class="text-danger" v-if="form.errors.has('access')" v-text="form.errors.get('access')">
+                </span>
+            </div>
+            <button type="submit"
+                    class="btn btn-raised btn-primary"
+                    :disabled="loading"
+                    v-text="loading ? 'Loading' : 'Add user'"
+            ></button>
 
         </form>
     </div>
@@ -43,7 +52,8 @@
         data() {
             return {
                 form: new Form({
-                    username: null
+                    username: null,
+                    access: null
                 }),
                 loading: false
             }

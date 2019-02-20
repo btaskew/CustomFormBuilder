@@ -12,6 +12,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Username</th>
                 <th scope="col">Email</th>
+                <th scope="col">Level</th>
                 <th scope="col">Access granted</th>
                 <th scope="col"></th>
             </tr>
@@ -21,6 +22,7 @@
                 <td>{{ user.name }}</td>
                 <td>{{ user.username }}</td>
                 <td>{{ user.email }}</td>
+                <td>{{ user.pivot.access }}</td>
                 <td>{{ user.pivot.created_at }}</td>
                 <td><i class="fas fa-trash-alt text-danger" @click="showModal(user.pivot.id)"></i></td>
             </tr>
