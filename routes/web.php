@@ -43,5 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('responses', 'FormResponseController@index');
         Route::get('responses/export', 'ResponseExportController@index');
 
+        Route::post('access', 'FormAccessController@store');
+
     });
+
 });
