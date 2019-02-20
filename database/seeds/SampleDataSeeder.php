@@ -2,6 +2,7 @@
 
 use App\Folder;
 use App\Form;
+use App\FormUser;
 use App\Question;
 use Illuminate\Database\Seeder;
 
@@ -27,10 +28,16 @@ class SampleDataSeeder extends Seeder
             ]);
         });
 
+        // Question bank
         factory(Question::class, 3)->create([
             'form_id' => null,
             'order' => 0,
             'in_question_bank' => true
+        ]);
+
+        factory(FormUser::class)->create([
+            'user_id' => 2,
+            'form_id' => $forms[0]->id
         ]);
     }
 }
