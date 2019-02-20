@@ -30,22 +30,17 @@
             </div>
         </modal>
 
-        <modal v-if="loading" :show="loading">
-            <h4 slot="header">Loading...</h4>
-
-            <div slot="body">
-                <div class="loader"></div>
-            </div>
-        </modal>
+        <loading-modal :show="loading"></loading-modal>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
     import Modal from './modal';
+    import LoadingModal from './LoadingModal';
 
     export default {
-        components: {Modal},
+        components: {LoadingModal, Modal},
 
         props: ['question', 'isOpen', 'formId'],
 

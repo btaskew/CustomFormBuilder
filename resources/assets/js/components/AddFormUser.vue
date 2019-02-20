@@ -22,8 +22,7 @@
                 <span class="text-danger" v-if="form.errors.has('username')" v-text="form.errors.get('username')">
             </span>
                 <div class="input-group-append">
-                    <button
-                            type="submit"
+                    <button type="submit"
                             class="btn btn-raised btn-primary"
                             :disabled="loading"
                             v-text="loading ? 'Loading' : 'Add user'"

@@ -33,13 +33,7 @@
             </div>
         </modal>
 
-        <modal v-if="loading">
-            <h4 slot="header">Loading...</h4>
-
-            <div slot="body">
-                <div class="loader"></div>
-            </div>
-        </modal>
+        <loading-modal :show="loading"></loading-modal>
     </div>
 </template>
 
@@ -47,9 +41,10 @@
     import axios from 'axios';
     import {filter} from 'lodash';
     import Modal from './modal';
+    import LoadingModal from './LoadingModal';
 
     export default {
-        components: {Modal},
+        components: {LoadingModal, Modal},
 
         props: {
             forms: {default: []}
@@ -59,14 +54,9 @@
             return {
                 formToDelete: null,
                 showConfirmModal: false,
-                loading: false
+                loading: false,
+                displayForms: this.forms
             };
-        },
-
-        computed: {
-            displayForms() {
-                return this.forms;
-            }
         },
 
         methods: {
