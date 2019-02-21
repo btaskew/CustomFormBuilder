@@ -13,6 +13,7 @@ class FormAccessController extends Controller
     /**
      * @param Form $form
      * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Form $form)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Form;
 
 use App\Form;
 use App\FormUser;
@@ -14,6 +14,12 @@ class ViewFormTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function a_guest_cant_view_their_forms()
+    {
+        $this->get('/forms')->assertRedirect('login');
+    }
+
+    /** @test */
     public function a_user_can_view_all_their_forms()
     {
         $form = $this->loginUserWithForm();
@@ -23,34 +29,10 @@ class ViewFormTest extends TestCase
             'form_id' => $form2->id
         ]);
 
-        $this->json('get', '/forms')
+        $this->get('/forms')
             ->assertStatus(200)
             ->assertSee($form->title)
             ->assertSee($form2->title);
-    }
-
-    /** @test */
-    public function a_user_can_view_a_forms_questions()
-    {
-        $form = $this->loginUserWithForm();
-        $question = create(Question::class, ['form_id' => $form->id]);
-
-        $this->json('get', formPath($form) . '/questions')
-            ->assertStatus(200)
-            ->assertSee($question->title);
-    }
-
-    /** @test */
-    public function a_user_cant_view_questions_on_another_users_form()
-    {
-        $this->withExceptionHandling();
-
-        $this->login();
-        $form = create(Form::class, ['user_id' => 999]);
-        create(Question::class, ['form_id' => $form->id]);
-
-        $this->get(formPath($form) . '/questions')
-            ->assertStatus(403);
     }
 
     /** @test */

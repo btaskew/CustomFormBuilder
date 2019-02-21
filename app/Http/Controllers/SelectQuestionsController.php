@@ -11,9 +11,12 @@ class SelectQuestionsController extends Controller
      * @param Request $request
      * @param Form    $form
      * @return \Illuminate\Database\Eloquent\Collection
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Request $request, Form $form)
     {
+        $this->authorize('edit', $form);
+
         $questions = $form->questions()
             ->select('id', 'title')
             ->whereIn('type', ['checkbox', 'radio', 'dropdown'])

@@ -19,4 +19,27 @@ class SelectOptionTest extends TestCase
 
         $this->assertTrue($option->question->is($question));
     }
+
+    /** @test */
+    public function a_questions_select_options_are_deleted_when_the_question_is_deleted()
+    {
+        $question = create(Question::class);
+        $option = create(SelectOption::class, ['question_id' => $question->id]);
+
+        $question->delete();
+
+        $this->assertDatabaseMissing('select_options', ['id' => $option->id]);
+    }
+
+    /** @test */
+    public function a_questions_select_options_are_deleted_when_the_type_is_changed()
+    {
+        $form = $this->loginUserWithForm();
+        $question = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
+        $option = create(SelectOption::class, ['question_id' => $question->id]);
+
+        $question->update(['type' => 'text']);
+
+        $this->assertDatabaseMissing('select_options', ['id' => $option->id]);
+    }
 }

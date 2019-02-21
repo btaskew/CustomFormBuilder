@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Responses;
 
 use App\Form;
 use App\Mail\FormResponded;

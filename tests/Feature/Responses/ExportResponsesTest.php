@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Responses;
 
 use App\Form;
 use App\FormUser;
@@ -11,6 +11,14 @@ use Tests\TestCase;
 class ExportResponsesTest extends TestCase
 {
     use RefreshDatabase;
+
+    /** @test */
+    public function a_guest_cant_export_a_forms_result()
+    {
+        $form = create(Form::class);
+
+        $this->get(formPath($form) . '/responses/export')->assertRedirect('login');
+    }
 
     /** @test */
     public function a_user_can_export_the_results_of_their_form()
@@ -27,8 +35,6 @@ class ExportResponsesTest extends TestCase
     /** @test */
     public function a_user_cant_export_the_results_of_another_users_form()
     {
-        $this->withExceptionHandling();
-
         $form = create(Form::class, ['user_id' => 9999]);
 
         $this->login()->get(formPath($form) . '/responses/export')->assertStatus(403);
@@ -39,24 +45,10 @@ class ExportResponsesTest extends TestCase
     {
         Excel::fake();
 
-        $this->login();
-        $form = create(Form::class, ['user_id' => 999]);
-        create(FormUser::class, [
-            'user_id' => auth()->user()->id,
-            'form_id' => $form->id,
-            'access' => 'view'
-        ]);
+        $form = $this->createFormWithAccess('view');
 
         $this->get(formPath($form) . '/responses/export')->assertStatus(200);
-    }
 
-    /** @test */
-    public function a_guest_cant_export_a_forms_result()
-    {
-        $this->withExceptionHandling();
-
-        $form = create(Form::class);
-
-        $this->get(formPath($form) . '/responses/export')->assertRedirect('login');
+        Excel::assertDownloaded('responses.xlsx');
     }
 }

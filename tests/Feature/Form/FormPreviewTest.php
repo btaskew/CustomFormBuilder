@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Form;
 
 use App\Form;
 use App\FormUser;
@@ -11,6 +11,12 @@ use Tests\TestCase;
 class FormPreviewTest extends TestCase
 {
     use RefreshDatabase;
+
+    /** @test */
+    public function a_guest_cant_preview_a_form()
+    {
+        $this->get('/forms/1/preview')->assertRedirect('login');
+    }
 
     /** @test */
     public function a_user_can_preview_their_complete_form()
@@ -27,8 +33,6 @@ class FormPreviewTest extends TestCase
     /** @test */
     public function a_user_cant_preview_another_users_complete_form()
     {
-        $this->withExceptionHandling();
-
         $form = create(Form::class, ['user_id' => 999]);
 
         $this->login()
@@ -39,13 +43,7 @@ class FormPreviewTest extends TestCase
     /** @test */
     public function a_user_can_preview_a_form_they_have_view_access_to()
     {
-        $this->login();
-        $form = create(Form::class, ['user_id' => 999]);
-        create(FormUser::class, [
-            'user_id' => auth()->user()->id,
-            'form_id' => $form->id,
-            'access' => 'view'
-        ]);
+        $form = $this->createFormWithAccess('view');
 
         $this->get(formPath($form) . '/preview')
             ->assertStatus(200)

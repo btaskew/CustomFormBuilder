@@ -52,7 +52,7 @@ class User extends Authenticatable
     public function getAllForms(): Collection
     {
         return $this->forms->merge($this->accessibleForms)->each(function (Form $form) {
-            $form->editAccess = auth()->user()->hasAccessTo('edit', $form);
+            $form->editAccess = $this->hasAccessTo('edit', $form);
         });
     }
 

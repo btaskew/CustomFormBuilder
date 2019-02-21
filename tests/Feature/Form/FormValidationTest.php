@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Form;
 
 use App\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -9,12 +9,6 @@ use Tests\TestCase;
 class FormValidationTest extends TestCase
 {
     use RefreshDatabase;
-
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->withExceptionHandling();
-    }
 
     /** @test */
     public function a_form_title_is_required()

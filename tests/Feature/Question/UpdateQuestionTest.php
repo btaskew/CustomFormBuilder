@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Question;
 
 use App\Form;
 use App\Question;
@@ -14,8 +14,6 @@ class UpdateQuestionTest extends TestCase
     /** @test */
     public function a_guest_cant_edit_a_question()
     {
-        $this->withExceptionHandling();
-
         $form = create(Form::class);
         $question = create(Question::class, ['form_id' => $form->id]);
 
@@ -24,7 +22,7 @@ class UpdateQuestionTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_edit_a_question()
+    public function a_user_can_edit_a_question_for_their_form()
     {
         $form = $this->loginUserWithForm();
         $question = create(Question::class, ['title' => 'Old title', 'form_id' => $form->id]);
@@ -54,8 +52,6 @@ class UpdateQuestionTest extends TestCase
     /** @test */
     public function a_user_cant_edit_questions_that_belong_to_another_users_form()
     {
-        $this->withExceptionHandling();
-
         $form = create(Form::class, ['user_id' => 9999]);
         $question = create(Question::class, ['title' => 'Old title', 'type' => 'text', 'form_id' => $form->id]);
 
@@ -69,43 +65,30 @@ class UpdateQuestionTest extends TestCase
     }
 
     /** @test */
-    public function a_guest_cant_delete_a_question()
+    public function a_user_can_edit_questions_to_a_form_they_have_edit_access_to()
     {
-        $this->withExceptionHandling();
+        $form = $this->createFormWithAccess('edit');
+        $question = create(Question::class, ['title' => 'Old title', 'form_id' => $form->id]);
 
-        $form = create(Form::class);
-        $question = create(Question::class, ['form_id' => $form->id]);
+        $this->patch(
+            '/forms/' . $question->form->id . '/questions/' . $question->id,
+            ['title' => 'New title', 'type' => 'text']
+        )->assertStatus(200);
 
-        $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id)
-            ->assertRedirect('login');
-
-        $this->assertDatabaseHas('questions', ['id' => $question->id]);
+        $this->assertEquals('New title', $question->fresh()->title);
     }
 
     /** @test */
-    public function a_user_can_delete_a_question()
+    public function a_user_cant_edit_questions_to_a_form_they_have_view_access_to()
     {
-        $form = $this->loginUserWithForm();
-        $question = create(Question::class, ['form_id' => $form->id]);
+        $form = $this->createFormWithAccess('view');
+        $question = create(Question::class, ['title' => 'Old title', 'form_id' => $form->id]);
 
-        $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id)
-            ->assertStatus(200);
+        $this->patch(
+            '/forms/' . $question->form->id . '/questions/' . $question->id,
+            ['title' => 'New title', 'type' => 'text']
+        )->assertStatus(403);
 
-        $this->assertDatabaseMissing('questions', ['id' => $question->id]);
-    }
-
-    /** @test */
-    public function a_user_cant_delete_a_question_on_another_users_form()
-    {
-        $this->withExceptionHandling();
-
-        $form = create(Form::class, ['user_id' => 9999]);
-        $question = create(Question::class, ['form_id' => $form->id]);
-
-        $this->login()
-            ->delete('/forms/' . $question->form->id . '/questions/' . $question->id)
-            ->assertStatus(403);
-
-        $this->assertDatabaseHas('questions', ['id' => $question->id]);
+        $this->assertEquals('Old title', $question->fresh()->title);
     }
 }

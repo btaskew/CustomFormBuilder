@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Question;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -9,12 +9,14 @@ class QuestionValidationTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * @var string
+     */
     private $uri;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->withExceptionHandling();
 
         $form = $this->loginUserWithForm();
         $this->uri = formPath($form) . '/questions';

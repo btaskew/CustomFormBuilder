@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Question;
 
 use App\Form;
 use App\Question;
@@ -54,8 +54,6 @@ class ManageSelectOptionsTest extends TestCase
     /** @test */
     public function a_user_cant_add_a_new_option_to_another_users_question()
     {
-        $this->withExceptionHandling();
-
         $form = create(Form::class, ['user_id' => 9999]);
         $question = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
 
@@ -68,6 +66,20 @@ class ManageSelectOptionsTest extends TestCase
                 'options' => [['id' => null, 'value' => 'value', 'display_value' => 'New value']]
             ]
         )->assertStatus(403);
+    }
+
+
+    /** @test */
+    public function a_guest_cant_delete_a_select_option()
+    {
+        $form = create(Form::class);
+        $question = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
+        $option = create(SelectOption::class, ['question_id' => $question->id]);
+
+        $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id . '/options/' . $option->id)
+            ->assertRedirect('login');
+
+        $this->assertDatabaseHas('select_options', ['id' => $option->id]);
     }
 
     /** @test */
@@ -84,25 +96,8 @@ class ManageSelectOptionsTest extends TestCase
     }
 
     /** @test */
-    public function a_guest_cant_delete_a_select_option()
-    {
-        $this->withExceptionHandling();
-
-        $form = create(Form::class);
-        $question = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
-        $option = create(SelectOption::class, ['question_id' => $question->id]);
-
-        $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id . '/options/' . $option->id)
-            ->assertRedirect('login');
-
-        $this->assertDatabaseHas('select_options', ['id' => $option->id]);
-    }
-
-    /** @test */
     public function a_user_cant_delete_an_option_for_another_users_form()
     {
-        $this->withExceptionHandling();
-
         $form = create(Form::class, ['user_id' => 9999]);
         $question = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
         $option = create(SelectOption::class, ['question_id' => $question->id]);
@@ -115,28 +110,28 @@ class ManageSelectOptionsTest extends TestCase
     }
 
     /** @test */
-    public function a_questions_select_options_are_deleted_when_the_question_is_deleted()
+    public function a_user_can_delete_an_option_to_a_form_they_have_edit_access_for()
     {
-        $question = create(Question::class);
+        $form = $this->createFormWithAccess('edit');
+        $question = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
-        $question->delete();
+        $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id . '/options/' . $option->id)
+            ->assertStatus(200);
 
         $this->assertDatabaseMissing('select_options', ['id' => $option->id]);
     }
 
     /** @test */
-    public function a_questions_select_options_are_deleted_when_the_type_is_changed()
+    public function a_user_cant_delete_an_option_to_a_form_they_have_view_access_for()
     {
-        $form = $this->loginUserWithForm();
-        $question = create(Question::class, ['form_id' => $form->id]);
+        $form = $this->createFormWithAccess('view');
+        $question = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
-        $this->patch(
-            formPath($form) . '/questions/' . $question->id,
-            ['title' => 'New title', 'type' => 'text', 'help_text' => '']
-        )->assertStatus(200);
+        $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id . '/options/' . $option->id)
+            ->assertStatus(403);
 
-        $this->assertDatabaseMissing('select_options', ['id' => $option->id]);
+        $this->assertDatabaseHas('select_options', ['id' => $option->id]);
     }
 }

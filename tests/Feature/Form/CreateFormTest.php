@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Form;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -18,17 +18,13 @@ class CreateFormTest extends TestCase
     /** @test */
     public function a_guest_cant_view_the_create_form_page()
     {
-        $this->withExceptionHandling();
         $this->get('/forms/create')->assertRedirect('login');
     }
 
     /** @test */
     public function a_guest_cant_create_new_forms()
     {
-        $this->withExceptionHandling();
-
-        $this->post('/forms', [])
-            ->assertRedirect('login');
+        $this->post('/forms', [])->assertRedirect('login');
     }
 
     /** @test */
