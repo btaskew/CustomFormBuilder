@@ -21,31 +21,41 @@ Route::resource('forms', 'FormController');
 
 Route::post('forms/{form}/responses', 'FormResponseController@store');
 
-Route::group(['middleware' => ['auth', 'permission:manage_forms']], function () {
+Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('questions/bank/search', 'QuestionSearchController@show');
+    Route::group(['middleware' => 'permission:manage_forms'], function () {
 
-    Route::group(['prefix' => 'forms/{form}'], function () {
+        Route::get('questions/bank/search', 'QuestionSearchController@show');
 
-        Route::get('preview', 'FormPreviewController@show');
+        Route::group(['prefix' => 'forms/{form}'], function () {
 
-        Route::patch('order', 'FormOrderController@update');
+            Route::get('preview', 'FormPreviewController@show');
 
-        Route::get('select-questions', 'SelectQuestionsController@index');
+            Route::patch('order', 'FormOrderController@update');
 
-        Route::get('questions/bank', 'QuestionBankController@index');
-        Route::post('questions/bank', 'QuestionBankController@store');
+            Route::get('select-questions', 'SelectQuestionsController@index');
 
-        Route::resource('questions', 'QuestionsController');
+            Route::get('questions/bank', 'QuestionBankController@index');
+            Route::post('questions/bank', 'QuestionBankController@store');
 
-        Route::delete('questions/{question}/options/{option}', 'SelectOptionsController@destroy');
+            Route::resource('questions', 'QuestionsController');
 
-        Route::get('responses', 'FormResponseController@index');
-        Route::get('responses/export', 'ResponseExportController@index');
+            Route::delete('questions/{question}/options/{option}', 'SelectOptionsController@destroy');
 
-        Route::get('access', 'FormAccessController@index');
-        Route::post('access', 'FormAccessController@store');
-        Route::delete('access/{formUser}', 'FormAccessController@destroy');
+            Route::get('responses', 'FormResponseController@index');
+            Route::get('responses/export', 'ResponseExportController@index');
+
+            Route::get('access', 'FormAccessController@index');
+            Route::post('access', 'FormAccessController@store');
+            Route::delete('access/{formUser}', 'FormAccessController@destroy');
+
+        });
+
+    });
+
+    Route::group(['middleware' => 'permission:manage_folders'], function () {
+
+        Route::resource('folders', 'FolderController');
 
     });
 

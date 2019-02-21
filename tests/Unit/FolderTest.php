@@ -19,4 +19,13 @@ class FolderTest extends TestCase
 
         $this->assertTrue($folder->forms->first()->is($form));
     }
+
+    /** @test */
+    public function a_folder_can_be_fetched_with_its_number_of_forms()
+    {
+        $folder = create(Folder::class);
+        create(Form::class, ['folder_id' => $folder->id], 2);
+
+        $this->assertEquals(2, $folder->withFormCount()->formCount);
+    }
 }

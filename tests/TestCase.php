@@ -12,12 +12,13 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication;
 
     /**
+     * @param string $role
      * @return $this
      */
-    public function login()
+    public function login(string $role = 'standard_user')
     {
         $user = create(User::class);
-        $user->assignRole('super_user');
+        $user->assignRole($role);
         $this->be($user);
 
         return $this;
