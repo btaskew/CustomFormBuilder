@@ -5,5 +5,5 @@
 
     <h3>Edit form details</h3>
 
-    <edit-form :form-data="{{ $form }}"></edit-form>
+    <edit-form :form-data="{{ $form }}" :folders="{{ json_encode($folders) }}"></edit-form>
 @endsection

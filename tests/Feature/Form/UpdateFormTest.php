@@ -75,7 +75,8 @@ class UpdateFormTest extends TestCase
             'success_text' => 'Form submitted',
             'response_email' => 'Response text',
             'response_email_field' => $question->id,
-            'active' => false
+            'active' => false,
+            'folder_id' => 2
         ];
 
         $this->patch(formPath($form), $attributes)
@@ -91,6 +92,7 @@ class UpdateFormTest extends TestCase
         $this->assertEquals('Response text', $form->response_email);
         $this->assertEquals($question->id, $form->response_email_field);
         $this->assertFalse($form->active);
+        $this->assertEquals(2, $form->folder_id);
     }
 
     /** @test */

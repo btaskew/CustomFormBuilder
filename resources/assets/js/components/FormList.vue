@@ -42,7 +42,6 @@
 
 <script>
     import axios from 'axios';
-    import {filter} from 'lodash';
     import Modal from './Utils/modal';
     import LoadingModal from './Utils/LoadingModal';
 
@@ -58,8 +57,13 @@
                 formToDelete: null,
                 showConfirmModal: false,
                 loading: false,
-                displayForms: this.forms
             };
+        },
+
+        computed: {
+            displayForms() {
+                return this.forms;
+            }
         },
 
         methods: {
@@ -76,18 +80,12 @@
                     .then(response => {
                         this.loading = false;
                         flash('Form deleted');
-                        this.removeForm();
+                        this.$emit('formDeleted', this.formToDelete);
+                        this.formToDelete = null;
                     }).catch(error => {
                     this.loading = false;
                     flash('Error deleting form. Please try again later', 'danger');
                 });
-            },
-
-            removeForm(removeForm) {
-                this.displayForms = filter(this.displayForms, form => {
-                    return form.id !== this.formToDelete;
-                });
-                this.formToDelete = null;
             }
         }
     }

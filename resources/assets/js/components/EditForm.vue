@@ -33,8 +33,7 @@
                     ></span>
                 </div>
 
-                <!--Only show folder selection when creating-->
-                <div v-if="this.folders" class="form-group">
+                <div class="form-group">
                     <label for="folder_id" :class="{ 'has-error': form.errors.has('folder_id') }">
                         Folder
                     </label>

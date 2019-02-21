@@ -90,7 +90,9 @@ class FormController extends Controller
     {
         $this->authorize('edit', $form);
 
-        return view('form.edit', compact('form'));
+        $folders = Folder::all();
+
+        return view('form.edit', compact('form', 'folders'));
     }
 
     /**
@@ -122,6 +124,7 @@ class FormController extends Controller
             'success_text',
             'response_email',
             'response_email_field',
+            'folder_id'
         ]));
 
         return $form;
