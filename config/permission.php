@@ -47,14 +47,14 @@ return [
          * table should be used to retrieve your models permissions. We have chosen a
          * basic default value but you may easily change it to any table you like.
          */
-        'model_has_permissions' => 'model_permissions',
+        'model_has_permissions' => 'user_permissions',
 
         /*
          * When using the "HasRoles" trait from this package, we need to know which
          * table should be used to retrieve your models roles. We have chosen a
          * basic default value but you may easily change it to any table you like.
          */
-        'model_has_roles' => 'model_roles',
+        'model_has_roles' => 'user_roles',
 
         /*
          * When using the "HasRoles" trait from this package, we need to know which
@@ -73,7 +73,7 @@ return [
          * For example, this would be nice if your primary keys are all UUIDs. In
          * that case, name this `model_uuid`.
          */
-        'model_morph_key' => 'model_id',
+        'model_morph_key' => 'user_id',
     ],
 
     /*
@@ -94,7 +94,7 @@ return [
         /*
          * The key to use when tagging and prefixing entries in the cache.
          */
-        'key' => 'spatie.permission.cache',
+        'key' => 'cfb.permission.cache',
 
         /*
          * When checking for a permission against a model by passing a Permission
