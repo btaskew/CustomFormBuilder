@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light mb-3" id="form-nav">
+<nav class="navbar navbar-expand-lg navbar-light mb-3 sub-nav">
     <span class="navbar-brand mb-0 h1">Manage folders</span>
 
     <ul class="nav">
