@@ -21,7 +21,7 @@ Route::resource('forms', 'FormController');
 
 Route::post('forms/{form}/responses', 'FormResponseController@store');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'permission:manage_forms']], function () {
 
     Route::get('questions/bank/search', 'QuestionSearchController@show');
 

@@ -16,7 +16,9 @@ abstract class TestCase extends BaseTestCase
      */
     public function login()
     {
-        $this->be(create(User::class));
+        $user = create(User::class);
+        $user->assignRole('super_user');
+        $this->be($user);
 
         return $this;
     }
