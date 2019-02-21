@@ -17,9 +17,14 @@ class SampleDataSeeder extends Seeder
     {
         $folders = factory(Folder::class, 3)->create();
 
-        $forms = factory(Form::class, 3)->create([
+        $forms = factory(Form::class, 2)->create([
             'user_id' => 1,
             'folder_id' => $folders[0]->id
+        ]);
+
+        $forms = factory(Form::class)->create([
+            'user_id' => 1,
+            'folder_id' => $folders[1]->id
         ]);
 
         $forms->each(function (Form $form) {
