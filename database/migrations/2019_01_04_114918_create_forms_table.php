@@ -25,11 +25,11 @@ class CreateFormsTable extends Migration
             $table->unsignedInteger('response_email_field')->nullable();
             $table->text('success_text')->nullable();
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('folder_id');
+            $table->unsignedInteger('folder_id')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('folder_id')->references('id')->on('folders')->onDelete('cascade');
+            $table->foreign('folder_id')->references('id')->on('folders')->onDelete('set null');
         });
     }
 
