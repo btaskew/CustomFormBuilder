@@ -24,6 +24,7 @@ Vue.component('question-bank', require('./components/QuestionBank'));
 Vue.component('forms-by-folder', require('./components/FormsByFolder'));
 Vue.component('form-access-manager', require('./components/FormAccessManager'));
 Vue.component('folder-list', require('./components/FolderList'));
+Vue.component('create-folder-form', require('./components/CreateFolderForm'));
 
 Vue.config.ignoredElements = ['trix-editor'];
 
