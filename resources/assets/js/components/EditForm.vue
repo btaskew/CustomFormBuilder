@@ -7,7 +7,7 @@
         >
             <div class="mt-t">
                 <div class="form-group">
-                    <label for="title" class="col-2 col-form-label" :class="{ 'has-error': form.errors.has('title') }">
+                    <label for="title" :class="{ 'has-error': form.errors.has('title') }">
                         Title
                     </label>
                     <input class="form-control" type="text" v-model="form.title" id="title" name="title" required>
@@ -15,10 +15,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="description"
-                           class="col-2 col-form-label"
-                           :class="{ 'has-error': form.errors.has('description') }"
-                    >
+                    <label for="description" :class="{ 'has-error': form.errors.has('description') }">
                         Description
                     </label>
                     <rich-text-editor
@@ -48,10 +45,7 @@
 
                 <div class="form-row">
                     <div class="col form-group">
-                        <label for="open_date"
-                               class="col-form-label"
-                               :class="{ 'has-error': form.errors.has('open_date') }"
-                        >
+                        <label for="open_date" :class="{ 'has-error': form.errors.has('open_date') }">
                             Open date
                         </label>
                         <input class="form-control"
@@ -67,10 +61,7 @@
                         ></span>
                     </div>
                     <div class="col form-group">
-                        <label for="close_date"
-                               class="col-form-label"
-                               :class="{ 'has-error': form.errors.has('close_date') }"
-                        >
+                        <label for="close_date" :class="{ 'has-error': form.errors.has('close_date') }">
                             Closing date
                         </label>
                         <input class="form-control"
@@ -88,10 +79,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="admin_email"
-                           class="form-check-label"
-                           :class="{ 'has-error': form.errors.has('admin_email') }"
-                    >
+                    <label for="admin_email" :class="{ 'has-error': form.errors.has('admin_email') }">
                         Admin emails
                     </label>
                     <input class="form-control"
@@ -107,10 +95,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="success_text"
-                           class="col-2 col-form-label"
-                           :class="{ 'has-error': form.errors.has('success_text') }"
-                    >
+                    <label for="success_text" :class="{ 'has-error': form.errors.has('success_text') }">
                         Success text
                     </label>
                     <rich-text-editor
@@ -134,10 +119,7 @@
                            :true-value="true"
                            :false-value="false"
                     >
-                    <label for="active"
-                           class="form-check-label"
-                           :class="{ 'has-error': form.errors.has('active') }"
-                    >
+                    <label for="active" class="form-check-label" :class="{ 'has-error': form.errors.has('active') }">
                         Active
                     </label>
                     <span class="text-danger"
