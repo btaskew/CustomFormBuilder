@@ -14,23 +14,29 @@ class FolderController extends Controller
      */
     public function index()
     {
-        //
+        $folders = Folder::paginate(25);
+
+        foreach ($folders->items() as $folder) {
+            $folder->withFormCount();
+        }
+
+        return view('folders.index', compact('folders'));
     }
 
     /**
      * Show the form for creating a new folder.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
-        //
+        return view('folders.create');
     }
 
     /**
      * Store a newly created folder in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return Folder
      */
     public function store(Request $request)
@@ -43,7 +49,7 @@ class FolderController extends Controller
     /**
      * Display the specified folder.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -54,7 +60,7 @@ class FolderController extends Controller
     /**
      * Show the form for editing the specified folder.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)

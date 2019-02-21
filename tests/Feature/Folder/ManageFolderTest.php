@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Form;
+namespace Tests\Feature\Folder;
 
 use App\Folder;
 use Illuminate\Foundation\Testing\RefreshDatabase;

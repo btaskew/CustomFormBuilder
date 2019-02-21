@@ -23,6 +23,7 @@ Vue.component('rich-text-editor', require('./components/Utils/RichTextEditor'));
 Vue.component('question-bank', require('./components/QuestionBank'));
 Vue.component('forms-by-folder', require('./components/FormsByFolder'));
 Vue.component('form-access-manager', require('./components/FormAccessManager'));
+Vue.component('folder-list', require('./components/FolderList'));
 
 Vue.config.ignoredElements = ['trix-editor'];
 

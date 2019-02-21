@@ -5,7 +5,7 @@
     @include('navbars.form')
     
     @if (count($responses) < 1)
-        <div class="alert alert-info animated mt" role="alert">
+        <div class="alert alert-info mt" role="alert">
             No responses found
         </div>
     @else
