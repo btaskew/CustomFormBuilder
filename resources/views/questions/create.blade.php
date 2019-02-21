@@ -1,6 +1,9 @@
-@extends('layouts.form')
+@extends('layouts.app')
 
-@section('form_content')
+@section('content')
+
+    @include('navbars.form')
+
     <h3>Create form question</h3>
 
     <div class="mt-4">

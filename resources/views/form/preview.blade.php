@@ -1,6 +1,8 @@
-@extends('layouts.form')
+@extends('layouts.app')
 
-@section('form_content')
+@section('content')
+    @include('navbars.form')
+
     <div>
         <p>This view is for testing only - submitting the form will not store any data as a response.</p>
         @if ($form->active)

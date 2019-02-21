@@ -1,6 +1,9 @@
-@extends('layouts.form')
+@extends('layouts.app')
 
-@section('form_content')
+@section('content')
+
+    @include('navbars.form')
+    
     @if (count($responses) < 1)
         <div class="alert alert-info animated mt" role="alert">
             No responses found

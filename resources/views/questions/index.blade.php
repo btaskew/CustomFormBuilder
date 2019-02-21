@@ -1,6 +1,8 @@
-@extends('layouts.form')
+@extends('layouts.app')
 
-@section('form_content')
+@section('content')
+
+    @include('navbars.form')
     <div class="d-flex justify-content-between">
         <h3>Edit form questions</h3>
         <a class="btn btn-primary" href="/forms/{{ $form->id }}/questions/create">Add question</a>

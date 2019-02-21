@@ -1,7 +1,7 @@
-@extends('layouts.form')
+@extends('layouts.app')
 
-@section('form_content')
-
+@section('content')
+    @include('navbars.form')
 
     <form-access-manager :form-users="{{ json_encode($users) }}" :form-id="{{ $form->id }}"></form-access-manager>
 @endsection
