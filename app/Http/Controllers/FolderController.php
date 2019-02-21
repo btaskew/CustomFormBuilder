@@ -93,6 +93,10 @@ class FolderController extends Controller
      */
     public function destroy(Folder $folder)
     {
+        if ($folder->forms()->count() > 0) {
+            return response()->json(['error' => 'Folder still contains forms'], 403);
+        }
+
         $folder->delete();
 
         return response()->json(['success' => 'Folder deleted']);

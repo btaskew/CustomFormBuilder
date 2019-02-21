@@ -3,6 +3,7 @@
 namespace Tests\Feature\Folder;
 
 use App\Folder;
+use App\Form;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -112,6 +113,19 @@ class ManageFolderTest extends TestCase
             ->assertStatus(200);
 
         $this->assertDatabaseMissing('folders', ['id' => $folder->id]);
+    }
+
+    /** @test */
+    public function a_folder_cant_be_deleted_if_it_has_forms_in()
+    {
+        $folder = create(Folder::class);
+        create(Form::class, ['folder_id' => $folder->id]);
+
+        $this->login('admin')
+            ->delete('/folders/' . $folder->id)
+            ->assertStatus(403);
+
+        $this->assertDatabaseHas('folders', ['id' => $folder->id]);
     }
 
     /** @test */
