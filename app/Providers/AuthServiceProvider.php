@@ -6,8 +6,10 @@ use App\Form;
 use App\Policies\FormPolicy;
 use App\Policies\QuestionPolicy;
 use App\Policies\SelectOptionPolicy;
+use App\Policies\UserPolicy;
 use App\Question;
 use App\SelectOption;
+use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -20,7 +22,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Form::class => FormPolicy::class,
         Question::class => QuestionPolicy::class,
-        SelectOption::class => SelectOptionPolicy::class
+        SelectOption::class => SelectOptionPolicy::class,
+        User::class => UserPolicy::class
     ];
 
     /**

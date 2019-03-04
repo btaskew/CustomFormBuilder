@@ -28,10 +28,15 @@ Vue.component('create-folder-form', require('./components/CreateFolderForm'));
 
 Vue.config.ignoredElements = ['trix-editor'];
 
+import BootstrapVue from 'bootstrap-vue'
 import VueFormGenerator from 'vue-form-generator'
 import 'vue-form-generator/dist/vfg.css'
 
+Vue.use(BootstrapVue);
 Vue.use(VueFormGenerator);
+
+require('../../../vendor/jwwebdev/admin/resources/assets/js/app.js');
+require('../../../vendor/jwwebdev/bvforms-laravel/resources/assets/js/app.js');
 
 const app = new Vue({
     el: '#app'

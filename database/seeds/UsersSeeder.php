@@ -14,22 +14,17 @@ class UsersSeeder extends Seeder
     {
         $user = factory(User::class)->create([
             'id' => 1,
-            'name' => 'John Doe',
-            'username' => 'jd123',
-            'email' => 'john@email.com',
-            'password' => bcrypt('password')
+            'name' => 'Ben Askew',
+            'username' => 'ba329',
         ]);
 
         $user->assignRole('admin');
 
-        $user2 = factory(User::class)->create([
+        factory(User::class)->create([
             'id' => 2,
             'name' => 'Jane Doe',
             'username' => 'jd456',
-            'email' => 'jane@email.com',
-            'password' => bcrypt('password')
+            'email' => 'jane@email.com'
         ]);
-
-        $user2->assignRole('standard_user');
     }
 }

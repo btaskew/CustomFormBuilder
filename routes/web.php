@@ -15,48 +15,50 @@ Route::get('/', function () {
     return redirect('/forms');
 });
 
-Auth::routes();
-
 Route::resource('forms', 'FormController');
 
 Route::post('forms/{form}/responses', 'FormResponseController@store');
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::group(['middleware' => 'permission:manage_forms'], function () {
 
-        Route::get('questions/bank/search', 'QuestionSearchController@show');
+    Route::get('questions/bank/search', 'QuestionSearchController@show');
 
-        Route::group(['prefix' => 'forms/{form}'], function () {
+    Route::group(['prefix' => 'forms/{form}'], function () {
 
-            Route::get('preview', 'FormPreviewController@show');
+        Route::get('preview', 'FormPreviewController@show');
 
-            Route::patch('order', 'FormOrderController@update');
+        Route::patch('order', 'FormOrderController@update');
 
-            Route::get('select-questions', 'SelectQuestionsController@index');
+        Route::get('select-questions', 'SelectQuestionsController@index');
 
-            Route::get('questions/bank', 'QuestionBankController@index');
-            Route::post('questions/bank', 'QuestionBankController@store');
+        Route::get('questions/bank', 'QuestionBankController@index');
+        Route::post('questions/bank', 'QuestionBankController@store');
 
-            Route::resource('questions', 'QuestionsController');
+        Route::resource('questions', 'QuestionsController');
 
-            Route::delete('questions/{question}/options/{option}', 'SelectOptionsController@destroy');
+        Route::delete('questions/{question}/options/{option}', 'SelectOptionsController@destroy');
 
-            Route::get('responses', 'FormResponseController@index');
-            Route::get('responses/export', 'ResponseExportController@index');
+        Route::get('responses', 'FormResponseController@index');
+        Route::get('responses/export', 'ResponseExportController@index');
 
-            Route::get('access', 'FormAccessController@index');
-            Route::post('access', 'FormAccessController@store');
-            Route::delete('access/{formUser}', 'FormAccessController@destroy');
-
-        });
+        Route::get('access', 'FormAccessController@index');
+        Route::post('access', 'FormAccessController@store');
+        Route::delete('access/{formUser}', 'FormAccessController@destroy');
 
     });
 
-    Route::group(['middleware' => 'permission:manage_folders'], function () {
+
+    Route::group(['middleware' => 'auth.admin'], function () {
 
         Route::resource('folders', 'FolderController');
 
     });
 
 });
+
+OpenAm::routes();
+
+Route::get('/home', function () {
+    return redirect('/forms');
+})->name('home');

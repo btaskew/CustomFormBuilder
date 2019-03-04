@@ -20,7 +20,7 @@ class ManageFolderTest extends TestCase
     /** @test */
     public function an_admin_user_can_create_a_new_folder()
     {
-        $this->login('admin')
+        $this->loginAdmin()
             ->post('/folders', ['name' => 'New folder'])
             ->assertStatus(201);
 
@@ -30,15 +30,15 @@ class ManageFolderTest extends TestCase
     /** @test */
     public function a_standard_user_cant_create_a_folder()
     {
-        $this->login('standard_user')
+        $this->login()
             ->post('/folders', ['name' => 'New folder'])
-            ->assertStatus(403);
+            ->assertRedirect('login');
     }
 
     /** @test */
     public function a_name_is_required_when_creating_a_folder()
     {
-        $this->login('admin')
+        $this->loginAdmin()
             ->json('post', '/folders', [])
             ->assertStatus(422)
             ->assertSee('name');
@@ -60,7 +60,7 @@ class ManageFolderTest extends TestCase
     {
         $folder = create(Folder::class, ['name' => 'Old name']);
 
-        $this->login('admin')
+        $this->loginAdmin()
             ->patch('/folders/' . $folder->id, ['name' => 'New name'])
             ->assertStatus(200);
 
@@ -72,9 +72,9 @@ class ManageFolderTest extends TestCase
     {
         $folder = create(Folder::class, ['name' => 'Old name']);
 
-        $this->login('standard_user')
+        $this->login()
             ->patch('/folders/' . $folder->id, ['name' => 'New name'])
-            ->assertStatus(403);
+            ->assertRedirect('login');
 
         $this->assertEquals('Old name', $folder->fresh()->name);
     }
@@ -84,7 +84,7 @@ class ManageFolderTest extends TestCase
     {
         $folder = create(Folder::class, ['name' => 'Old name']);
 
-        $this->login('admin')
+        $this->loginAdmin()
             ->json('patch', '/folders/' . $folder->id, [])
             ->assertStatus(422)
             ->assertSee('name');
@@ -108,7 +108,7 @@ class ManageFolderTest extends TestCase
     {
         $folder = create(Folder::class);
 
-        $this->login('admin')
+        $this->loginAdmin()
             ->delete('/folders/' . $folder->id)
             ->assertStatus(200);
 
@@ -121,7 +121,7 @@ class ManageFolderTest extends TestCase
         $folder = create(Folder::class);
         create(Form::class, ['folder_id' => $folder->id]);
 
-        $this->login('admin')
+        $this->loginAdmin()
             ->delete('/folders/' . $folder->id)
             ->assertStatus(403);
 
@@ -133,9 +133,9 @@ class ManageFolderTest extends TestCase
     {
         $folder = create(Folder::class);
 
-        $this->login('standard_user')
+        $this->login()
             ->delete('/folders/' . $folder->id)
-            ->assertStatus(403);
+            ->assertRedirect('login');
 
         $this->assertDatabaseHas('folders', ['id' => $folder->id]);
     }

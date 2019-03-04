@@ -15,11 +15,16 @@ abstract class TestCase extends BaseTestCase
      * @param string $role
      * @return $this
      */
-    public function login(string $role = 'standard_user')
+    public function loginAdmin()
     {
-        $user = create(User::class);
-        $user->assignRole($role);
-        $this->be($user);
+        $this->login();
+        auth()->user()->assignRole('admin');
+        return $this;
+    }
+
+    public function login()
+    {
+        $this->be(create(User::class));
 
         return $this;
     }

@@ -23,7 +23,7 @@ class ViewFolderTest extends TestCase
         $folder = create(Folder::class);
         create(Form::class, ['folder_id' => $folder->id], 2);
 
-        $this->login('admin')
+        $this->loginAdmin()
             ->get('/folders')
             ->assertStatus(200)
             ->assertSee($folder->name)
@@ -33,11 +33,8 @@ class ViewFolderTest extends TestCase
     /** @test */
     public function a_standard_user_cant_see_a_list_of_folders()
     {
-        $folder = create(Folder::class);
-
-        $this->login('standard_user')
+        $this->login()
             ->get('/folders')
-            ->assertStatus(403)
-            ->assertDontSee($folder->name);
+            ->assertRedirect('login');
     }
 }
