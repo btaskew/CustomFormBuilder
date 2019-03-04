@@ -1,13 +1,17 @@
 <?php
 
 return [
-    'domain' => 'https://ssocore.exeter.ac.uk',
+    'domain' => env('OPENAM_DOMAIN'),
 
-    'uri' => 'openam',
+    'uri' => env('OPENAM_URI'),
 
-    'realm' => 'people',
+    'realm' => env('OPENAM_REALM'),
 
-    'cookieName' => 'iPlanetDirectoryPro',
+    'cookieName' => env('OPENAM_COOKIE_NAME'),
+
+    'cookieDomain' => env('OPENAM_COOKIE_DOMAIN'),
+
+    'cookiePath' => env('OPENAM_COOKIE_PATH'),
 
     'secureCookie' => true,
 
