@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Folder;
 use App\Form;
+use App\Policies\FolderPolicy;
 use App\Policies\FormPolicy;
 use App\Policies\QuestionPolicy;
 use App\Policies\SelectOptionPolicy;
@@ -23,7 +25,8 @@ class AuthServiceProvider extends ServiceProvider
         Form::class => FormPolicy::class,
         Question::class => QuestionPolicy::class,
         SelectOption::class => SelectOptionPolicy::class,
-        User::class => UserPolicy::class
+        User::class => UserPolicy::class,
+        Folder::class => FolderPolicy::class
     ];
 
     /**

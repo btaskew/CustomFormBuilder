@@ -54,11 +54,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/forms/create">Create a form</a>
                         </li>
-                        @if (auth()->user()->hasRole('admin'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="/folders">Manage folders</a>
-                            </li>
-                        @endif
                     @endauth
                 </ul>
 
@@ -70,6 +65,11 @@
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                     @else
+                        @if (auth()->user()->hasRole('admin'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin">Admin site</a>
+                            </li>
+                        @endif
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown"
                                class="nav-link dropdown-toggle"

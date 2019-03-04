@@ -17,11 +17,10 @@
                 <td>{{ folder.name }}</td>
                 <td>{{ folder.formCount }}</td>
                 <td v-if="folder.formCount == 0">
-                    <i class="fas fa-trash-alt text-danger folder-delete-icon" @click="showModal(folder.id)"></i>
+                    <a href="#" @click="showModal(folder.id)">Delete</a>
                 </td>
                 <td v-else>
-                    <i class="fas fa-trash-alt" data-toggle="tooltip" title="Folders with forms in cannot be deleted">
-                    </i>
+                    <a href="#" data-toggle="tooltip" title="Folders with forms in cannot be deleted"></a>
                 </td>
             </tr>
             </tbody>

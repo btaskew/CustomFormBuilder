@@ -9,6 +9,10 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
+    /**
+     * @param User $user
+     * @return bool
+     */
     public function administer(User $user)
     {
         return $user->hasRole('admin');
@@ -58,7 +62,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        if ( ! $model->hasRole('admin')) {
+        if (!$model->hasRole('admin')) {
             return $user->hasRole('admin');
         }
     }

@@ -11,6 +11,12 @@ return [
                     'guard' => 'administer',
                     'guardKey' => App\User::class,
                 ],
+                'folders' => [
+                    'name' => 'Folders',
+                    'route' => 'folders.index',
+                    'guard' => 'administer',
+                    'guardKey' => App\Folder::class,
+                ]
             ],
         ],
     ],

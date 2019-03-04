@@ -55,7 +55,7 @@ label {
 }
 
 .navbar-laravel {
-  background-color: #005DAB;
+  background-color: #005DAB !important;
   color: white !important;
 }
 
@@ -75,6 +75,10 @@ label {
 a:hover {
   font-weight: bold;
   text-decoration: none;
+}
+
+a:focus {
+  color: inherit !important;
 }
 
 .sub-nav {
