@@ -13,7 +13,9 @@
 
 Route::get('/', function () {
     return redirect('/forms');
-});
+})->name('home');
+
+OpenAm::routes();
 
 Route::resource('forms', 'FormController');
 
@@ -56,9 +58,3 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 });
-
-OpenAm::routes();
-
-Route::get('/home', function () {
-    return redirect('/forms');
-})->name('home');
