@@ -16,6 +16,12 @@ return [
                     'route' => 'folders.index',
                     'guard' => 'administer',
                     'guardKey' => App\Folder::class,
+                ],
+                'questionBank' => [
+                    'name' => 'Question bank',
+                    'route' => 'question-bank.create',
+                    'guard' => 'administer',
+                    'guardKey' => App\Question::class,
                 ]
             ],
         ],

@@ -11,6 +11,15 @@ class QuestionPolicy
     use HandlesAuthorization;
 
     /**
+     * @param User $user
+     * @return bool
+     */
+    public function administer(User $user)
+    {
+        return $user->hasRole('admin');
+    }
+
+    /**
      * @param User     $user
      * @param Question $question
      * @return bool

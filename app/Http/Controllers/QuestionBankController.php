@@ -6,7 +6,6 @@ use App\Facades\QuestionFacade;
 use App\Form;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
-use Illuminate\Http\Request;
 
 class QuestionBankController extends Controller
 {
@@ -24,8 +23,22 @@ class QuestionBankController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        return view('questionBank.create');
+    }
+
+    /**
+     * @param QuestionRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(QuestionRequest $request)
     {
         QuestionFacade::createBankQuestion($request);
+
+        return response()->json(['success' => 'Question created']);
     }
 }
