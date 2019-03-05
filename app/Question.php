@@ -21,7 +21,8 @@ class Question extends Model
         'help_text',
         'required',
         'admin_only',
-        'order'
+        'order',
+        'in_question_bank'
     ];
 
     /**

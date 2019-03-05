@@ -54,6 +54,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('folders', 'FolderController');
 
+        Route::post('question-bank', 'QuestionBankController@store');
+
     });
 
 });

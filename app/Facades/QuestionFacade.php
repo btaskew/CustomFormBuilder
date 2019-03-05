@@ -18,11 +18,28 @@ class QuestionFacade
             'title', 'type', 'help_text', 'required', 'admin_only'
         ]));
 
-        self::setSelectOptions($request, $question);
+        self::setSelectOptions($question, $request);
 
         if ($request->hasVisibilityRequirement()) {
             $question->setVisibilityRequirement($request->input('required_if'));
         }
+    }
+
+    /**
+     * @param QuestionRequest $request
+     */
+    public static function createBankQuestion(QuestionRequest $request)
+    {
+        $attributes = array_merge(
+            ['form_id' => null, 'in_question_bank' => true, 'order' => 0],
+            $request->only([
+                'title', 'type', 'help_text', 'required', 'admin_only'
+            ])
+        );
+
+        $question = Question::create($attributes);
+
+        self::setSelectOptions($question, $request);
     }
 
     /**
@@ -35,16 +52,16 @@ class QuestionFacade
             'title', 'type', 'help_text', 'required', 'admin_only'
         ]));
 
-        self::setSelectOptions($request, $question);
+        self::setSelectOptions($question, $request);
 
         self::updateVisibilityRequirement($question, $request);
     }
 
     /**
-     * @param QuestionRequest $request
      * @param Question        $question
+     * @param QuestionRequest $request
      */
-    private static function setSelectOptions(QuestionRequest $request, Question $question): void
+    private static function setSelectOptions(Question $question, QuestionRequest $request): void
     {
         if ($question->isSelectQuestion()) {
             $question->setOptions($request->input('options'));

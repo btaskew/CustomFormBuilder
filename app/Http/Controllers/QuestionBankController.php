@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\QuestionFacade;
 use App\Form;
+use App\Http\Requests\QuestionRequest;
 use App\Question;
+use Illuminate\Http\Request;
 
 class QuestionBankController extends Controller
 {
@@ -19,5 +22,10 @@ class QuestionBankController extends Controller
             'questions' => $questions,
             'form' => $form
         ]);
+    }
+
+    public function store(QuestionRequest $request)
+    {
+        QuestionFacade::createBankQuestion($request);
     }
 }
