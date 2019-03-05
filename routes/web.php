@@ -35,7 +35,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('select-questions', 'SelectQuestionsController@index');
 
         Route::get('questions/bank', 'QuestionBankController@index');
-        Route::post('questions/bank', 'QuestionBankController@store');
+
+        Route::post('questions/bank/assign', 'AssignQuestionBankController@store');
 
         Route::resource('questions', 'QuestionsController');
 

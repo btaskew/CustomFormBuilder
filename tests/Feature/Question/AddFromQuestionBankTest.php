@@ -15,7 +15,7 @@ class AddFromQuestionBankTest extends TestCase
     /** @test */
     public function a_guest_cant_add_a_question_bank_question_to_a_form()
     {
-        $this->post('forms/1/questions/bank', ['questions' => [1]])->assertRedirect('login');
+        $this->post('forms/1/questions/bank/assign', ['questions' => [1]])->assertRedirect('login');
     }
 
     /** @test */
@@ -24,7 +24,7 @@ class AddFromQuestionBankTest extends TestCase
         $form = $this->loginUserWithForm();
         $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
 
-        $this->post(formPath($form) . '/questions/bank', ['questions' => [$question->id]])
+        $this->post(formPath($form) . '/questions/bank/assign', ['questions' => [$question->id]])
             ->assertStatus(200);
 
         $this->assertEquals($question->title, $form->questions->first()->title);
@@ -38,7 +38,7 @@ class AddFromQuestionBankTest extends TestCase
         $question = create(Question::class, ['type' => 'radio', 'form_id' => null, 'in_question_bank' => true]);
         $option = create(SelectOption::class, ['question_id' => $question]);
 
-        $this->post(formPath($form) . '/questions/bank', ['questions' => [$question->id]])
+        $this->post(formPath($form) . '/questions/bank/assign', ['questions' => [$question->id]])
             ->assertStatus(200);
 
         $this->assertEquals($question->title, $form->questions->first()->title);
@@ -52,7 +52,7 @@ class AddFromQuestionBankTest extends TestCase
         $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
 
         $this->login()
-            ->post(formPath($form) . '/questions/bank', ['questions' => [$question->id]])
+            ->post(formPath($form) . '/questions/bank/assign', ['questions' => [$question->id]])
             ->assertStatus(403);
 
         $this->assertFalse($form->questions->contains('title', $question->title));
@@ -64,7 +64,7 @@ class AddFromQuestionBankTest extends TestCase
         $form = $this->createFormWithAccess('edit');
         $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
 
-        $this->post(formPath($form) . '/questions/bank', ['questions' => [$question->id]])
+        $this->post(formPath($form) . '/questions/bank/assign', ['questions' => [$question->id]])
             ->assertStatus(200);
 
         $this->assertEquals($question->title, $form->questions->first()->title);
@@ -76,7 +76,7 @@ class AddFromQuestionBankTest extends TestCase
         $form = $this->createFormWithAccess('view');
         $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
 
-        $this->post(formPath($form) . '/questions/bank', ['questions' => [$question->id]])
+        $this->post(formPath($form) . '/questions/bank/assign', ['questions' => [$question->id]])
             ->assertStatus(403);
 
         $this->assertFalse($form->questions->contains('title', $question->title));

@@ -69,14 +69,14 @@
                     'questions': this.questionsToAdd
                 };
 
-                axios.post(`/forms/${this.formId}/questions/bank`, data)
+                axios.post(`/forms/${this.formId}/questions/bank/assign`, data)
                     .then(response => {
                         this.loading = false;
                         this.questionsToAdd = [];
                         flash('Questions added to form');
                     }).catch(error => {
                     this.loading = false;
-                    flash('Error adding questions. Please try again later');
+                    flash('Error adding questions. Please try again later', 'danger');
                 });
             },
 
