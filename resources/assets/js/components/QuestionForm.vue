@@ -112,8 +112,8 @@
                                id="visibility-requirement"
                                name="visibility-requirement"
                                class="form-check-input"
-                               v-model="hasVisibilityRequirement"
-                               @change="clearVisibilityRequirement"
+                               :checked="hasVisibilityRequirement"
+                               @change="toggleVisibilityRequirement"
                                :true-value="true"
                                :false-value="false"
                         >
@@ -147,116 +147,26 @@
 <script>
     import axios from 'axios';
     import {filter} from 'lodash';
-    import Form from '../classes/Form';
     import OptionsForm from './OptionsForm';
     import VisibilityRequirementForm from './VisibilityRequirementForm';
 
     export default {
         components: {VisibilityRequirementForm, OptionsForm},
-        props: ['formId', 'questionId'],
-
-        data() {
-            return {
-                form: new Form({
-                    title: null,
-                    type: null,
-                    help_text: null,
-                    required: false,
-                    options: [],
-                    required_if: {
-                        question: null,
-                        value: null
-                    }
-                }),
-                loading: false,
-                success: true,
-                error: false,
-                isNewQuestion: true,
-                hasVisibilityRequirement: false
-            }
-        },
-
-        created() {
-            if (this.questionId) {
-                this.loadQuestionData(this.questionId);
-            }
-        },
-
-        computed: {
-            isSelectQuestion() {
-                return this.form.type === 'checkbox' || this.form.type === 'radio' || this.form.type === 'dropdown';
-            }
-        },
+        // TODO Can remove questionId prop after changing delete select option link
+        props: [
+            'formId',
+            'questionId',
+            'form',
+            'loading',
+            'success',
+            'error',
+            'hasVisibilityRequirement',
+            'isSelectQuestion'
+        ],
 
         methods: {
-            loadQuestionData(id) {
-                this.loading = true;
-                axios.get(`/forms/${this.formId}/questions/${id}`)
-                    .then(response => {
-                        this.mapQuestion(response.data);
-                        this.isNewQuestion = false;
-                        this.loading = false;
-                    });
-            },
-
-            mapQuestion(question) {
-                this.form = new Form({
-                    title: question.title,
-                    type: question.type,
-                    help_text: question.help_text,
-                    required: question.required,
-                    options: question.options,
-                    required_if: {
-                        question: null,
-                        value: null
-                    }
-                });
-
-                if (question.visibility_requirement) {
-                    this.form.required_if = {
-                        question: question.visibility_requirement.required_question_id,
-                        value: question.visibility_requirement.required_value,
-                    };
-                    this.hasVisibilityRequirement = true;
-                }
-            },
-
             onSubmit() {
-                this.loading = true;
-
-                if (!this.isSelectQuestion) {
-                    this.form.options = [];
-                }
-
-                if (this.isNewQuestion) {
-                    return (this.submitNewQuestion());
-                }
-
-                this.submitUpdate();
-            },
-
-            submitNewQuestion() {
-                this.form.post(`/forms/${this.formId}/questions`)
-                    .then(response => {
-                        this.loading = false;
-                        window.location = `/forms/${this.formId}/questions`;
-                    }).catch(error => {
-                    this.loading = false;
-                    flash('Error updating form. Please try again later', 'danger');
-                });
-            },
-
-            submitUpdate() {
-                this.form.patch(`/forms/${this.formId}/questions/${this.questionId}`)
-                    .then(response => {
-                        flash('Question updated');
-                        this.$emit('questionUpdated', response.title);
-                        this.mapQuestion(response);
-                        this.loading = false;
-                    }).catch(error => {
-                    this.loading = false;
-                    flash('Error updating form. Please try again later', 'danger');
-                });
+                this.$emit('formSubmitted');
             },
 
             addOption(e) {
@@ -269,6 +179,7 @@
             },
 
             deleteOption(id) {
+                // TODO move up once route changed
                 if (!id) {
                     // User is deleting an empty option, so just remove from local data
                     this.form.options = filter(this.form.options, option => option.id !== null);
@@ -286,11 +197,15 @@
                 });
             },
 
-            clearVisibilityRequirement() {
-                this.form.required_if = {
-                    question: null,
-                    value: null
-                };
+            toggleVisibilityRequirement() {
+                if (this.hasVisibilityRequirement) {
+                    return this.form.required_if = {
+                        question: null,
+                        value: null
+                    };
+                }
+
+                this.form.required_if = {};
             }
         }
     }

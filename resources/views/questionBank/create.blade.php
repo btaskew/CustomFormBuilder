@@ -14,7 +14,7 @@
         </div>
 
         <div class="mt-4">
-            <question-form :form-id="1"></question-form>
+            <form-question-form :form-id="1"></form-question-form>
         </div>
 
     </main>

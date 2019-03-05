@@ -7,6 +7,6 @@
     <h3>Create form question</h3>
 
     <div class="mt-4">
-        <question-form :form-id={{ $form->id }}></question-form>
+        <form-question-form :form-id={{ $form->id }}></form-question-form>
     </div>
 @endsection

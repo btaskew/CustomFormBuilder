@@ -16,7 +16,7 @@ window.Vue = require('vue');
 Vue.component('flash', require('./components/Utils/Flash'));
 Vue.component('edit-form', require('./components/EditForm'));
 Vue.component('question-list', require('./components/QuestionList'));
-Vue.component('question-form', require('./components/QuestionForm'));
+Vue.component('form-question-form', require('./components/FormQuestionForm'));
 Vue.component('form-list', require('./components/FormList'));
 Vue.component('form-builder', require('./components/FormBuilder'));
 Vue.component('rich-text-editor', require('./components/Utils/RichTextEditor'));

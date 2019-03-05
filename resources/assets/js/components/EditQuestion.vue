@@ -9,8 +9,8 @@
         </div>
 
         <div v-if="isOpen" class="card-body">
-            <question-form :question-id="question.id" :form-id="formId" @questionUpdated="this.updateTitle">
-            </question-form>
+            <form-question-form :question-id="question.id" :form-id="formId" @questionUpdated="this.updateTitle">
+            </form-question-form>
         </div>
 
         <modal v-if="showConfirmModal">
