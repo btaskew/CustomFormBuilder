@@ -36,7 +36,7 @@
             </div>
         </modal>
 
-        <loading-modal :show="loading"></loading-modal>
+        <loading-modal v-if="loading"></loading-modal>
     </div>
 </template>
 

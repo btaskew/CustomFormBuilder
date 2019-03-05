@@ -1,5 +1,5 @@
 <template>
-    <modal v-if="show">
+    <modal v-if="true">
         <h4 slot="header">Loading...</h4>
 
         <div slot="body">
@@ -13,7 +13,5 @@
 
     export default {
         components: {Modal},
-
-        props: ['show']
     }
 </script>
