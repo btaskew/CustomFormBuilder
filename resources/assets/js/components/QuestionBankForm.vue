@@ -1,12 +1,11 @@
 <template>
     <question-form
-            :form-id="this.formId"
             :question-id="this.questionId"
             :form="this.form"
             :loading="this.loading"
             :is-new-question="this.isNewQuestion"
-            :has-visibility-requirement="this.hasVisibilityRequirement"
             :is-select-question="this.isSelectQuestion"
+            :allow-visibility-requirement="false"
             @formSubmitted="this.handleSubmit"
     >
     </question-form>
@@ -14,14 +13,12 @@
 
 <script>
     import axios from 'axios';
-    import {isEqual} from 'lodash';
     import Form from '../classes/Form';
     import QuestionForm from './QuestionForm';
 
     export default {
         components: {QuestionForm},
-
-        props: ['formId', 'questionId'],
+        props: ['questionId'],
 
         data() {
             return {
@@ -30,11 +27,7 @@
                     type: null,
                     help_text: null,
                     required: false,
-                    options: [],
-                    required_if: {
-                        question: null,
-                        value: null
-                    }
+                    options: []
                 }),
                 loading: false,
                 isNewQuestion: true,
@@ -50,22 +43,13 @@
         computed: {
             isSelectQuestion() {
                 return this.form.type === 'checkbox' || this.form.type === 'radio' || this.form.type === 'dropdown';
-            },
-
-            hasVisibilityRequirement() {
-                return !isEqual(this.form.required_if, {question:null, value:null});
             }
         },
 
         methods: {
             loadQuestionData(id) {
                 this.loading = true;
-                axios.get(`/forms/${this.formId}/questions/${id}`)
-                    .then(response => {
-                        this.mapQuestion(response.data);
-                        this.isNewQuestion = false;
-                        this.loading = false;
-                    });
+                // TODO
             },
 
             mapQuestion(question) {
@@ -74,19 +58,8 @@
                     type: question.type,
                     help_text: question.help_text,
                     required: question.required,
-                    options: question.options,
-                    required_if: {
-                        question: null,
-                        value: null
-                    }
+                    options: question.options
                 });
-
-                if (question.visibility_requirement) {
-                    this.form.required_if = {
-                        question: question.visibility_requirement.required_question_id,
-                        value: question.visibility_requirement.required_value,
-                    };
-                }
             },
 
             handleSubmit() {
@@ -104,26 +77,18 @@
             },
 
             submitNewQuestion() {
-                this.form.post(`/forms/${this.formId}/questions`)
+                this.form.post(`/question-bank`)
                     .then(response => {
                         this.loading = false;
-                        window.location = `/forms/${this.formId}/questions`;
+                        flash('Question created');
                     }).catch(error => {
                     this.loading = false;
-                    flash('Error updating form. Please try again later', 'danger');
+                    flash('Error updating question. Please try again later', 'danger');
                 });
             },
 
             submitUpdate() {
-                this.form.patch(`/forms/${this.formId}/questions/${this.questionId}`)
-                    .then(response => {
-                        flash('Question updated');
-                        this.$emit('questionUpdated', response.title);
-                        this.loading = false;
-                    }).catch(error => {
-                    this.loading = false;
-                    flash('Error updating form. Please try again later', 'danger');
-                });
+                // TODO
             },
         }
     }

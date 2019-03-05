@@ -23,13 +23,8 @@
                         >
                             Help text for question
                         </label>
-                        <textarea class="form-control"
-                                  type="text"
-                                  v-model="form.help_text"
-                                  id="help_text"
-                                  name="help_text"
-                                  rows=2
-                        ></textarea>
+                        <textarea class="form-control" v-model="form.help_text" id="help_text" name="help_text" rows=2>
+                        </textarea>
                         <span class="text-danger"
                               v-if="form.errors.has('help_text')"
                               v-text="form.errors.get('help_text')"
@@ -107,29 +102,32 @@
                               v-text="form.errors.get('required')"
                         ></span>
                     </div>
-                    <div class="form-check form-group">
-                        <input type="checkbox"
-                               id="visibility-requirement"
-                               name="visibility-requirement"
-                               class="form-check-input"
-                               :checked="hasVisibilityRequirement"
-                               @change="toggleVisibilityRequirement"
-                               :true-value="true"
-                               :false-value="false"
-                        >
-                        <label for="type" class="form-check-label">
-                            Visibility requirement
-                        </label>
-                    </div>
 
-                    <visibility-requirement-form
-                            v-if="hasVisibilityRequirement"
-                            :form-id="this.formId"
-                            :question-id="this.questionId"
-                            :question.sync="form.required_if.question"
-                            :value.sync="form.required_if.value"
-                    >
-                    </visibility-requirement-form>
+                    <div v-if="this.allowVisibilityRequirement">
+                        <div class="form-check form-group">
+                            <input type="checkbox"
+                                   id="visibility-requirement"
+                                   name="visibility-requirement"
+                                   class="form-check-input"
+                                   :checked="hasVisibilityRequirement"
+                                   @change="toggleVisibilityRequirement"
+                                   :true-value="true"
+                                   :false-value="false"
+                            >
+                            <label for="type" class="form-check-label">
+                                Visibility requirement
+                            </label>
+                        </div>
+
+                        <visibility-requirement-form
+                                v-if="hasVisibilityRequirement"
+                                :form-id="this.formId"
+                                :question-id="this.questionId"
+                                :question.sync="form.required_if.question"
+                                :value.sync="form.required_if.value"
+                        >
+                        </visibility-requirement-form>
+                    </div>
                 </div>
 
             </div>
@@ -153,16 +151,33 @@
     export default {
         components: {VisibilityRequirementForm, OptionsForm},
         // TODO Can remove questionId prop after changing delete select option link
-        props: [
-            'formId',
-            'questionId',
-            'form',
-            'loading',
-            'success',
-            'error',
-            'hasVisibilityRequirement',
-            'isSelectQuestion'
-        ],
+        props: {
+            formId: {
+                type: Number
+            },
+            questionId: {
+                type: Number
+            },
+            form: {
+                type: Object,
+                required: true
+            },
+            loading: {
+                type: Boolean,
+                required: true
+            },
+            hasVisibilityRequirement: {
+                type: Boolean
+            },
+            allowVisibilityRequirement: {
+                type: Boolean,
+                default: true
+            },
+            isSelectQuestion: {
+                type: Boolean,
+                required: true
+            },
+        },
 
         methods: {
             onSubmit() {
