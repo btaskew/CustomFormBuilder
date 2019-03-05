@@ -25,7 +25,7 @@ class ViewQuestionBankTest extends TestCase
         $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
-        $this->get(formPath($form) . '/questions/bank')
+        $this->get(formPath($form) . '/question-bank')
             ->assertStatus(200)
             ->assertSee($question->title)
             ->assertSee($option->value);
@@ -34,7 +34,7 @@ class ViewQuestionBankTest extends TestCase
     /** @test */
     public function a_guest_cant_search_for_a_question_in_the_question_bank()
     {
-        $this->get('/questions/bank/search?title=foo')->assertRedirect('login');
+        $this->get('/question-bank/search?title=foo')->assertRedirect('login');
     }
 
     /** @test */
@@ -43,7 +43,7 @@ class ViewQuestionBankTest extends TestCase
         $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
 
         $this->login()
-            ->get('/questions/bank/search?title=' . $question->title)
+            ->get('/question-bank/search?title=' . $question->title)
             ->assertStatus(200)
             ->assertSee($question->type);
     }
@@ -55,7 +55,7 @@ class ViewQuestionBankTest extends TestCase
 
         // If the input is sanitised then the search will find the record
         $this->login()
-            ->get('/questions/bank/search?title=<h1>title&blahblah</h1>')
+            ->get('/question-bank/search?title=<h1>title&blahblah</h1>')
             ->assertStatus(200)
             ->assertSee($question->type);
     }
@@ -65,7 +65,7 @@ class ViewQuestionBankTest extends TestCase
     {
         create(Question::class, ['title' => 'title', 'form_id' => null, 'in_question_bank' => true], 30);
 
-        $result = $this->login()->get('/questions/bank/search?title=title')->json();
+        $result = $this->login()->get('/question-bank/search?title=title')->json();
 
         $this->assertCount(25, $result);
     }

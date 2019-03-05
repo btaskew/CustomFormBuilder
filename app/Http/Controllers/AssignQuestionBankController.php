@@ -9,13 +9,14 @@ use Illuminate\Http\Request;
 class AssignQuestionBankController extends Controller
 {
     /**
-     * @param Form    $form
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Form $form, Request $request)
+    public function store(Request $request)
     {
+        $form = Form::findOrFail($request->input('form'));
+
         $this->authorize('edit', $form);
 
         (new QuestionBankMapper())->map($request->input('questions'), $form->id);

@@ -23,8 +23,8 @@ Route::post('forms/{form}/responses', 'FormResponseController@store');
 
 Route::group(['middleware' => 'auth'], function () {
 
-
-    Route::get('questions/bank/search', 'QuestionSearchController@show');
+    Route::get('question-bank/search', 'QuestionSearchController@show');
+    Route::post('question-bank/assign', 'AssignQuestionBankController@store');
 
     Route::group(['prefix' => 'forms/{form}'], function () {
 
@@ -34,9 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('select-questions', 'SelectQuestionsController@index');
 
-        Route::get('questions/bank', 'QuestionBankController@index');
-
-        Route::post('questions/bank/assign', 'AssignQuestionBankController@store');
+        Route::get('question-bank', 'QuestionBankController@index');
 
         Route::resource('questions', 'QuestionsController');
 

@@ -66,10 +66,11 @@
             addQuestions() {
                 this.loading = true;
                 const data = {
+                    'form': this.formId,
                     'questions': this.questionsToAdd
                 };
 
-                axios.post(`/forms/${this.formId}/questions/bank/assign`, data)
+                axios.post(`/question-bank/assign`, data)
                     .then(response => {
                         this.loading = false;
                         this.questionsToAdd = [];
@@ -89,7 +90,7 @@
                     return;
                 }
 
-                axios.get(`/questions/bank/search?title=` + title)
+                axios.get(`/question-bank/search?title=` + title)
                     .then(response => {
                         this.questionList = response.data;
                         this.showingSearchResults = true;
