@@ -4,7 +4,7 @@ namespace App\Mail;
 
 use App\Form;
 use App\FormResponse;
-use App\Mappers\ResponseMapper;
+use App\Mappers\ResponseFormatter;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -55,7 +55,7 @@ class FormResponded extends Mailable
      */
     private function getResponse(): array
     {
-        return (new ResponseMapper($this->form, $this->form->getAnswerableQuestions()))
+        return (new ResponseFormatter($this->form, $this->form->getAnswerableQuestions()))
             ->mapResponse($this->response)[$this->response->id];
     }
 }

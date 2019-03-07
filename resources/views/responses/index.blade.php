@@ -11,7 +11,7 @@
     @else
 
         <div class="d-flex justify-content-between">
-            <span>Response count: {{ $paginatedResponses->total() }}</span>
+            <span>Response count: {{ $pagination->total() }}</span>
 
             <a class="btn btn-primary mb-3" href="/forms/{{ $form->id }}/responses/export" role="button">
                 Export as spreadsheet
@@ -21,7 +21,7 @@
         @include('responses._responseTable')
 
         <div class="d-flex justify-content-center">
-            {{ $paginatedResponses->links() }}
+            {{ $pagination->links() }}
         </div>
 
     @endif

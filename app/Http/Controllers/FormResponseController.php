@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\ResponseRecorded;
 use App\Form;
-use App\Mappers\ResponseMapper;
+use App\Mappers\ResponseFormatter;
 use App\Question;
 use Illuminate\Http\Request;
 
@@ -23,8 +23,8 @@ class FormResponseController extends Controller
         $questions = $form->getAnswerableQuestions();
 
         return view('responses.index', [
-            'responses' => (new ResponseMapper($form, $questions))->map(collect($paginatedResponses->items())),
-            'paginatedResponses' => $paginatedResponses,
+            'responses' => (new ResponseFormatter($form, $questions))->formatResponses($paginatedResponses->items()),
+            'pagination' => $paginatedResponses,
             'form' => $form,
             'questions' => $questions
         ]);

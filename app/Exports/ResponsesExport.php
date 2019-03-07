@@ -3,7 +3,7 @@
 namespace App\Exports;
 
 use App\Form;
-use App\Mappers\ResponseMapper;
+use App\Mappers\ResponseFormatter;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -28,7 +28,7 @@ class ResponsesExport implements FromView
     public function view(): View
     {
         $questions = $this->form->getAnswerableQuestions();
-        $responses = (new ResponseMapper($this->form, $questions))->map($this->form->responses);
+        $responses = (new ResponseFormatter($this->form, $questions))->formatResponses($this->form->responses);
 
         return view('responses._responseTable', [
             'responses' => $responses,

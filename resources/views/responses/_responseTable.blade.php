@@ -11,11 +11,11 @@
     <tbody>
     @foreach ($responses as $response)
         <tr>
-            <th scope="row" class="table-active">{{ $response['id'] }}</th>
-            @foreach ($response['answers'] as $answer)
+            <th scope="row" class="table-active">{{ $response->getId() }}</th>
+            @foreach ($response->getAnswers() as $answer)
                 <td>{{ $answer }}</td>
             @endforeach
-            <td>{{ $response['created_at'] }}</td>
+            <td>{{ $response->getTimeRecorded() }}</td>
         </tr>
     @endforeach
     </tbody>
