@@ -1,6 +1,5 @@
 <template>
     <question-form
-            :question-id="this.questionId"
             :form="this.form"
             :loading="this.loading"
             :is-new-question="this.isNewQuestion"

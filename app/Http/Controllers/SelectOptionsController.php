@@ -9,13 +9,11 @@ use App\SelectOption;
 class SelectOptionsController extends Controller
 {
     /**
-     * @param Form         $form
-     * @param Question     $question
      * @param SelectOption $option
      * @throws \Exception
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($form, $question, SelectOption $option)
+    public function destroy(SelectOption $option)
     {
         $this->authorize('edit', $option);
 

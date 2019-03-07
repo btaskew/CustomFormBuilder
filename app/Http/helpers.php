@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Request;
  * @param string $path
  * @return string|null
  */
-if (! function_exists('setActiveLink')) {
+if (!function_exists('setActiveLink')) {
     function setActiveLink(string $path)
     {
         if (Request::is($path)) {

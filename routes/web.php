@@ -26,6 +26,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('question-bank/search', 'QuestionSearchController@show');
     Route::post('question-bank/assign', 'AssignQuestionBankController@store');
 
+    Route::delete('select-options/{option}', 'SelectOptionsController@destroy');
+
     Route::group(['prefix' => 'forms/{form}'], function () {
 
         Route::get('preview', 'FormPreviewController@show');
@@ -37,8 +39,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('question-bank', 'QuestionBankController@index');
 
         Route::resource('questions', 'QuestionsController');
-
-        Route::delete('questions/{question}/options/{option}', 'SelectOptionsController@destroy');
 
         Route::get('responses', 'FormResponseController@index');
         Route::get('responses/export', 'ResponseExportController@index');

@@ -72,11 +72,10 @@ class ManageSelectOptionsTest extends TestCase
     /** @test */
     public function a_guest_cant_delete_a_select_option()
     {
-        $form = create(Form::class);
-        $question = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
+        $question = create(Question::class, ['type' => 'radio']);
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
-        $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id . '/options/' . $option->id)
+        $this->delete('/select-options/' . $option->id)
             ->assertRedirect('login');
 
         $this->assertDatabaseHas('select_options', ['id' => $option->id]);
@@ -89,7 +88,7 @@ class ManageSelectOptionsTest extends TestCase
         $question = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
-        $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id . '/options/' . $option->id)
+        $this->delete('/select-options/' . $option->id)
             ->assertStatus(200);
 
         $this->assertDatabaseMissing('select_options', ['id' => $option->id]);
@@ -103,7 +102,7 @@ class ManageSelectOptionsTest extends TestCase
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
         $this->login()
-            ->delete('/forms/' . $question->form->id . '/questions/' . $question->id . '/options/' . $option->id)
+            ->delete('/select-options/' . $option->id)
             ->assertStatus(403);
 
         $this->assertDatabaseHas('select_options', ['id' => $option->id]);
@@ -116,7 +115,7 @@ class ManageSelectOptionsTest extends TestCase
         $question = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
-        $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id . '/options/' . $option->id)
+        $this->delete('/select-options/' . $option->id)
             ->assertStatus(200);
 
         $this->assertDatabaseMissing('select_options', ['id' => $option->id]);
@@ -129,7 +128,7 @@ class ManageSelectOptionsTest extends TestCase
         $question = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
         $option = create(SelectOption::class, ['question_id' => $question->id]);
 
-        $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id . '/options/' . $option->id)
+        $this->delete('/select-options/' . $option->id)
             ->assertStatus(403);
 
         $this->assertDatabaseHas('select_options', ['id' => $option->id]);

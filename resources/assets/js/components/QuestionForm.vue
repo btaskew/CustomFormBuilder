@@ -150,7 +150,6 @@
 
     export default {
         components: {VisibilityRequirementForm, OptionsForm},
-        // TODO Can remove questionId prop after changing delete select option link
         props: {
             formId: {
                 type: Number
@@ -194,14 +193,13 @@
             },
 
             deleteOption(id) {
-                // TODO move up once route changed
                 if (!id) {
                     // User is deleting an empty option, so just remove from local data
                     this.form.options = filter(this.form.options, option => option.id !== null);
                     return;
                 }
 
-                axios.delete(`/forms/${this.formId}/questions/${this.questionId}/options/${id}`)
+                axios.delete(`/select-options/${id}`)
                     .then(response => {
                         this.loading = false;
                         flash('Option deleted');
