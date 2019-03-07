@@ -34,17 +34,7 @@ class QuestionRequest extends FormRequest
         ];
 
         if ($this->has('options')) {
-            $options = collect($this->input('options'));
-
-            foreach ($this->get('options') as $key => $option) {
-                $rules['options.' . $key . '.id'] = 'nullable';
-                $rules['options.' . $key . '.display_value'] = 'required|string';
-                $rules['options.' . $key . '.value'] = [
-                    'required',
-                    'string',
-                    $this->hasUniqueValues($options)
-                ];
-            }
+            $this->addOptionsRules($rules);
         }
 
         return $rules;
@@ -59,10 +49,28 @@ class QuestionRequest extends FormRequest
     }
 
     /**
+     * @param array $rules
+     */
+    private function addOptionsRules(array &$rules): void
+    {
+        $options = collect($this->input('options'));
+
+        foreach ($this->get('options') as $key => $option) {
+            $rules['options.' . $key . '.id'] = 'nullable';
+            $rules['options.' . $key . '.display_value'] = 'required|string';
+            $rules['options.' . $key . '.value'] = [
+                'required',
+                'string',
+                $this->hasUniqueOptionValues($options)
+            ];
+        }
+    }
+
+    /**
      * @param Collection $options
      * @return \Closure
      */
-    private function hasUniqueValues(Collection $options): \Closure
+    private function hasUniqueOptionValues(Collection $options): \Closure
     {
         return function ($attribute, $value, $fail) use ($options) {
             if ($options->where('value', $value)->count() > 1) {

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\ResponseRecorded;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -16,6 +17,18 @@ class FormResponse extends Model
         'form_id',
         'response',
     ];
+
+    /**
+     * Boot the model
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($response) {
+            event(new ResponseRecorded($response));
+        });
+    }
 
     /**
      * @param $response

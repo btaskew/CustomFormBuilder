@@ -12,7 +12,7 @@ class QuestionBankMapper
      * @param array $questions
      * @param int   $formId
      */
-    public function map(array $questions, int $formId): void
+    public function addQuestions(array $questions, int $formId): void
     {
         foreach ($questions as $questionId) {
             $this->addQuestionToForm($formId, $questionId);

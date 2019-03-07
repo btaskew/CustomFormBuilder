@@ -83,7 +83,6 @@ class User extends Authenticatable
             'access' => $access
         ]);
 
-
         if ($access == 'view') {
             $userAccess = $userAccess
                 ->orWhere('access', 'edit')

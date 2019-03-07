@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\ResponseRecorded;
 use App\Form;
+use App\Http\Requests\ResponseRequest;
 use App\Mappers\ResponseFormatter;
 use App\Question;
 use Illuminate\Http\Request;
@@ -31,27 +32,17 @@ class FormResponseController extends Controller
     }
 
     /**
-     * @param Form    $form
-     * @param Request $request
+     * @param Form            $form
+     * @param ResponseRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Form $form, Request $request)
+    public function store(Form $form, ResponseRequest $request)
     {
         if (!$form->isActive()) {
             return response()->json(['error' => 'This form is not currently accepting responses'], 403);
         }
 
-        $responseData = [];
-
-        $form->getAnswerableQuestions()->each(function (Question $question) use ($request, &$responseData) {
-            $responseData[$question->id] = $request->input($question->id);
-        });
-
-        $response = $form->responses()->create([
-            'response' => json_encode($responseData)
-        ]);
-
-        event(new ResponseRecorded($response));
+        $form->recordResponse($request);
 
         return response()->json(['success' => 'Response stored']);
     }

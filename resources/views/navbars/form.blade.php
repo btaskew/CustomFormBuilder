@@ -4,35 +4,35 @@
     <ul class="nav">
         @if (auth()->user()->hasAccessTo('edit', $form))
             <li class="nav-item">
-                <a class="nav-link {{ setActive('forms/*/edit') }}" href="/forms/{{ $form->id }}/edit">
+                <a class="nav-link {{ setActiveLink('forms/*/edit') }}" href="/forms/{{ $form->id }}/edit">
                     Edit form
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ setActive('forms/*/questions') }}" href="/forms/{{ $form->id }}/questions">
+                <a class="nav-link {{ setActiveLink('forms/*/questions') }}" href="/forms/{{ $form->id }}/questions">
                     Edit questions
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ setActive('forms/*/questions/bank') }}"
+                <a class="nav-link {{ setActiveLink('forms/*/question-bank') }}"
                    href="/forms/{{ $form->id }}/question-bank"
                 >
                     Add from question bank
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ setActive('forms/*/access') }}" href="/forms/{{ $form->id }}/access">
+                <a class="nav-link {{ setActiveLink('forms/*/access') }}" href="/forms/{{ $form->id }}/access">
                     Edit access
                 </a>
             </li>
         @endif
         <li class="nav-item">
-            <a class="nav-link {{ setActive('forms/*/preview') }}" href="/forms/{{ $form->id }}/preview">
+            <a class="nav-link {{ setActiveLink('forms/*/preview') }}" href="/forms/{{ $form->id }}/preview">
                 Preview form
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ setActive('forms/*/responses') }}" href="/forms/{{ $form->id }}/responses">
+            <a class="nav-link {{ setActiveLink('forms/*/responses') }}" href="/forms/{{ $form->id }}/responses">
                 View responses
             </a>
         </li>

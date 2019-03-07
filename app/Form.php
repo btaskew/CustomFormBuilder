@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Requests\ResponseRequest;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -150,5 +151,22 @@ class Form extends Model
     {
         $currentDate = new Carbon();
         return $this->active && $currentDate->between((new Carbon($this->open_date)), (new Carbon($this->close_date)));
+    }
+
+    /**
+     * @param ResponseRequest $request
+     */
+    public function recordResponse(ResponseRequest $request): void
+    {
+        $answers = [];
+
+        $this->getAnswerableQuestions()
+            ->each(function (Question $question) use ($request, &$answers) {
+                $answers[$question->id] = $request->getQuestionsResponse($question->id);
+            });
+
+        $this->responses()->create([
+            'response' => json_encode($answers)
+        ]);
     }
 }

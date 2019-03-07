@@ -19,7 +19,7 @@ class AssignQuestionBankController extends Controller
 
         $this->authorize('edit', $form);
 
-        (new QuestionBankMapper())->map($request->input('questions'), $form->id);
+        (new QuestionBankMapper())->addQuestions($request->input('questions'), $form->id);
 
         return response()->json(['success' => 'Questions added to form']);
     }
