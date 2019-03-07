@@ -150,6 +150,7 @@
 
     export default {
         components: {VisibilityRequirementForm, OptionsForm},
+
         props: {
             formId: {
                 type: Number

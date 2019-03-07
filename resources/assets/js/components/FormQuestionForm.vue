@@ -119,6 +119,7 @@
                     .then(response => {
                         flash('Question updated');
                         this.$emit('questionUpdated', response.title);
+                        this.form.options = response.options;
                         this.loading = false;
                     }).catch(error => {
                     this.loading = false;

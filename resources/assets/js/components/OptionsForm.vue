@@ -30,7 +30,7 @@
                 >
                 <span class="text-danger" v-if="hasDisplayValueError">Display value field required</span>
             </div>
-            <div class="col col-1 ">
+            <div class="col col-1">
                 <i class="fas fa-trash-alt text-danger col-form-label mt-1" @click="deleteOption"></i>
             </div>
         </div>
