@@ -4,9 +4,9 @@ namespace Tests\Unit;
 
 use App\Form;
 use App\FormResponse;
-use App\Services\ResponseFormatter;
 use App\Objects\FormattedResponse;
 use App\Question;
+use App\Services\ResponseFormatter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

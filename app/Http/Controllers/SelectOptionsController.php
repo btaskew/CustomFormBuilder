@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Form;
-use App\Question;
 use App\SelectOption;
 
 class SelectOptionsController extends Controller

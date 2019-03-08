@@ -3,7 +3,6 @@
 namespace Tests\Feature\Form;
 
 use App\Form;
-use App\FormUser;
 use App\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

@@ -53,6 +53,7 @@ class CanSetVisibilityRequirement
 
     /**
      * @param int $questionId
+     * @param int $formId
      * @return bool
      */
     private static function requiredQuestionOnSameForm(int $questionId, int $formId): bool

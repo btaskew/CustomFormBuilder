@@ -3,7 +3,6 @@
 namespace Tests\Feature\Responses;
 
 use App\Form;
-use App\FormUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Maatwebsite\Excel\Facades\Excel;
 use Tests\TestCase;

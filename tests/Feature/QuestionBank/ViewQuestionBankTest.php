@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\QuestionBank;
 
-use App\Form;
 use App\Question;
 use App\SelectOption;
 use Illuminate\Foundation\Testing\RefreshDatabase;

@@ -12,7 +12,6 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication;
 
     /**
-     * @param string $role
      * @return $this
      */
     public function loginAdmin()

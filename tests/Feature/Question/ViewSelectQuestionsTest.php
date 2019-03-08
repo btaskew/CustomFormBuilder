@@ -45,7 +45,7 @@ class ViewSelectQuestionsTest extends TestCase
             ->assertSee($selectQuestion->title)
             ->assertDontSee($questionToExclude->title);
     }
-    
+
     /** @test */
     public function a_user_cant_view_select_questions_for_another_users_form()
     {

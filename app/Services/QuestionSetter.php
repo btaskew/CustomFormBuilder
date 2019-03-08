@@ -20,9 +20,7 @@ class QuestionSetter
 
         self::setSelectOptions($question, $request);
 
-        if ($request->hasVisibilityRequirement()) {
-            $question->setVisibilityRequirement($request->input('required_if'));
-        }
+        self::setVisibilityRequirement($question, $request);
     }
 
     /**
@@ -37,7 +35,7 @@ class QuestionSetter
 
         self::setSelectOptions($question, $request);
 
-        self::updateVisibilityRequirement($question, $request);
+        self::setVisibilityRequirement($question, $request);
     }
 
     /**
@@ -73,12 +71,13 @@ class QuestionSetter
      * @param Question        $question
      * @param QuestionRequest $request
      */
-    private static function updateVisibilityRequirement(Question $question, QuestionRequest $request): void
+    private static function setVisibilityRequirement(Question $question, QuestionRequest $request): void
     {
         if ($request->hasVisibilityRequirement()) {
             $question->setVisibilityRequirement($request->input('required_if'));
-        } else if ($question->visibilityRequirement()->exists()) {
-            $question->visibilityRequirement->delete();
+            return;
         }
+
+        optional($question->visibilityRequirement)->delete();
     }
 }

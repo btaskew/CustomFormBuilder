@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\QuestionSetter;
 use App\Form;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
+use App\Services\QuestionSetter;
 
 class QuestionsController extends Controller
 {
