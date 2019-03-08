@@ -26,23 +26,6 @@ class QuestionFacade
     }
 
     /**
-     * @param QuestionRequest $request
-     */
-    public static function createBankQuestion(QuestionRequest $request)
-    {
-        $attributes = array_merge(
-            ['form_id' => null, 'in_question_bank' => true, 'order' => 0],
-            $request->only([
-                'title', 'type', 'help_text', 'required', 'admin_only'
-            ])
-        );
-
-        $question = Question::create($attributes);
-
-        self::setSelectOptions($question, $request);
-    }
-
-    /**
      * @param Question        $question
      * @param QuestionRequest $request
      */
@@ -55,6 +38,24 @@ class QuestionFacade
         self::setSelectOptions($question, $request);
 
         self::updateVisibilityRequirement($question, $request);
+    }
+
+    /**
+     * @param QuestionRequest $request
+     * @param int|null        $id
+     */
+    public static function setBankQuestion(QuestionRequest $request, int $id = null)
+    {
+        $attributes = array_merge(
+            ['form_id' => null, 'in_question_bank' => true, 'order' => 0],
+            $request->only([
+                'title', 'type', 'help_text', 'required', 'admin_only'
+            ])
+        );
+
+        $question = Question::updateOrCreate(['id' => $id], $attributes);
+
+        self::setSelectOptions($question, $request);
     }
 
     /**

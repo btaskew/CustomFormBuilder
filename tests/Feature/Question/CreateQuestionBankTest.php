@@ -5,7 +5,7 @@ namespace Tests\Feature\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ManageQuestionBankTest extends TestCase
+class CreateQuestionBankTest extends TestCase
 {
     use RefreshDatabase;
 

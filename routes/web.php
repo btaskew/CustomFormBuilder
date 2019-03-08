@@ -54,7 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('folders', 'FolderController');
 
-        Route::resource('question-bank', 'QuestionBankController');
+        Route::resource('question-bank', 'QuestionBankController')->parameters(['question-bank' => 'question']);
 
     });
 

@@ -37,8 +37,24 @@ class QuestionBankController extends Controller
      */
     public function store(QuestionRequest $request)
     {
-        QuestionFacade::createBankQuestion($request);
+        QuestionFacade::setBankQuestion($request);
 
         return response()->json(['success' => 'Question created']);
+    }
+
+    /**
+     * @param Question        $question
+     * @param QuestionRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Question $question, QuestionRequest $request)
+    {
+        if ($question->in_question_bank == false || $question->form_id != 0) {
+            return response()->json(['error' => 'Trying to update question not in question bank'], 403);
+        }
+
+        QuestionFacade::setBankQuestion($request, $question->id);
+
+        return response()->json(['success' => 'Question updated']);
     }
 }
