@@ -14,7 +14,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import 'vue-form-generator/dist/vfg-core.css';
     import FormBuilder from './../classes/FormBuilder';
 
     export default {
@@ -35,7 +35,12 @@
         created() {
             this.model = FormBuilder.buildModel(this.questions);
             this.schema.fields = FormBuilder.buildFields(this.questions);
-            this.schema.fields.push({type: 'submit', buttonText: 'Submit', onSubmit: this.submitForm});
+            this.schema.fields.push({
+                type: 'submit',
+                buttonText: 'Submit',
+                onSubmit: this.submitForm,
+                validateBeforeSubmit: true
+            });
         },
 
         methods: {

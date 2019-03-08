@@ -32,7 +32,6 @@ Vue.config.ignoredElements = ['trix-editor'];
 
 import BootstrapVue from 'bootstrap-vue'
 import VueFormGenerator from 'vue-form-generator'
-import 'vue-form-generator/dist/vfg.css'
 
 Vue.use(BootstrapVue);
 Vue.use(VueFormGenerator);
