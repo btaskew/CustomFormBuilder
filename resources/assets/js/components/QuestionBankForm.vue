@@ -17,7 +17,7 @@
 
     export default {
         components: {QuestionForm},
-        props: ['questionId'],
+        props: ['question'],
 
         data() {
             return {
@@ -34,8 +34,15 @@
         },
 
         created() {
-            if (this.questionId) {
-                this.loadQuestionData(this.questionId);
+            if (this.question) {
+                this.form = new Form({
+                    title: this.question.title,
+                    type: this.question.type,
+                    help_text: this.question.help_text,
+                    required: this.question.required,
+                    options: this.question.options
+                });
+                this.isNewQuestion = false;
             }
         },
 
@@ -46,21 +53,6 @@
         },
 
         methods: {
-            loadQuestionData(id) {
-                this.loading = true;
-                // TODO
-            },
-
-            mapQuestion(question) {
-                this.form = new Form({
-                    title: question.title,
-                    type: question.type,
-                    help_text: question.help_text,
-                    required: question.required,
-                    options: question.options
-                });
-            },
-
             handleSubmit() {
                 this.loading = true;
 
@@ -76,7 +68,7 @@
             },
 
             submitNewQuestion() {
-                this.form.post(`/question-bank`)
+                this.form.post(`/admin/question-bank`)
                     .then(response => {
                         this.loading = false;
                         flash('Question created');
@@ -87,7 +79,15 @@
             },
 
             submitUpdate() {
-                // TODO
+                this.form.patch(`/admin/question-bank/${this.question.id}`)
+                    .then(response => {
+                        this.loading = false;
+                        this.form.options = response.options;
+                        flash('Question updated');
+                    }).catch(error => {
+                    this.loading = false;
+                    flash('Error updating question. Please try again later', 'danger');
+                });
             },
         }
     }

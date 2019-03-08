@@ -31,19 +31,6 @@ class QuestionsController extends Controller
     }
 
     /**
-     * @param Form     $form
-     * @param Question $question
-     * @return Question
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function show(Form $form, Question $question)
-    {
-        $this->authorize('edit', $form);
-
-        return $question->load(['options', 'visibilityRequirement']);
-    }
-
-    /**
      * @param Form $form
      * @return \Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -65,6 +52,19 @@ class QuestionsController extends Controller
         $this->authorize('edit', $form);
 
         QuestionSetter::createQuestion($form, $request);
+    }
+
+    /**
+     * @param Form     $form
+     * @param Question $question
+     * @return Question
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function show(Form $form, Question $question)
+    {
+        $this->authorize('edit', $form);
+
+        return $question->load(['options', 'visibilityRequirement']);
     }
 
     /**

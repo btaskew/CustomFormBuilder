@@ -50,9 +50,20 @@ class QuestionBankController extends Controller
     }
 
     /**
+     * @param Question $question
+     * @return \Illuminate\View\View
+     */
+    public function edit(Question $question)
+    {
+        $question->load('options');
+
+        return view('questionBank.edit', compact('question'));
+    }
+
+    /**
      * @param Question        $question
      * @param QuestionRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return Question|\Illuminate\Http\JsonResponse
      */
     public function update(Question $question, QuestionRequest $request)
     {
@@ -62,6 +73,6 @@ class QuestionBankController extends Controller
 
         QuestionSetter::setBankQuestion($request, $question->id);
 
-        return response()->json(['success' => 'Question updated']);
+        return $question->fresh()->load(['options']);
     }
 }

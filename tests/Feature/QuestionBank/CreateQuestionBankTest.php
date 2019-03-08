@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Question;
+namespace Tests\Feature\QuestionBank;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

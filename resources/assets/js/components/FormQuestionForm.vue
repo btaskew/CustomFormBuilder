@@ -62,13 +62,13 @@
                 this.loading = true;
                 axios.get(`/forms/${this.formId}/questions/${id}`)
                     .then(response => {
-                        this.mapQuestion(response.data);
+                        this.fillQuestion(response.data);
                         this.isNewQuestion = false;
                         this.loading = false;
                     });
             },
 
-            mapQuestion(question) {
+            fillQuestion(question) {
                 this.form = new Form({
                     title: question.title,
                     type: question.type,

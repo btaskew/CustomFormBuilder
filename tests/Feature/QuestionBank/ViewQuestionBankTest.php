@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Question;
+namespace Tests\Feature\QuestionBank;
 
 use App\Form;
 use App\Question;
@@ -70,4 +70,15 @@ class ViewQuestionBankTest extends TestCase
         $this->assertCount(25, $result);
     }
 
+
+    /** @test */
+    public function an_admin_can_view_the_question_bank_via_the_admin_route()
+    {
+        $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
+
+        $this->loginAdmin()
+            ->get('/admin/question-bank')
+            ->assertStatus(200)
+            ->assertSee($question->title);
+    }
 }

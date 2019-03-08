@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('question-bank', 'QuestionBankController@index');
 
-        Route::resource('questions', 'QuestionsController');
+        Route::resource('questions', 'QuestionsController')->except(['edit']);
 
         Route::get('responses', 'FormResponseController@index');
         Route::get('responses/export', 'ResponseExportController@index');
@@ -54,7 +54,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('folders', 'FolderController');
 
-        Route::resource('question-bank', 'QuestionBankController')->parameters(['question-bank' => 'question']);
+        Route::resource('question-bank', 'QuestionBankController')
+            ->except(['show'])
+            ->parameters(['question-bank' => 'question']);
 
     });
 
