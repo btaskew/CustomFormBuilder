@@ -22,6 +22,7 @@ Vue.component('form-list', require('./components/FormList'));
 Vue.component('form-builder', require('./components/FormBuilder'));
 Vue.component('rich-text-editor', require('./components/Utils/RichTextEditor'));
 Vue.component('question-bank', require('./components/QuestionBank'));
+Vue.component('manage-question-bank', require('./components/ManageQuestionBank'));
 Vue.component('forms-by-folder', require('./components/FormsByFolder'));
 Vue.component('form-access-manager', require('./components/FormAccessManager'));
 Vue.component('folder-list', require('./components/FolderList'));

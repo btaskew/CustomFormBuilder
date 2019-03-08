@@ -6,20 +6,27 @@ use App\Services\QuestionSetter;
 use App\Form;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
+use Illuminate\Http\Request;
 
 class QuestionBankController extends Controller
 {
     /**
-     * @param Form $form
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function index(Form $form)
+    public function index(Request $request)
     {
         $questions = Question::where('form_id', null)->where('in_question_bank', true)->with('options')->paginate(25);
 
+        if ($request->route('form')) {
+            return view('form.questionBank', [
+                'questions' => $questions,
+                'form' => Form::findOrFail($request->route('form'))
+            ]);
+        }
+
         return view('questionBank.index', [
-            'questions' => $questions,
-            'form' => $form
+            'questions' => $questions
         ]);
     }
 

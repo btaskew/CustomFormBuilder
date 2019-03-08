@@ -77,7 +77,7 @@ a:hover {
   text-decoration: none;
 }
 
-a:focus {
+a:not(.nav-link):focus {
   color: inherit !important;
 }
 

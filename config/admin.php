@@ -19,7 +19,7 @@ return [
                 ],
                 'questionBank' => [
                     'name' => 'Question bank',
-                    'route' => 'question-bank.create',
+                    'route' => 'question-bank.index',
                     'guard' => 'administer',
                     'guardKey' => App\Question::class,
                 ]
