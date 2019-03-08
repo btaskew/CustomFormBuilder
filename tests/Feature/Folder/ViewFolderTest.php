@@ -14,7 +14,7 @@ class ViewFolderTest extends TestCase
     /** @test */
     public function a_guest_cant_view_all_folder()
     {
-        $this->get('/folders')->assertRedirect('login');
+        $this->get('/admin/folders')->assertRedirect('login');
     }
 
     /** @test */
@@ -24,7 +24,7 @@ class ViewFolderTest extends TestCase
         create(Form::class, ['folder_id' => $folder->id], 2);
 
         $this->loginAdmin()
-            ->get('/folders')
+            ->get('/admin/folders')
             ->assertStatus(200)
             ->assertSee($folder->name)
             ->assertSee(2);
@@ -34,7 +34,7 @@ class ViewFolderTest extends TestCase
     public function a_standard_user_cant_see_a_list_of_folders()
     {
         $this->login()
-            ->get('/folders')
+            ->get('/admin/folders')
             ->assertRedirect('login');
     }
 }

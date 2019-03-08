@@ -12,20 +12,20 @@ class CreateQuestionBankTest extends TestCase
     /** @test */
     public function a_guest_cant_create_a_new_question_bank_question()
     {
-        $this->post('/question-bank', [])->assertRedirect('login');
+        $this->post('/admin/question-bank', [])->assertRedirect('login');
     }
 
     /** @test */
     public function a_non_admin_cant_create_a_new_question_bank_question()
     {
-        $this->login()->post('/question-bank', [])->assertRedirect('login');
+        $this->login()->post('/admin/question-bank', [])->assertRedirect('login');
     }
 
     /** @test */
     public function an_admin_can_create_a_new_question_bank_question()
     {
         $this->loginAdmin()
-            ->post('/question-bank', [
+            ->post('/admin/question-bank', [
                 'title' => 'Question title',
                 'type' => 'text',
                 'help_text' => 'Help text',
@@ -48,7 +48,7 @@ class CreateQuestionBankTest extends TestCase
     public function an_admin_can_create_a_new_select_question_bank_question()
     {
         $this->loginAdmin()
-            ->post('/question-bank', [
+            ->post('/admin/question-bank', [
                 'title' => 'Question title',
                 'type' => 'radio',
                 'help_text' => 'Help text',
