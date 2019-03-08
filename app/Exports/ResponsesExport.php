@@ -3,7 +3,7 @@
 namespace App\Exports;
 
 use App\Form;
-use App\Mappers\ResponseFormatter;
+use App\Services\ResponseFormatter;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mappers;
+namespace App\Services;
 
 use App\Form;
 use App\FormResponse;

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Form;
-use App\Mappers\QuestionBankMapper;
+use App\Services\QuestionBankReplicator;
 use Illuminate\Http\Request;
 
 class AssignQuestionBankController extends Controller
@@ -19,7 +19,7 @@ class AssignQuestionBankController extends Controller
 
         $this->authorize('edit', $form);
 
-        (new QuestionBankMapper())->addQuestions($request->input('questions'), $form->id);
+        (new QuestionBankReplicator())->addQuestions($request->input('questions'), $form->id);
 
         return response()->json(['success' => 'Questions added to form']);
     }

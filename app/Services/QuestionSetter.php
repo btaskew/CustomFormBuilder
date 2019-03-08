@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Facades;
+namespace App\Services;
 
 use App\Form;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
 
-class QuestionFacade
+class QuestionSetter
 {
     /**
      * @param Form            $form

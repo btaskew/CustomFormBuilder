@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use App\Form;
 use App\FormResponse;
-use App\Mappers\ResponseFormatter;
+use App\Services\ResponseFormatter;
 use App\Objects\FormattedResponse;
 use App\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;

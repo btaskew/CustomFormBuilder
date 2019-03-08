@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\QuestionFacade;
+use App\Services\QuestionSetter;
 use App\Form;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
@@ -64,7 +64,7 @@ class QuestionsController extends Controller
     {
         $this->authorize('edit', $form);
 
-        QuestionFacade::createQuestion($form, $request);
+        QuestionSetter::createQuestion($form, $request);
     }
 
     /**
@@ -78,7 +78,7 @@ class QuestionsController extends Controller
     {
         $this->authorize('edit', $question);
 
-        QuestionFacade::updateQuestion($question, $request);
+        QuestionSetter::updateQuestion($question, $request);
 
         return $question->fresh()->load(['options', 'visibilityRequirement']);
     }

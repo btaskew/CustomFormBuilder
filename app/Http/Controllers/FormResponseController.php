@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ResponseRecorded;
 use App\Form;
 use App\Http\Requests\ResponseRequest;
-use App\Mappers\ResponseFormatter;
-use App\Question;
-use Illuminate\Http\Request;
+use App\Services\ResponseFormatter;
 
 class FormResponseController extends Controller
 {

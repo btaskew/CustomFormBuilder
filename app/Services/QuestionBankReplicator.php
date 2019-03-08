@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Mappers;
+namespace App\Services;
 
 use App\Question;
 use App\SelectOption;
 use Illuminate\Support\Collection;
 
-class QuestionBankMapper
+class QuestionBankReplicator
 {
     /**
      * @param array $questions

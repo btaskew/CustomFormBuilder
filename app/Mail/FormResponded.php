@@ -4,7 +4,7 @@ namespace App\Mail;
 
 use App\Form;
 use App\FormResponse;
-use App\Mappers\ResponseFormatter;
+use App\Services\ResponseFormatter;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;

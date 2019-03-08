@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\QuestionFacade;
+use App\Services\QuestionSetter;
 use App\Form;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
@@ -37,7 +37,7 @@ class QuestionBankController extends Controller
      */
     public function store(QuestionRequest $request)
     {
-        QuestionFacade::setBankQuestion($request);
+        QuestionSetter::setBankQuestion($request);
 
         return response()->json(['success' => 'Question created']);
     }
@@ -53,7 +53,7 @@ class QuestionBankController extends Controller
             return response()->json(['error' => 'Trying to update question not in question bank'], 403);
         }
 
-        QuestionFacade::setBankQuestion($request, $question->id);
+        QuestionSetter::setBankQuestion($request, $question->id);
 
         return response()->json(['success' => 'Question updated']);
     }
