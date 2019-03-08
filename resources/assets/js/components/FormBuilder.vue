@@ -1,5 +1,7 @@
 <template>
-    <div v-if="isSubmitted" class="alert mt" role="alert">
+    <div class="loader" v-if="loading"></div>
+
+    <div v-else-if="isSubmitted" class="alert mt" role="alert">
         <span v-if="this.form.success_text" v-html="this.form.success_text"></span>
         <span v-else>Form submitted</span>
     </div>
@@ -21,11 +23,10 @@
         data() {
             return {
                 model: {},
-
                 schema: {
                     fields: []
                 },
-
+                loading: false,
                 isSubmitted: false,
                 error: false,
             }
@@ -43,6 +44,7 @@
                     return (this.isSubmitted = true);
                 }
 
+                this.loading = true;
                 const formData = new FormData();
 
                 for (const field in this.model) {
@@ -51,8 +53,10 @@
 
                 axios.post(`/forms/${this.form.id}/responses`, formData)
                     .then(response => {
+                        this.loading = false;
                         this.isSubmitted = true;
                     }).catch(error => {
+                        this.loading = false;
                     this.error = true;
                 });
             }

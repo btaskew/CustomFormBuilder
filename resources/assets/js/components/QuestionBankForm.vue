@@ -11,7 +11,6 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import Form from '../classes/Form';
     import QuestionForm from './QuestionForm';
 
