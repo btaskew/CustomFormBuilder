@@ -40,23 +40,11 @@ class FormAccessController extends Controller
 
         $this->authorize('edit', $form);
 
-        if ($request->input('username') == auth()->user()->username) {
-            return response()->json(['error' => "Can't grant access to self"], 422);
-        }
-
-        try {
-            $user = User::where('username', $request->input('username'))->firstOrFail();
-        } catch (ModelNotFoundException $exception) {
-            return response()->json(['error' => 'Given user was not found in the database'], 404);
-        }
-
-        $user->pivot = FormUser::create([
-            'user_id' => $user->id,
-            'form_id' => $form->id,
-            'access' => $request->input('access')
-        ]);
-
-        return $user;
+        return FormUser::createAccess(
+            $request->input('username'),
+            $request->input('access'),
+            $form->id
+        );
     }
 
     /**

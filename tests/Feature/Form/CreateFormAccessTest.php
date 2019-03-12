@@ -3,6 +3,7 @@
 namespace Tests\Feature\Form;
 
 use App\Form;
+use App\FormUser;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -92,5 +93,19 @@ class CreateFormAccessTest extends TestCase
         $this->post(formPath($form) . '/access', ['username' => $form->owner->username, 'access' => 'view'])
             ->assertStatus(422)
             ->assertJsonFragment(['error' => 'Can\'t grant access to self']);
+    }
+
+    /** @test */
+    public function a_user_cant_grant_access_to_the_same_user_twice()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = create(User::class);
+        $form = $this->loginUserWithForm();
+        create(FormUser::class, ['form_id' => $form->id, 'user_id' => $user->id]);
+
+        $this->post(formPath($form) . '/access', ['username' => $user->username, 'access' => 'view'])
+            ->assertStatus(422)
+            ->assertJsonFragment(['error' => 'User already has access']);
     }
 }
