@@ -77,7 +77,7 @@
                 this.showConfirmModal = false;
                 this.loading = true;
 
-                axios.delete(`/folders/${this.folderToDelete}`)
+                axios.delete(`/admin/folders/${this.folderToDelete}`)
                     .then(response => {
                         this.loading = false;
                         flash('Folder deleted');

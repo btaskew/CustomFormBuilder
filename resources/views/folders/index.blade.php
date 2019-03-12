@@ -7,7 +7,7 @@
 
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
-                    <a href="/folders/create" class="btn btn-primary" role="button">Add new folder</a>
+                    <a href="/admin/folders/create" class="btn btn-primary" role="button">Add new folder</a>
                 </div>
             </div>
 

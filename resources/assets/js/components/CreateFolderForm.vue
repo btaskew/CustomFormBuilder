@@ -44,7 +44,7 @@
 
         methods: {
             onSubmit() {
-                this.form.post(`/folders`)
+                this.form.post(`/admin/folders`)
                     .then(response => {
                         flash('Folder created');
                         this.loading = false;
