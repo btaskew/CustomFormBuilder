@@ -59,9 +59,9 @@ class ViewSelectQuestionsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_select_questions_for_a_form_they_have_edit_access_to()
+    public function a_user_can_view_select_questions_for_a_form_they_have_update_access_to()
     {
-        $form = $this->createFormWithAccess('edit');
+        $form = $this->createFormWithAccess('update');
         $selectQuestion = create(Question::class, ['type' => 'radio', 'form_id' => $form->id]);
 
         $this->get(formPath($form) . '/select-questions')

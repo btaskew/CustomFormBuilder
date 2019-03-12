@@ -50,9 +50,9 @@ class DeleteFormAccessTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_remove_a_users_access_to_another_users_form_they_have_edit_access_to()
+    public function a_user_can_remove_a_users_access_to_another_users_form_they_have_update_access_to()
     {
-        $form = $this->createFormWithAccess('edit');
+        $form = $this->createFormWithAccess('update');
         $userAcccess = create(FormUser::class, ['form_id' => $form->id, 'user_id' => 123]);
 
         $this->delete(formPath($form) . '/access/' . $userAcccess->id)

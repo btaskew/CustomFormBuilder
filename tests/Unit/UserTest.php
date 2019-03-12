@@ -69,14 +69,14 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function if_a_user_has_edit_access_they_also_have_view_access()
+    public function if_a_user_has_update_access_they_also_have_view_access()
     {
         $user = create(User::class);
         $form = create(Form::class, ['user_id' => 999]);
         create(FormUser::class, [
             'user_id' => $user->id,
             'form_id' => $form->id,
-            'access' => 'edit'
+            'access' => 'update'
         ]);
         $this->assertTrue($user->hasAccessTo('view', $form));
     }

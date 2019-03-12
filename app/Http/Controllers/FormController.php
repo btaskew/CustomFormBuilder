@@ -88,7 +88,7 @@ class FormController extends Controller
      */
     public function edit(Form $form)
     {
-        $this->authorize('edit', $form);
+        $this->authorize('update', $form);
 
         $folders = Folder::all();
 
@@ -105,7 +105,7 @@ class FormController extends Controller
      */
     public function update(FormRequest $request, Form $form)
     {
-        $this->authorize('edit', $form);
+        $this->authorize('update', $form);
 
         if ($request->has('response_email_field')
             &&
@@ -139,7 +139,7 @@ class FormController extends Controller
      */
     public function destroy(Form $form)
     {
-        $this->authorize('edit', $form);
+        $this->authorize('update', $form);
 
         $form->delete();
 

@@ -59,9 +59,9 @@ class AddFromQuestionBankTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_add_a_question_bank_question_to_a_form_they_have_edit_access_to()
+    public function a_user_can_add_a_question_bank_question_to_a_form_they_have_update_access_to()
     {
-        $form = $this->createFormWithAccess('edit');
+        $form = $this->createFormWithAccess('update');
         $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
 
         $this->post('/question-bank/assign', ['form' => $form->id, 'questions' => [$question->id]])

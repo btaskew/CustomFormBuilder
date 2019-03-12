@@ -49,9 +49,9 @@ class DeleteQuestionTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_delete_a_question_on_a_form_they_have_edit_access_to()
+    public function a_user_can_delete_a_question_on_a_form_they_have_update_access_to()
     {
-        $form = $this->createFormWithAccess('edit');
+        $form = $this->createFormWithAccess('update');
         $question = create(Question::class, ['form_id' => $form->id]);
 
         $this->delete('/forms/' . $question->form->id . '/questions/' . $question->id)

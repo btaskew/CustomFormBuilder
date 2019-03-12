@@ -41,9 +41,9 @@ class ViewQuestionTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_questions_to_a_form_they_have_edit_access_to()
+    public function a_user_can_view_questions_to_a_form_they_have_update_access_to()
     {
-        $form = $this->createFormWithAccess('edit');
+        $form = $this->createFormWithAccess('update');
         $question = create(Question::class, ['form_id' => $form->id]);
 
         $this->get(formPath($form) . '/questions')
@@ -93,9 +93,9 @@ class ViewQuestionTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_a_questions_data_for_a_form_they_have_edit_access_to()
+    public function a_user_can_view_a_questions_data_for_a_form_they_have_update_access_to()
     {
-        $form = $this->createFormWithAccess('edit');
+        $form = $this->createFormWithAccess('update');
         $question = create(Question::class, ['title' => 'Old title', 'form_id' => $form->id]);
 
         $this->get(formPath($form) . '/questions/' . $question->id)

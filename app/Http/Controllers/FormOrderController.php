@@ -15,7 +15,7 @@ class FormOrderController extends Controller
      */
     public function update(Form $form, Request $request)
     {
-        $this->authorize('edit', $form);
+        $this->authorize('update', $form);
 
         foreach ($request->input('order') as $order) {
             $form->questions()

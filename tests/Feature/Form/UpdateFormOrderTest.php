@@ -66,9 +66,9 @@ class UpdateFormOrderTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_update_the_order_of_a_forms_questions_they_have_edit_access_to()
+    public function a_user_can_update_the_order_of_a_forms_questions_they_have_update_access_to()
     {
-        $form = $this->createFormWithAccess('edit');
+        $form = $this->createFormWithAccess('update');
         $question1 = create(Question::class, ['form_id' => $form->id, 'order' => 1]);
         $question2 = create(Question::class, ['form_id' => $form->id, 'order' => 2]);
 

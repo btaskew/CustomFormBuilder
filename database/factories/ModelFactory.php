@@ -97,6 +97,6 @@ $factory->define(App\FormUser::class, function (Faker $faker) {
         'form_id' => function () {
             return factory(\App\Form::class)->create()->id;
         },
-        'access' => 'edit'
+        'access' => 'update'
     ];
 });

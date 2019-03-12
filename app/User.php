@@ -85,7 +85,7 @@ class User extends Authenticatable
 
         if ($access == 'view') {
             $userAccess = $userAccess
-                ->orWhere('access', 'edit')
+                ->orWhere('access', 'update')
                 ->where([
                     'user_id' => $this->id,
                     'form_id' => $form->id,

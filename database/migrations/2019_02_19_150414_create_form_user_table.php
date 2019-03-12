@@ -19,7 +19,7 @@ class CreateFormUserTable extends Migration
             $table->unsignedInteger('form_id');
             $table->enum('access', [
                 'view',
-                'edit'
+                'update'
             ]);
             $table->timestamps();
 

@@ -17,7 +17,7 @@ class AssignQuestionBankController extends Controller
     {
         $form = Form::findOrFail($request->input('form'));
 
-        $this->authorize('edit', $form);
+        $this->authorize('update', $form);
 
         (new QuestionBankReplicator())->addQuestions($request->input('questions'), $form->id);
 

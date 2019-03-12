@@ -41,9 +41,9 @@ class DeleteFormTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_delete_a_form_they_have_edit_access_to()
+    public function a_user_can_delete_a_form_they_have_update_access_to()
     {
-        $form = $this->createFormWithAccess('edit');
+        $form = $this->createFormWithAccess('update');
 
         $this->delete(formPath($form))->assertStatus(200);
 

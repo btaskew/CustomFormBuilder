@@ -48,9 +48,9 @@ class CreateFormAccessTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_grant_access_to_a_form_they_have_edit_access_to()
+    public function a_user_can_grant_access_to_a_form_they_have_update_access_to()
     {
-        $form = $this->createFormWithAccess('edit');
+        $form = $this->createFormWithAccess('update');
         $user = create(User::class);
 
         $this->post(formPath($form) . '/access', ['username' => $user->username, 'access' => 'view'])

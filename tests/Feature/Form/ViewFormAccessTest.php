@@ -39,9 +39,9 @@ class ViewFormAccessTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_another_users_forms_list_of_users_if_they_have_edit_access()
+    public function a_user_can_view_another_users_forms_list_of_users_if_they_have_update_access()
     {
-        $form = $this->createFormWithAccess('edit');
+        $form = $this->createFormWithAccess('update');
 
         $this->get(formPath($form) . '/access')->assertStatus(200);
     }

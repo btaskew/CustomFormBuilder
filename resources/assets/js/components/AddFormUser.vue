@@ -28,7 +28,7 @@
                 </label>
                 <select class="form-control" v-model="form.access" id="access" name="access" required>
                     <option value="view">View</option>
-                    <option value="edit">Edit</option>
+                    <option value="update">Update</option>
                 </select>
                 <span class="text-danger" v-if="form.errors.has('access')" v-text="form.errors.get('access')">
                 </span>

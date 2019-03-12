@@ -13,7 +13,7 @@ class SelectOptionsController extends Controller
      */
     public function destroy(SelectOption $option)
     {
-        $this->authorize('edit', $option);
+        $this->authorize('update', $option);
 
         $option->delete();
 

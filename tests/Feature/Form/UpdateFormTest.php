@@ -34,9 +34,9 @@ class UpdateFormTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_the_edit_form_page_for_another_users_form_they_have_edit_access_to()
+    public function a_user_can_view_the_edit_form_page_for_another_users_form_they_have_update_access_to()
     {
-        $form = $this->createFormWithAccess('edit');
+        $form = $this->createFormWithAccess('update');
 
         $this->get(formPath($form) . '/edit')->assertSee($form->title);
     }
@@ -106,9 +106,9 @@ class UpdateFormTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_edit_another_users_form_that_they_have_edit_access_to()
+    public function a_user_can_edit_another_users_form_that_they_have_update_access_to()
     {
-        $form = $this->createFormWithAccess('edit');
+        $form = $this->createFormWithAccess('update');
 
         $attributes = [
             'title' => 'New title',

@@ -16,7 +16,7 @@ class QuestionsController extends Controller
      */
     public function index(Form $form)
     {
-        $this->authorize('edit', $form);
+        $this->authorize('update', $form);
 
         $questions = $form->questions()->orderBy('order')->get(['id', 'title']);
 
@@ -37,7 +37,7 @@ class QuestionsController extends Controller
      */
     public function create(Form $form)
     {
-        $this->authorize('edit', $form);
+        $this->authorize('update', $form);
 
         return view('questions.create', compact('form'));
     }
@@ -49,7 +49,7 @@ class QuestionsController extends Controller
      */
     public function store(Form $form, QuestionRequest $request)
     {
-        $this->authorize('edit', $form);
+        $this->authorize('update', $form);
 
         QuestionSetter::createQuestion($form, $request);
     }
@@ -62,7 +62,7 @@ class QuestionsController extends Controller
      */
     public function show(Form $form, Question $question)
     {
-        $this->authorize('edit', $form);
+        $this->authorize('update', $form);
 
         return $question->load(['options', 'visibilityRequirement']);
     }
@@ -76,7 +76,7 @@ class QuestionsController extends Controller
      */
     public function update($form, Question $question, QuestionRequest $request)
     {
-        $this->authorize('edit', $question);
+        $this->authorize('update', $question);
 
         QuestionSetter::updateQuestion($question, $request);
 
@@ -91,7 +91,7 @@ class QuestionsController extends Controller
      */
     public function destroy($form, Question $question)
     {
-        $this->authorize('edit', $question);
+        $this->authorize('update', $question);
 
         $question->delete();
 

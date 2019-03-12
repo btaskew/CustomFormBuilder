@@ -15,7 +15,7 @@ class SelectQuestionsController extends Controller
      */
     public function index(Request $request, Form $form)
     {
-        $this->authorize('edit', $form);
+        $this->authorize('update', $form);
 
         $questions = $form->questions()
             ->select('id', 'title')

@@ -17,7 +17,7 @@ class FormAccessController extends Controller
      */
     public function index(Form $form)
     {
-        $this->authorize('edit', $form);
+        $this->authorize('update', $form);
 
         return view('form.users', [
             'form' => $form,
@@ -35,10 +35,10 @@ class FormAccessController extends Controller
     {
         $request->validate([
             'username' => 'string|required',
-            'access' => 'string|required|in:view,edit'
+            'access' => 'string|required|in:view,update'
         ]);
 
-        $this->authorize('edit', $form);
+        $this->authorize('update', $form);
 
         return FormUser::createAccess(
             $request->input('username'),
@@ -55,7 +55,7 @@ class FormAccessController extends Controller
      */
     public function destroy(Form $form, FormUser $formUser)
     {
-        $this->authorize('edit', $form);
+        $this->authorize('update', $form);
 
         $formUser->delete();
 
