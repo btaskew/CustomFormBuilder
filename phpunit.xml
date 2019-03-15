@@ -22,6 +22,12 @@
             <directory suffix=".php">./app</directory>
         </whitelist>
     </filter>
+    <!--<logging>-->
+    <!--<log type="coverage-html" target=".report" lowUpperBound="35" highLowerBound="70"/>-->
+    <!--<log type="coverage-clover" target=".report/coverage.xml"/>-->
+    <!--<log type="coverage-php" target=".report/coverage.serialized"/>-->
+    <!--<log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>-->
+    <!--</logging>-->
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>

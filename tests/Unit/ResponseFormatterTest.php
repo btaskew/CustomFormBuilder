@@ -47,7 +47,7 @@ class ResponseFormatterTest extends TestCase
 
         $this->assertEquals(
             $expectedResult,
-            (new ResponseFormatter($form, $form->getOrderedQuestions()))->formatResponses([$response1, $response2])
+            (new ResponseFormatter($form->getOrderedQuestions()))->formatResponses([$response1, $response2])
         );
     }
 
@@ -69,7 +69,7 @@ class ResponseFormatterTest extends TestCase
 
         $this->assertEquals(
             [$response->id => $expectedResponse1],
-            (new ResponseFormatter($form, $form->getOrderedQuestions()))->formatResponses([$response])
+            (new ResponseFormatter($form->getOrderedQuestions()))->formatResponses([$response])
         );
     }
 }

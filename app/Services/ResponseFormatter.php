@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Form;
 use App\FormResponse;
 use App\Objects\FormattedResponse;
 use App\Question;
@@ -11,29 +10,22 @@ use Illuminate\Support\Collection;
 class ResponseFormatter
 {
     /**
-     * @var array
-     */
-    private $responses;
-
-    /**
-     * @var Form
-     */
-    private $form;
-
-    /**
      * @var Collection
      */
     private $questions;
 
     /**
-     * @param Form       $form
+     * @var array
+     */
+    private $responses;
+
+    /**
      * @param Collection $questions
      */
-    public function __construct(Form $form, Collection $questions)
+    public function __construct(Collection $questions)
     {
-        $this->responses = [];
-        $this->form = $form;
         $this->questions = $questions;
+        $this->responses = [];
     }
 
     /**

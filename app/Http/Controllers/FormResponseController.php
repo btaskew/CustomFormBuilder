@@ -21,7 +21,7 @@ class FormResponseController extends Controller
         $questions = $form->getAnswerableQuestions();
 
         return view('responses.index', [
-            'responses' => (new ResponseFormatter($form, $questions))->formatResponses($paginatedResponses->items()),
+            'responses' => (new ResponseFormatter($questions))->formatResponses($paginatedResponses->items()),
             'pagination' => $paginatedResponses,
             'form' => $form,
             'questions' => $questions

@@ -56,7 +56,7 @@ class FormController extends Controller
             'success_text' => $request->input('success_text'),
             'response_email' => $request->input('response_email'),
             'folder_id' => $request->input('folder_id'),
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->id()
         ]);
     }
 

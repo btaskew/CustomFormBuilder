@@ -23,7 +23,7 @@ abstract class TestCase extends BaseTestCase
 
     public function login()
     {
-        $this->be(create(User::class));
+        $this->actingAs(create(User::class));
 
         return $this;
     }
@@ -34,7 +34,7 @@ abstract class TestCase extends BaseTestCase
     public function loginUserWithForm(): Form
     {
         $this->login();
-        return create(Form::class, ['user_id' => auth()->user()->id]);
+        return create(Form::class, ['user_id' => auth()->id()]);
     }
 
     /**
@@ -48,7 +48,7 @@ abstract class TestCase extends BaseTestCase
         $this->login();
         $form = create(Form::class, ['user_id' => 999]);
         create(FormUser::class, [
-            'user_id' => auth()->user()->id,
+            'user_id' => auth()->id(),
             'form_id' => $form->id,
             'access' => $access
         ]);
