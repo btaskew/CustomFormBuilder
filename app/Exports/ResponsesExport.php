@@ -2,8 +2,8 @@
 
 namespace App\Exports;
 
+use App\Contracts\ResponseFormatter;
 use App\Form;
-use App\Services\ResponseFormatter;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -15,11 +15,18 @@ class ResponsesExport implements FromView
     private $form;
 
     /**
-     * @param Form $form
+     * @var ResponseFormatter
      */
-    public function __construct(Form $form)
+    private $formatter;
+
+    /**
+     * @param Form              $form
+     * @param ResponseFormatter $formatter
+     */
+    public function __construct(Form $form, ResponseFormatter $formatter)
     {
         $this->form = $form;
+        $this->formatter = $formatter;
     }
 
     /**
@@ -28,7 +35,7 @@ class ResponsesExport implements FromView
     public function view(): View
     {
         $questions = $this->form->getAnswerableQuestions();
-        $responses = (new ResponseFormatter($this->form, $questions))->formatResponses($this->form->responses);
+        $responses = $this->formatter->setQuestions($questions)->formatResponses($this->form->responses);
 
         return view('responses._responseTable', [
             'responses' => $responses,

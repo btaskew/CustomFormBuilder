@@ -2,17 +2,18 @@
 
 namespace App\Services;
 
+use App\Contracts\QuestionSetter as QuestionSetterContract;
 use App\Form;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
 
-class QuestionSetter
+class QuestionSetter implements QuestionSetterContract
 {
     /**
      * @param Form            $form
      * @param QuestionRequest $request
      */
-    public static function createQuestion(Form $form, QuestionRequest $request)
+    public static function createQuestion(Form $form, QuestionRequest $request): void
     {
         $question = $form->questions()->create($request->only([
             'title', 'type', 'help_text', 'required', 'admin_only'
@@ -27,7 +28,7 @@ class QuestionSetter
      * @param Question        $question
      * @param QuestionRequest $request
      */
-    public static function updateQuestion(Question $question, QuestionRequest $request)
+    public static function updateQuestion(Question $question, QuestionRequest $request): void
     {
         $question->update($request->only([
             'title', 'type', 'help_text', 'required', 'admin_only'
@@ -42,7 +43,7 @@ class QuestionSetter
      * @param QuestionRequest $request
      * @param int|null        $id
      */
-    public static function setBankQuestion(QuestionRequest $request, int $id = null)
+    public static function setBankQuestion(QuestionRequest $request, int $id = null): void
     {
         $attributes = array_merge(
             ['form_id' => null, 'in_question_bank' => true, 'order' => 0],

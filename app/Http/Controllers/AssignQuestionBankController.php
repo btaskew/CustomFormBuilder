@@ -2,12 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\QuestionBankReplicator;
 use App\Form;
-use App\Services\QuestionBankReplicator;
 use Illuminate\Http\Request;
 
 class AssignQuestionBankController extends Controller
 {
+    /**
+     * @var QuestionBankReplicator
+     */
+    private $questionBankReplicator;
+
+    /**
+     * @param QuestionBankReplicator $questionBankReplicator
+     */
+    public function __construct(QuestionBankReplicator $questionBankReplicator)
+    {
+        $this->questionBankReplicator = $questionBankReplicator;
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -19,7 +32,7 @@ class AssignQuestionBankController extends Controller
 
         $this->authorize('update', $form);
 
-        (new QuestionBankReplicator())->addQuestions($request->input('questions'), $form->id);
+        $this->questionBankReplicator::addQuestions($request->input('questions'), $form->id);
 
         return response()->json(['success' => 'Questions added to form']);
     }

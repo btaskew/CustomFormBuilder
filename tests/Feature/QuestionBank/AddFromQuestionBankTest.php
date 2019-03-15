@@ -21,6 +21,7 @@ class AddFromQuestionBankTest extends TestCase
     /** @test */
     public function a_user_can_add_a_question_bank_question_to_their_form()
     {
+        $this->withoutExceptionHandling();
         $form = $this->loginUserWithForm();
         $question = create(Question::class, ['form_id' => null, 'in_question_bank' => true]);
 

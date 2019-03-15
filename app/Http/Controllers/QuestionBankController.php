@@ -2,14 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\QuestionSetter;
 use App\Form;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
-use App\Services\QuestionSetter;
 use Illuminate\Http\Request;
 
 class QuestionBankController extends Controller
 {
+    /**
+     * @var QuestionSetter
+     */
+    private $questionSetter;
+
+    /**
+     * @param QuestionSetter $questionSetter
+     */
+    public function __construct(QuestionSetter $questionSetter)
+    {
+        $this->questionSetter = $questionSetter;
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\View\View
@@ -44,7 +57,7 @@ class QuestionBankController extends Controller
      */
     public function store(QuestionRequest $request)
     {
-        QuestionSetter::setBankQuestion($request);
+        $this->questionSetter::setBankQuestion($request);
 
         return response()->json(['success' => 'Question created']);
     }
@@ -71,7 +84,7 @@ class QuestionBankController extends Controller
             return response()->json(['error' => 'Trying to update question not in question bank'], 403);
         }
 
-        QuestionSetter::setBankQuestion($request, $question->id);
+        $this->questionSetter::setBankQuestion($request, $question->id);
 
         return $question->fresh()->load(['options']);
     }

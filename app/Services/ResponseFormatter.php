@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
+use App\Contracts\ResponseFormatter as ResponseFormatterContract;
 use App\FormResponse;
 use App\Objects\FormattedResponse;
 use App\Question;
 use Illuminate\Support\Collection;
 
-class ResponseFormatter
+class ResponseFormatter implements ResponseFormatterContract
 {
     /**
      * @var Collection
@@ -21,11 +22,12 @@ class ResponseFormatter
 
     /**
      * @param Collection $questions
+     * @return ResponseFormatterContract
      */
-    public function __construct(Collection $questions)
+    public function setQuestions(Collection $questions): ResponseFormatterContract
     {
         $this->questions = $questions;
-        $this->responses = [];
+        return $this;
     }
 
     /**
@@ -34,6 +36,8 @@ class ResponseFormatter
      */
     public function formatResponses(array $responses): array
     {
+        $this->responses = [];
+
         foreach ($responses as $response) {
             $this->formatResponse($response);
         }

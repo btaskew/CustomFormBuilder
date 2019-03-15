@@ -2,12 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\ResponseFormatter;
 use App\Exports\ResponsesExport;
 use App\Form;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ResponseExportController extends Controller
 {
+    /**
+     * @var ResponseFormatter
+     */
+    private $responseFormatter;
+
+    /**
+     * @param ResponseFormatter $responseFormatter
+     */
+    public function __construct(ResponseFormatter $responseFormatter)
+    {
+        $this->responseFormatter = $responseFormatter;
+    }
+
     /**
      * @param Form $form
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
@@ -17,6 +31,6 @@ class ResponseExportController extends Controller
     {
         $this->authorize('view', $form);
 
-        return Excel::download(new ResponsesExport($form), 'responses.xlsx');
+        return Excel::download(new ResponsesExport($form, $this->responseFormatter), 'responses.xlsx');
     }
 }

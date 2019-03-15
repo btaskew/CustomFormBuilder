@@ -2,12 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\ResponseFormatter;
 use App\Form;
 use App\Http\Requests\ResponseRequest;
-use App\Services\ResponseFormatter;
 
 class FormResponseController extends Controller
 {
+    /**
+     * @var ResponseFormatter
+     */
+    private $responseFormatter;
+
+    /**
+     * @param ResponseFormatter $responseFormatter
+     */
+    public function __construct(ResponseFormatter $responseFormatter)
+    {
+        $this->responseFormatter = $responseFormatter;
+    }
+
     /**
      * @param Form $form
      * @return \Illuminate\View\View
@@ -19,9 +32,12 @@ class FormResponseController extends Controller
 
         $paginatedResponses = $form->responses()->paginate(25);
         $questions = $form->getAnswerableQuestions();
+        $responses = $this->responseFormatter
+            ->setQuestions($questions)
+            ->formatResponses($paginatedResponses->items());
 
         return view('responses.index', [
-            'responses' => (new ResponseFormatter($questions))->formatResponses($paginatedResponses->items()),
+            'responses' => $responses,
             'pagination' => $paginatedResponses,
             'form' => $form,
             'questions' => $questions

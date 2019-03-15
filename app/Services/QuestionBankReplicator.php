@@ -2,20 +2,21 @@
 
 namespace App\Services;
 
+use App\Contracts\QuestionBankReplicator as QuestionBankReplicatorContract;
 use App\Question;
 use App\SelectOption;
 use Illuminate\Support\Collection;
 
-class QuestionBankReplicator
+class QuestionBankReplicator implements QuestionBankReplicatorContract
 {
     /**
      * @param array $questions
      * @param int   $formId
      */
-    public function addQuestions(array $questions, int $formId): void
+    public static function addQuestions(array $questions, int $formId): void
     {
         foreach ($questions as $questionId) {
-            $this->addQuestionToForm($formId, $questionId);
+            static::addQuestionToForm($formId, $questionId);
         }
     }
 
@@ -23,14 +24,14 @@ class QuestionBankReplicator
      * @param int $formId
      * @param int $questionId
      */
-    private function addQuestionToForm(int $formId, int $questionId): void
+    private static function addQuestionToForm(int $formId, int $questionId): void
     {
         $originalQuestion = Question::findOrFail($questionId);
 
-        $question = $this->replicateQuestion($formId, $originalQuestion);
+        $question = static::replicateQuestion($formId, $originalQuestion);
 
         if ($question->isSelectQuestion()) {
-            $this->replicateOptions($originalQuestion->options, $question->id);
+            static::replicateOptions($originalQuestion->options, $question->id);
         }
     }
 
@@ -39,7 +40,7 @@ class QuestionBankReplicator
      * @param Question $originalQuestion
      * @return Question
      */
-    private function replicateQuestion(int $formId, Question $originalQuestion): Question
+    private static function replicateQuestion(int $formId, Question $originalQuestion): Question
     {
         $question = $originalQuestion->replicate(['in_question_bank', 'order']);
         $question->form_id = $formId;
@@ -53,7 +54,7 @@ class QuestionBankReplicator
      * @param Collection $options
      * @param int        $questionId
      */
-    private function replicateOptions(Collection $options, int $questionId): void
+    private static function replicateOptions(Collection $options, int $questionId): void
     {
         $options->each(function (SelectOption $originalOption) use ($questionId) {
             $option = $originalOption->replicate(['question_id']);

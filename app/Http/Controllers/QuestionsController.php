@@ -2,13 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\QuestionSetter;
 use App\Form;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
-use App\Services\QuestionSetter;
 
 class QuestionsController extends Controller
 {
+    /**
+     * @var QuestionSetter
+     */
+    private $questionSetter;
+
+    /**
+     * @param QuestionSetter $questionSetter
+     */
+    public function __construct(QuestionSetter $questionSetter)
+    {
+        $this->questionSetter = $questionSetter;
+    }
+
     /**
      * @param Form $form
      * @return mixed
@@ -51,7 +64,7 @@ class QuestionsController extends Controller
     {
         $this->authorize('update', $form);
 
-        QuestionSetter::createQuestion($form, $request);
+        $this->questionSetter::createQuestion($form, $request);
     }
 
     /**
@@ -78,7 +91,7 @@ class QuestionsController extends Controller
     {
         $this->authorize('update', $question);
 
-        QuestionSetter::updateQuestion($question, $request);
+        $this->questionSetter::updateQuestion($question, $request);
 
         return $question->fresh()->load(['options', 'visibilityRequirement']);
     }
