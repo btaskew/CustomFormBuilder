@@ -35,7 +35,7 @@ class ResponsesExport implements FromView
     public function view(): View
     {
         $questions = $this->form->getAnswerableQuestions();
-        $responses = $this->formatter->setQuestions($questions)->formatResponses($this->form->responses);
+        $responses = $this->formatter->setQuestions($questions)->formatResponses($this->form->responses->all());
 
         return view('responses._responseTable', [
             'responses' => $responses,
