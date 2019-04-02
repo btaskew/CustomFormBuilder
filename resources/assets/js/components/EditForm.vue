@@ -1,142 +1,60 @@
 <template>
     <div>
-        <form method="GET"
-              @submit.prevent="onSubmit"
-              @change="form.errors.clear($event)"
-              @keydown="form.errors.clear($event)"
-        >
-            <div class="mt-t">
-                <div class="form-group">
-                    <label for="title" :class="{ 'has-error': form.errors.has('title') }">
-                        Title
-                    </label>
-                    <input class="form-control" type="text" v-model="form.title" id="title" name="title" required>
-                    <span class="text-danger" v-if="form.errors.has('title')" v-text="form.errors.get('title')"></span>
+        <dd-form :form="form" @submitted="onSubmit">
+            <dd-form-input tag="title" label="Title" :value.sync="form.title" required></dd-form-input>
+
+            <dd-form-group tag="description" label="Description" :error-message="form.errors.get('description')">
+                <rich-text-editor id="description" name="description" :value.sync="form.description">
+                </rich-text-editor>
+            </dd-form-group>
+
+            <dd-select-input
+                    tag="folder_id"
+                    label="Folder"
+                    :value.sync="form.folder_id"
+                    :options="folders"
+                    option-value-field="id"
+                    option-text-field="name"
+            ></dd-select-input>
+
+            <div class="form-row">
+                <div class="col">
+                    <dd-form-input tag="open_date" label="Open date" :value.sync="form.open_date" type="date" required>
+                    </dd-form-input>
                 </div>
 
-                <div class="form-group">
-                    <label for="description" :class="{ 'has-error': form.errors.has('description') }">
-                        Description
-                    </label>
-                    <rich-text-editor
-                            id="description"
-                            name="description"
-                            :value.sync="form.description"
+                <div class="col">
+                    <dd-form-input
+                            tag="close_date"
+                            label="Closing date"
+                            :value.sync="form.close_date"
+                            type="date"
+                            required
                     >
-                    </rich-text-editor>
-                    <span class="text-danger"
-                          v-if="form.errors.has('description')"
-                          v-text="form.errors.get('description')"
-                    ></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="folder_id" :class="{ 'has-error': form.errors.has('folder_id') }">
-                        Folder
-                    </label>
-                    <select class="form-control" v-model="form.folder_id" id="folder_id" name="folder_id" required>
-                        <option v-for="folder in this.folders" :value="folder.id">{{ folder.name }}</option>
-                    </select>
-                    <span class="text-danger"
-                          v-if="form.errors.has('folder_id')"
-                          v-text="form.errors.get('folder_id')"
-                    ></span>
-                </div>
-
-                <div class="form-row">
-                    <div class="col form-group">
-                        <label for="open_date" :class="{ 'has-error': form.errors.has('open_date') }">
-                            Open date
-                        </label>
-                        <input class="form-control"
-                               type="date"
-                               v-model="form.open_date"
-                               id="open_date"
-                               name="open_date"
-                               required
-                        >
-                        <span class="text-danger"
-                              v-if="form.errors.has('open_date')"
-                              v-text="form.errors.get('open_date')"
-                        ></span>
-                    </div>
-                    <div class="col form-group">
-                        <label for="close_date" :class="{ 'has-error': form.errors.has('close_date') }">
-                            Closing date
-                        </label>
-                        <input class="form-control"
-                               type="date"
-                               v-model="form.close_date"
-                               id="close_date"
-                               name="close_date"
-                               required
-                        >
-                        <span class="text-danger"
-                              v-if="form.errors.has('close_date')"
-                              v-text="form.errors.get('close_date')"
-                        ></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="admin_email" :class="{ 'has-error': form.errors.has('admin_email') }">
-                        Admin emails
-                    </label>
-                    <input class="form-control"
-                           type="text"
-                           v-model="form.admin_email"
-                           id="admin_email"
-                           name="admin_email"
-                    >
-                    <span class="text-danger"
-                          v-if="form.errors.has('admin_email')"
-                          v-text="form.errors.get('admin_email')"
-                    ></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="success_text" :class="{ 'has-error': form.errors.has('success_text') }">
-                        Success text
-                    </label>
-                    <rich-text-editor
-                            id="success_text"
-                            name="success_text"
-                            :value.sync="form.success_text"
-                    >
-                    </rich-text-editor>
-                    <span class="text-danger"
-                          v-if="form.errors.has('success_text')"
-                          v-text="form.errors.get('success_text')"
-                    ></span>
-                </div>
-
-                <div class="form-check form-group">
-                    <input type="checkbox"
-                           id="active"
-                           name="active"
-                           class="form-check-input"
-                           v-model="form.active"
-                           :true-value="true"
-                           :false-value="false"
-                    >
-                    <label for="active" class="form-check-label" :class="{ 'has-error': form.errors.has('active') }">
-                        Active
-                    </label>
-                    <span class="text-danger"
-                          v-if="form.errors.has('active')"
-                          v-text="form.errors.get('active')"
-                    ></span>
+                    </dd-form-input>
                 </div>
             </div>
+
+            <dd-form-input
+                    tag="admin_email"
+                    label="Admin emails"
+                    description="List of valid emails separated by semi-colons with no spaces"
+                    :value.sync="form.admin_email"
+            ></dd-form-input>
+
+            <dd-form-input tag="success_text" label="Success text" :value.sync="form.success_text"></dd-form-input>
+
+            <dd-checkbox-input tag="active" label="" :options="[{value: true, text: 'Active'}]"></dd-checkbox-input>
+
             <button type="submit" class="btn btn-raised btn-primary mt" :disabled="loading">Save form</button>
-        </form>
+        </dd-form>
 
         <div class="loader" v-if="loading"></div>
     </div>
 </template>
 
 <script>
-    import Form from '../classes/Form';
+    import {Form} from 'dd-js-package-components';
 
     export default {
         props: {

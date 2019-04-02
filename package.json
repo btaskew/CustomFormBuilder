@@ -13,6 +13,7 @@
         "axios": "^0.18",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
+        "dd-js-package-components": "git+ssh://git@bitbucket.org/exeterit/dd-js-package-components",
         "fecha": "^3.0.2",
         "jquery": "^3.2",
         "laravel-mix": "^4.0.7",
@@ -22,11 +23,12 @@
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
         "vue": "^2.5.17",
+        "vue-runtime-helpers": "^1.0.0",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
         "babel-polyfill": "^6.26.0",
-        "bootstrap-vue": "^2.0.0-rc.13",
+        "bootstrap-vue": "^2.0.0-rc.16",
         "trix": "^1.0.0",
         "vue-form-generator": "^2.3.3",
         "vuedraggable": "^2.17.0"
