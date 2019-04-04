@@ -15,22 +15,17 @@
                     :options="folders"
                     option-value-field="id"
                     option-text-field="name"
+                    required
             ></dd-select-input>
 
             <div class="form-row">
                 <div class="col">
-                    <dd-form-input tag="open_date" label="Open date" :value.sync="form.open_date" type="date" required>
+                    <dd-form-input tag="open_date" label="Open date" :value.sync="form.open_date" type="date">
                     </dd-form-input>
                 </div>
 
                 <div class="col">
-                    <dd-form-input
-                            tag="close_date"
-                            label="Closing date"
-                            :value.sync="form.close_date"
-                            type="date"
-                            required
-                    >
+                    <dd-form-input tag="close_date" label="Closing date" :value.sync="form.close_date" type="date">
                     </dd-form-input>
                 </div>
             </div>

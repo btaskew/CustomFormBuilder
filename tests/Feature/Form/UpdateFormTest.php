@@ -100,7 +100,13 @@ class UpdateFormTest extends TestCase
     {
         $form = create(Form::class, ['user_id' => 999, 'title' => 'Old title']);
 
-        $this->login()->patch(formPath($form), ['title' => 'New title'])->assertStatus(403);
+        $attributes = [
+            'title' => 'New title',
+            'folder_id' => 1,
+            'active' => false
+        ];
+
+        $this->login()->patch(formPath($form), $attributes)->assertStatus(403);
 
         $this->assertEquals('Old title', $form->fresh()->title);
     }
@@ -112,8 +118,7 @@ class UpdateFormTest extends TestCase
 
         $attributes = [
             'title' => 'New title',
-            'open_date' => '1990-01-01',
-            'close_date' => '1990-01-02',
+            'folder_id' => 1,
             'active' => false
         ];
 
@@ -130,8 +135,7 @@ class UpdateFormTest extends TestCase
 
         $attributes = [
             'title' => 'New title',
-            'open_date' => '1990-01-01',
-            'close_date' => '1990-01-02',
+            'folder_id' => 1,
             'active' => false
         ];
 
