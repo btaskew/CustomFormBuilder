@@ -104,6 +104,10 @@ class FormValidationTest extends TestCase
         return $this->login()->json('POST', '/forms', array_merge($defaultAttributes, $attributes));
     }
 
+    /**
+     * @param array $attributes
+     * @return \Illuminate\Foundation\Testing\TestResponse
+     */
     private function updateForm(array $attributes = [])
     {
         $defaultAttributes = [
