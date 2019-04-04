@@ -101,10 +101,9 @@
     import {filter} from 'lodash';
     import OptionsForm from './OptionsForm';
     import VisibilityRequirementForm from './VisibilityRequirementForm';
-    import TestCheckbox from './TestCheckbox.vue';
 
     export default {
-        components: {TestCheckbox, VisibilityRequirementForm, OptionsForm},
+        components: {VisibilityRequirementForm, OptionsForm},
 
         props: {
             formId: {

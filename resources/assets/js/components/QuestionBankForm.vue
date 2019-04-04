@@ -13,10 +13,9 @@
 <script>
     import {Form} from 'dd-js-package-components';
     import QuestionForm from './QuestionForm';
-    import TestForm from './TestForm';
 
     export default {
-        components: {TestForm, QuestionForm},
+        components: {QuestionForm},
         props: ['question'],
 
         data() {

@@ -48,10 +48,6 @@
         computed: {
             isSelectQuestion() {
                 return this.form.type === 'checkbox' || this.form.type === 'radio' || this.form.type === 'dropdown';
-            },
-
-            hasVisibilityRequirement() {
-                return !isEqual(this.form.required_if, {question:null, value:null});
             }
         },
 

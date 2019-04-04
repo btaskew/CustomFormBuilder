@@ -69,7 +69,7 @@
                     description: null,
                     open_date: null,
                     close_date: null,
-                    active: null,
+                    active: false,
                     admin_email: null,
                     success_text: null,
                     folder_id: null,
