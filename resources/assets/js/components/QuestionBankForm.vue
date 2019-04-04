@@ -11,11 +11,12 @@
 </template>
 
 <script>
-    import Form from '../classes/Form';
+    import {Form} from 'dd-js-package-components';
     import QuestionForm from './QuestionForm';
+    import TestForm from './TestForm';
 
     export default {
-        components: {QuestionForm},
+        components: {TestForm, QuestionForm},
         props: ['question'],
 
         data() {

@@ -5,7 +5,6 @@
             :form="this.form"
             :loading="this.loading"
             :is-new-question="this.isNewQuestion"
-            :has-visibility-requirement="this.hasVisibilityRequirement"
             :is-select-question="this.isSelectQuestion"
             @formSubmitted="this.handleSubmit"
     >
@@ -15,7 +14,7 @@
 <script>
     import axios from 'axios';
     import {isEqual} from 'lodash';
-    import Form from '../classes/Form';
+    import {Form} from 'dd-js-package-components';
     import QuestionForm from './QuestionForm';
 
     export default {
@@ -31,10 +30,9 @@
                     help_text: null,
                     required: false,
                     options: [],
-                    required_if: {
-                        question: null,
-                        value: null
-                    }
+                    visibility_requirement: false,
+                    required_question: null,
+                    required_value: null
                 }),
                 loading: false,
                 isNewQuestion: true,
@@ -75,17 +73,15 @@
                     help_text: question.help_text,
                     required: question.required,
                     options: question.options,
-                    required_if: {
-                        question: null,
-                        value: null
-                    }
+                    visibility_requirement: false,
+                    required_question: null,
+                    required_value: null
                 });
 
                 if (question.visibility_requirement) {
-                    this.form.required_if = {
-                        question: question.visibility_requirement.required_question_id,
-                        value: question.visibility_requirement.required_value,
-                    };
+                    this.form.visibility_requirement = true;
+                    this.form.required_question = question.visibility_requirement.required_question_id;
+                    this.form.required_value =  question.visibility_requirement.required_value;
                 }
             },
 

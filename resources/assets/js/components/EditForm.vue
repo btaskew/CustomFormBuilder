@@ -1,7 +1,7 @@
 <template>
     <div>
         <dd-form :form="form" @submitted="onSubmit">
-            <dd-form-input tag="title" label="Title" :value.sync="form.title" required></dd-form-input>
+            <dd-form-input tag="title" label="Title" :value.sync="form.title" required key="asfsafsafa"></dd-form-input>
 
             <dd-form-group tag="description" label="Description" :error-message="form.errors.get('description')">
                 <rich-text-editor id="description" name="description" :value.sync="form.description">
@@ -44,7 +44,7 @@
 
             <dd-form-input tag="success_text" label="Success text" :value.sync="form.success_text"></dd-form-input>
 
-            <dd-checkbox-input tag="active" label="" :options="[{value: true, text: 'Active'}]"></dd-checkbox-input>
+            <dd-checkbox-input tag="active" label="Active" :checked.sync="form.active"></dd-checkbox-input>
 
             <button type="submit" class="btn btn-raised btn-primary mt" :disabled="loading">Save form</button>
         </dd-form>

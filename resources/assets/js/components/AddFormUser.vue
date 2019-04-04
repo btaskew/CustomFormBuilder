@@ -2,49 +2,28 @@
     <div class="mt-4 mb-5">
         <h4>Add new user</h4>
 
-        <form method="GET"
-              @submit.prevent="onSubmit"
-              @change="form.errors.clear($event)"
-              @keydown="form.errors.clear($event)"
-              class="mt-3"
-        >
-            <div class="form-group">
-                <label for="username" :class="{ 'has-error': form.errors.has('username') }">
-                    Username
-                </label>
-                <input class="form-control"
-                       type="text"
-                       v-model="form.username"
-                       id="username"
-                       name="username"
-                       required
-                >
-                <span class="text-danger" v-if="form.errors.has('username')" v-text="form.errors.get('username')">
-                </span>
-            </div>
-            <div class="form-group">
-                <label for="access" :class="{ 'has-error': form.errors.has('access') }">
-                    Access type
-                </label>
-                <select class="form-control" v-model="form.access" id="access" name="access" required>
-                    <option value="view">View</option>
-                    <option value="update">Update</option>
-                </select>
-                <span class="text-danger" v-if="form.errors.has('access')" v-text="form.errors.get('access')">
-                </span>
-            </div>
+        <dd-form :form="form" @submitted="onSubmit">
+            <dd-form-input tag="username" label="Username" :value.sync="form.username" required></dd-form-input>
+
+            <dd-select-input
+                tag="access"
+                label="Access type"
+                :value.sync="form.access"
+                :options="[{value: 'view', text: 'View'}, {value: 'update', text: 'Update'}]"
+                required
+            ></dd-select-input>
+
             <button type="submit"
                     class="btn btn-raised btn-primary"
                     :disabled="loading"
                     v-text="loading ? 'Loading' : 'Add user'"
             ></button>
-
-        </form>
+        </dd-form>
     </div>
 </template>
 
 <script>
-    import Form from '../classes/Form';
+    import {Form} from 'dd-js-package-components';
 
     export default {
         props: ['formId'],

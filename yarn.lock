@@ -1778,7 +1778,7 @@ date-now@^0.1.4:
 
 "dd-js-package-components@git+ssh://git@bitbucket.org/exeterit/dd-js-package-components":
   version "0.0.1"
-  resolved "git+ssh://git@bitbucket.org/exeterit/dd-js-package-components#2811185b976b814e9b8a71d30d566949a8ee958b"
+  resolved "git+ssh://git@bitbucket.org/exeterit/dd-js-package-components#a62836088e5359bd24c2e64230ca5191f4c300bc"
 
 de-indent@^1.0.2:
   version "1.0.2"

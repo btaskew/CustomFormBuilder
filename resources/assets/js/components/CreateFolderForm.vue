@@ -1,36 +1,19 @@
 <template>
-    <form method="GET"
-          @submit.prevent="onSubmit"
-          @change="form.errors.clear($event)"
-          @keydown="form.errors.clear($event)"
-          class="mt-3"
-    >
-        <label for="name" :class="{ 'has-error': form.errors.has('name') }">
-            Folder name
-        </label>
-        <div class="input-group">
-            <input class="form-control"
-                   type="text"
-                   v-model="form.name"
-                   id="name"
-                   name="name"
-                   required
-            >
-            <span class="text-danger" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></span>
-            <div class="input-group-append">
+    <dd-form :form="form" @submitted="onSubmit">
+        <dd-form-input tag="name" label="Folder name" :value.sync="form.name">
+            <template v-slot:append>
                 <button type="submit"
                         class="btn btn-raised btn-primary"
                         :disabled="loading"
                         v-text="loading ? 'Loading' : 'Add folder'"
                 ></button>
-            </div>
-        </div>
-
-    </form>
+            </template>
+        </dd-form-input>
+    </dd-form>
 </template>
 
 <script>
-    import Form from '../classes/Form';
+    import {Form} from 'dd-js-package-components';
 
     export default {
         data() {

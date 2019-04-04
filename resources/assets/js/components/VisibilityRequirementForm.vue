@@ -10,36 +10,28 @@
         </span>
 
         <div v-else>
-            <div class="form-group">
-                <label for="question">
-                    Question
-                </label>
-                <select class="form-control"
-                        type="text"
-                        v-model="selectedQuestion"
-                        @change="updateQuestion"
-                        id="question"
-                        name="question"
-                        required
-                >
-                    <option v-for="question in questions" :value="question.id">{{ question.title }}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="value">
-                    Value
-                </label>
-                <select class="form-control"
-                        type="text"
-                        v-model="selectedValue"
-                        @change="updateValue"
-                        id="value"
-                        name="value"
-                        required
-                >
-                    <option v-for="option in selectedQuestionOptions" :value="option.value">{{ option.value }}</option>
-                </select>
-            </div>
+            <dd-select-input
+                    tag="question"
+                    label="Question"
+                    :value.sync="selectedQuestion"
+                    :options="questions"
+                    option-value-field="id"
+                    option-text-field="title"
+                    @update:value="updateQuestion"
+                    show-first-option
+                    required
+            ></dd-select-input>
+
+            <dd-select-input
+                    tag="value"
+                    label="Value"
+                    :value.sync="selectedValue"
+                    @update:value="updateValue"
+                    :options="selectedQuestionOptions"
+                    option-text-field="value"
+                    show-first-option
+                    required
+            ></dd-select-input>
         </div>
     </div>
 </template>
@@ -67,9 +59,7 @@
                     return [];
                 }
 
-                const options = [{value: null}];
-                const question = this.questions.find(question => question.id == this.question);
-                return options.concat(question.options);
+                return this.questions.find(question => question.id == this.question).options;
             }
         },
 
@@ -82,8 +72,7 @@
                         return;
                     }
 
-                    const questions = [{id: null}];
-                    this.questions = questions.concat(response.data);
+                    this.questions = response.data;
                     this.loading = false;
 
                     if (this.question && this.value) {
@@ -98,14 +87,14 @@
         },
 
         methods: {
-            updateQuestion(e) {
-                this.$emit('update:question', e.target.value);
+            updateQuestion(value) {
+                this.$emit('update:question', value);
                 this.$emit('update:value', null);
                 this.selectedValue = null;
             },
 
-            updateValue(e) {
-                this.$emit('update:value', e.target.value);
+            updateValue(value) {
+                this.$emit('update:value', value);
             }
         }
     }

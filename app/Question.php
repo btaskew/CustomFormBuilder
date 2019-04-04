@@ -31,6 +31,7 @@ class Question extends Model
      * @var array
      */
     protected $casts = [
+        'required' => 'boolean',
         'in_question_bank' => 'boolean'
     ];
 
