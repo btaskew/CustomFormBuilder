@@ -2,9 +2,10 @@
 
 namespace App\Mail;
 
+use App\Contracts\ResponseFormatter;
 use App\Form;
 use App\FormResponse;
-use App\Services\ResponseFormatter;
+use App\Objects\FormattedResponse;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -42,7 +43,7 @@ class FormResponded extends Mailable
      */
     public function build()
     {
-        return $this->subject($this->form->title . " - response recorded")
+        return $this->subject($this->form->title . ' - response recorded')
             ->from('no-reply@exeter.ac.uk')
             ->view('emails.formResponded', [
                 'response' => $this->getResponse(),
@@ -51,11 +52,12 @@ class FormResponded extends Mailable
     }
 
     /**
-     * @return array
+     * @return FormattedResponse
      */
-    private function getResponse(): array
+    private function getResponse(): FormattedResponse
     {
-        return (new ResponseFormatter($this->form->getAnswerableQuestions()))
-            ->mapResponse($this->response)[$this->response->id];
+        return resolve(ResponseFormatter::class)
+            ->setQuestions($this->form->getAnswerableQuestions())
+            ->formatResponses([$this->response])[$this->response->id];
     }
 }

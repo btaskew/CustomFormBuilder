@@ -12,11 +12,11 @@
         A response was recorded for your form <b>{{ $form->title }}</b>
     </p>
     <p>
-        Recorded at: {{ $response['created_at'] }}
+        Recorded at: {{ $response->getTimeRecorded() }}
     </p>
     <br />
 
-    @foreach($response['answers'] as $question => $answer)
+    @foreach($response->getAnswers() as $question => $answer)
         <b>{{ $question }}</b>
         <br />
         {{ $answer }}
