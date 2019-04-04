@@ -19,10 +19,7 @@ class CanSetVisibilityRequirementTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("Can't set requirement against self");
 
-        CanSetVisibilityRequirement::isSatisfiedBy([
-            'question' => $question->id,
-            'value' => 'value'
-        ], $question);
+        CanSetVisibilityRequirement::isSatisfiedBy($question->id, 'value', $question);
     }
 
     /** @test */
@@ -32,10 +29,7 @@ class CanSetVisibilityRequirementTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("Required question does not exist");
 
-        CanSetVisibilityRequirement::isSatisfiedBy([
-            'question' => 999,
-            'value' => 'value'
-        ], $question);
+        CanSetVisibilityRequirement::isSatisfiedBy(999, 'value', $question);
     }
 
     /** @test */
@@ -47,10 +41,7 @@ class CanSetVisibilityRequirementTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("Required question is on a different form");
 
-        CanSetVisibilityRequirement::isSatisfiedBy([
-            'question' => $requiredQuestion->id,
-            'value' => 'value'
-        ], $question);
+        CanSetVisibilityRequirement::isSatisfiedBy($requiredQuestion->id, 'value', $question);
     }
 
     /** @test */
@@ -62,9 +53,6 @@ class CanSetVisibilityRequirementTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("Required value does not exist");
 
-        CanSetVisibilityRequirement::isSatisfiedBy([
-            'question' => $requiredQuestion->id,
-            'value' => 'value'
-        ], $question);
+        CanSetVisibilityRequirement::isSatisfiedBy($requiredQuestion->id, 'value', $question);
     }
 }

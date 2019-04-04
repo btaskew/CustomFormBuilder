@@ -112,4 +112,15 @@ class QuestionValidationTest extends TestCase
             ->assertStatus(422)
             ->assertSee('options');
     }
+
+    /** @test */
+    public function a_question_id_and_value_are_required_when_setting_a_visibility_requirement()
+    {
+        $this->json('post', $this->uri, [
+            'title' => 'Title', 'type' => 'text', 'visibility_requirement' => true
+        ])
+            ->assertStatus(422)
+            ->assertSee('required_question')
+            ->assertSee('required_value');
+    }
 }

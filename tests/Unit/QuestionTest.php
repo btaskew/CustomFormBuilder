@@ -128,10 +128,7 @@ class QuestionTest extends TestCase
         $requiredQuestion = create(Question::class, ['type' => 'radio', 'form_id' => 1]);
         $option = create(SelectOption::class, ['question_id' => $requiredQuestion->id]);
 
-        $question->setVisibilityRequirement([
-            'question' => $requiredQuestion->id,
-            'value' => $option->value
-        ]);
+        $question->setVisibilityRequirement($requiredQuestion->id, $option->value);
 
         $this->assertDatabaseHas('visibility_requirements', ['question_id' => $question->id]);
     }

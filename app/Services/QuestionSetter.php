@@ -74,11 +74,14 @@ class QuestionSetter implements QuestionSetterContract
      */
     private static function setVisibilityRequirement(Question $question, QuestionRequest $request): void
     {
-        if ($request->hasVisibilityRequirement()) {
-            $question->setVisibilityRequirement($request->input('required_if'));
+        if (!$request->hasVisibilityRequirement()) {
+            optional($question->visibilityRequirement)->delete();
             return;
         }
 
-        optional($question->visibilityRequirement)->delete();
+        $question->setVisibilityRequirement(
+            $request->input('required_question'),
+            $request->input('required_value')
+        );
     }
 }

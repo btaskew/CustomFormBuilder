@@ -30,7 +30,10 @@ class QuestionRequest extends FormRequest
             'help_text' => 'string|nullable',
             'required' => 'boolean',
             'admin_only' => 'boolean',
-            'options' => 'array|required_if:type,checkbox,radio,dropdown'
+            'options' => 'array|required_if:type,checkbox,radio,dropdown',
+            'visibility_requirement' => 'boolean',
+            'required_question' => 'integer|nullable|required_if:visibility_requirement,true',
+            'required_value' => 'string|nullable|required_if:visibility_requirement,true'
         ];
 
         if ($this->has('options')) {
@@ -45,7 +48,7 @@ class QuestionRequest extends FormRequest
      */
     public function hasVisibilityRequirement(): bool
     {
-        return $this->has('required_if') && !is_null($this->input('required_if')['question']);
+        return $this->has('visibility_requirement') && !is_null($this->input('required_question'));
     }
 
     /**

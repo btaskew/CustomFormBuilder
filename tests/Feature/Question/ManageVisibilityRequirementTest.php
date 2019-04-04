@@ -25,10 +25,9 @@ class ManageVisibilityRequirementTest extends TestCase
             [
                 'title' => 'New title',
                 'type' => 'text',
-                'required_if' => [
-                    'question' => $requiredQuestion->id,
-                    'value' => $option->value
-                ]
+                'visibility_requirement' => true,
+                'required_question' => $requiredQuestion->id,
+                'required_value' => $option->value
             ]
         )->assertStatus(200);
 
@@ -49,10 +48,9 @@ class ManageVisibilityRequirementTest extends TestCase
             [
                 'title' => 'New title',
                 'type' => 'text',
-                'required_if' => [
-                    'question' => $requiredQuestion->id,
-                    'value' => $option->value
-                ]
+                'visibility_requirement' => true,
+                'required_question' => $requiredQuestion->id,
+                'required_value' => $option->value
             ]
         )->assertStatus(200);
 
@@ -71,10 +69,9 @@ class ManageVisibilityRequirementTest extends TestCase
             [
                 'title' => 'New title',
                 'type' => 'text',
-                'required_if' => [
-                    'question' => null,
-                    'value' => null
-                ]
+                'visibility_requirement' => false,
+                'required_question' => null,
+                'required_value' => null
             ]
         )->assertStatus(200);
 

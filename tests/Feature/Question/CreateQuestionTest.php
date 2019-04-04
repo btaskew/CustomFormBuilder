@@ -110,10 +110,9 @@ class CreateQuestionTest extends TestCase
             'type' => 'text',
             'help_text' => 'Help text',
             'required' => true,
-            'required_if' => [
-                'question' => $question->id,
-                'value' => $option->value
-            ]
+            'visibility_requirement' => true,
+            'required_question' => $question->id,
+            'required_value' => $option->value
         ];
 
         $this->post(formPath($form) . '/questions', $attributes)->assertStatus(200);

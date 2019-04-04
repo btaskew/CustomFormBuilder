@@ -120,16 +120,17 @@ class Question extends Model
     }
 
     /**
-     * @param array $requirement
+     * @param int    $questionId
+     * @param string $questionValue
      */
-    public function setVisibilityRequirement(array $requirement): void
+    public function setVisibilityRequirement(int $questionId, string $questionValue): void
     {
-        if (CanSetVisibilityRequirement::isSatisfiedBy($requirement, $this)) {
+        if (CanSetVisibilityRequirement::isSatisfiedBy($questionId, $questionValue, $this)) {
             $this->visibilityRequirement()->updateOrCreate([
                 'question_id' => $this->id
             ], [
-                'required_question_id' => $requirement['question'],
-                'required_value' => $requirement['value']
+                'required_question_id' => $questionId,
+                'required_value' => $questionValue
             ]);
         }
     }
