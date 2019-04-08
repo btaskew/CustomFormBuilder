@@ -3,7 +3,6 @@
 namespace Tests\Feature\Form;
 
 use App\Form;
-use App\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -76,21 +75,11 @@ class FormValidationTest extends TestCase
     }
 
     /** @test */
-    public function an_error_is_returned_if_setting_response_email_field_for_non_existing_question()
+    public function an_error_is_returned_if_setting_an_invalid_response_email_field()
     {
         $this->updateForm(['response_email_field' => 1])
             ->assertStatus(422)
-            ->assertJsonFragment(['error' => 'Question for the response email field not present on form']);
-    }
-
-    /** @test */
-    public function an_error_is_returned_if_setting_response_email_field_for_question_on_different_form()
-    {
-        $question = create(Question::class, ['form_id' => 999]);
-
-        $this->updateForm(['response_email_field' => $question->i])
-            ->assertStatus(422)
-            ->assertJsonFragment(['error' => 'Question for the response email field not present on form']);
+            ->assertJsonFragment(['error' => 'Question for the response email field not valid']);
     }
 
     private function postForm(array $attributes = [])

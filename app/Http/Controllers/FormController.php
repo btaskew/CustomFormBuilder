@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Folder;
 use App\Form;
 use App\Http\Requests\FormRequest;
+use App\Specifications\CanSetResponseEmailField;
 
 class FormController extends Controller
 {
@@ -109,11 +110,8 @@ class FormController extends Controller
     {
         $this->authorize('update', $form);
 
-        if ($request->has('response_email_field')
-            &&
-            !$form->questions->contains('id', $request->input('response_email_field'))
-        ) {
-            return response()->json(['error' => 'Question for the response email field not present on form'], 422);
+        if (!CanSetResponseEmailField::isSatisfiedBy($request->input('response_email_field'), $form)) {
+            return response()->json(['error' => 'Question for the response email field not valid'], 422);
         }
 
         $form->update($request->only([

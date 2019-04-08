@@ -64,7 +64,7 @@ class UpdateFormTest extends TestCase
     public function a_user_can_edit_their_form()
     {
         $form = $this->loginUserWithForm();
-        $question = create(Question::class, ['form_id' => $form->id]);
+        $question = create(Question::class, ['form_id' => $form->id, 'type' => 'email']);
 
         $attributes = [
             'title' => 'New title',
