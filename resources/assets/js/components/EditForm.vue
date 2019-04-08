@@ -1,9 +1,14 @@
 <template>
     <div>
         <dd-form :form="form" @submitted="onSubmit">
-            <dd-form-input tag="title" label="Title" :value.sync="form.title" required key="asfsafsafa"></dd-form-input>
+            <dd-form-input tag="title" label="Title" :value.sync="form.title" required></dd-form-input>
 
-            <dd-form-group tag="description" label="Description" :error-message="form.errors.get('description')">
+            <dd-form-group
+                    tag="description"
+                    label="Description"
+                    :error-message="form.errors.get('description')"
+                    :error-state="form.errors.state('description')"
+            >
                 <rich-text-editor id="description" name="description" :value.sync="form.description">
                 </rich-text-editor>
             </dd-form-group>
@@ -50,9 +55,11 @@
             ></dd-select-input>
 
             <dd-form-group
+                    v-if="form.response_email_field"
                     tag="response_email"
                     label="Response email text"
                     :error-message="form.errors.get('response_email')"
+                    :error-state="form.errors.state('response_email')"
             >
                 <rich-text-editor id="response_email" name="response_email" :value.sync="form.response_email">
                 </rich-text-editor>

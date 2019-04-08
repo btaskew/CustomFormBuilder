@@ -32,8 +32,8 @@ class FormRequest extends LaravelFormRequest
             'admin_email' => ['string', 'nullable', new EmailList()],
             'active' => 'boolean|required',
             'success_text' => 'string|nullable',
-            'response_email' => 'string|nullable',
             'response_email_field' => 'integer|nullable',
+            'response_email' => 'string|nullable|required_with:response_email_field',
             'folder_id' => 'integer|required',
         ];
     }

@@ -77,11 +77,23 @@ class FormValidationTest extends TestCase
     /** @test */
     public function an_error_is_returned_if_setting_an_invalid_response_email_field()
     {
-        $this->updateForm(['response_email_field' => 1])
+        $this->updateForm(['response_email_field' => 1, 'response_email' => 'Email text'])
             ->assertStatus(422)
             ->assertJsonFragment(['error' => 'Question for the response email field not valid']);
     }
 
+    /** @test */
+    public function a_response_email_is_required_if_setting_a_response_email_field()
+    {
+        $this->updateForm(['response_email_field' => 1])
+            ->assertStatus(422)
+            ->assertSee('response_email');
+    }
+
+    /**
+     * @param array $attributes
+     * @return \Illuminate\Foundation\Testing\TestResponse
+     */
     private function postForm(array $attributes = [])
     {
         $defaultAttributes = [
@@ -107,6 +119,6 @@ class FormValidationTest extends TestCase
 
         $form = $this->loginUserWithForm();
 
-        return $this->patch(formPath($form), array_merge($defaultAttributes, $attributes));
+        return $this->json('PATCH', formPath($form), array_merge($defaultAttributes, $attributes));
     }
 }
