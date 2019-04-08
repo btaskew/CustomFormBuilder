@@ -17,8 +17,8 @@ class CreateFormsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->date('open_date');
-            $table->date('close_date');
+            $table->date('open_date')->nullable();
+            $table->date('close_date')->nullable();
             $table->boolean('active')->default(false);
             $table->string('admin_email')->nullable();
             $table->text('response_email')->nullable();
