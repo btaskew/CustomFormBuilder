@@ -45,6 +45,21 @@ class RespondToFormTest extends TestCase
     }
 
     /** @test */
+    public function a_date_field_is_converted_from_unix()
+    {
+        $form = create(Form::class);
+        $question = create(Question::class, ['form_id' => $form->id, 'type' => 'date']);
+
+        $this->post(formPath($form) . '/responses', [$question->id => 631152000000])
+            ->assertStatus(200);
+
+        $this->assertDatabaseHas('form_responses', [
+            'form_id' => $form->id,
+            'response' => '{"' . $question->id . '":"1990-01-01"}'
+        ]);
+    }
+
+    /** @test */
     public function an_email_is_sent_to_the_form_administrator_if_set_when_a_response_is_recorded()
     {
         Mail::fake();

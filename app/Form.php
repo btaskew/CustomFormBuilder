@@ -56,7 +56,7 @@ class Form extends Model
     }
 
     /**
-     * @param  string $description
+     * @param string $description
      * @return string
      */
     public function getDescriptionAttribute($description)
@@ -65,7 +65,7 @@ class Form extends Model
     }
 
     /**
-     * @param  string $text
+     * @param string $text
      * @return string
      */
     public function getSuccessTextAttribute($text)
@@ -74,7 +74,7 @@ class Form extends Model
     }
 
     /**
-     * @param  string $email
+     * @param string $email
      * @return string
      */
     public function getResponseEmailAttribute($email)
@@ -162,11 +162,25 @@ class Form extends Model
 
         $this->getAnswerableQuestions()
             ->each(function (Question $question) use ($request, &$answers) {
-                $answers[$question->id] = $request->getQuestionsResponse($question->id);
+                $this->addResponse($question, $request, $answers);
             });
 
         $this->responses()->create([
             'response' => json_encode($answers)
         ]);
+    }
+
+    /**
+     * @param Question        $question
+     * @param ResponseRequest $request
+     * @param array           $answers
+     */
+    private function addResponse(Question $question, ResponseRequest $request, array &$answers): void
+    {
+        $answers[$question->id] = $request->getQuestionsResponse($question->id);
+
+        if ($question->type == 'date') {
+            $answers[$question->id] = (Carbon::createFromTimestampMs($answers[$question->id]))->toDateString();
+        }
     }
 }
