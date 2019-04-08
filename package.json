@@ -27,7 +27,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "babel-polyfill": "^6.26.0",
+        "@babel/polyfill": "^7.4.3",
         "bootstrap-vue": "^2.0.0-rc.16",
         "trix": "^1.0.0",
         "vue-form-generator": "^2.3.3",
