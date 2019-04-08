@@ -39,6 +39,25 @@
 
             <dd-form-input tag="success_text" label="Success text" :value.sync="form.success_text"></dd-form-input>
 
+            <dd-select-input
+                    tag="response_email_field"
+                    label="Response email field"
+                    :value.sync="form.response_email_field"
+                    :options="this.emailQuestions"
+                    option-value-field="id"
+                    option-text-field="title"
+                    :show-first-option="true"
+            ></dd-select-input>
+
+            <dd-form-group
+                    tag="response_email"
+                    label="Response email text"
+                    :error-message="form.errors.get('response_email')"
+            >
+                <rich-text-editor id="response_email" name="response_email" :value.sync="form.response_email">
+                </rich-text-editor>
+            </dd-form-group>
+
             <dd-checkbox-input tag="active" label="Active" :checked.sync="form.active"></dd-checkbox-input>
 
             <button type="submit" class="btn btn-raised btn-primary mt" :disabled="loading">Save form</button>
@@ -55,6 +74,7 @@
         props: {
             formData: {default: null},
             folders: {default: null},
+            emailQuestions: {default: []}
         },
 
         data() {
@@ -68,6 +88,8 @@
                     admin_email: null,
                     success_text: null,
                     folder_id: null,
+                    response_email_field: null,
+                    response_email: null,
                 }),
                 loading: false,
                 success: true,
@@ -86,6 +108,8 @@
                 this.form.admin_email = this.formData.admin_email;
                 this.form.success_text = this.formData.success_text;
                 this.form.folder_id = this.formData.folder_id;
+                this.form.response_email_field = this.formData.response_email_field;
+                this.form.response_email = this.formData.response_email;
                 this.isNewForm = false;
             }
         },
