@@ -1770,7 +1770,10 @@ date-now@^0.1.4:
 
 "dd-js-package-components@git+ssh://git@bitbucket.org/exeterit/dd-js-package-components":
   version "0.0.1"
-  resolved "git+ssh://git@bitbucket.org/exeterit/dd-js-package-components#a62836088e5359bd24c2e64230ca5191f4c300bc"
+  resolved "git+ssh://git@bitbucket.org/exeterit/dd-js-package-components#64624fced62032b7dd3bda53043a3b197116578e"
+  dependencies:
+    bootstrap-vue "^2.0.0-rc.16"
+    vue-runtime-helpers "^1.0.0"
 
 de-indent@^1.0.2:
   version "1.0.2"

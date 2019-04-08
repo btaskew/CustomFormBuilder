@@ -46,7 +46,7 @@
                     :options="this.emailQuestions"
                     option-value-field="id"
                     option-text-field="title"
-                    :show-first-option="true"
+                    :show-blank-option="true"
             ></dd-select-input>
 
             <dd-form-group
