@@ -13,6 +13,15 @@ class CanSendResponseEmailTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function returns_true_if_parameters_valid()
+    {
+        $form = create(Form::class, ['response_email' => 'text', 'response_email_field' => 1]);
+        $response = create(FormResponse::class, ['response' => '{"1":"test@email.com"}']);
+
+        $this->assertTrue(CanSendResponseEmail::isSatisfiedBy($form, $response));
+    }
+
+    /** @test */
     public function returns_false_if_form_has_no_response_email()
     {
         $form = create(Form::class, ['response_email' => null, 'response_email_field' => 1]);

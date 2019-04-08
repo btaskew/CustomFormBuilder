@@ -18,7 +18,7 @@ class CanSendResponseEmail
             return false;
         }
 
-        if (!static::responseIncludesValidEmail($form->response_email_field, $response)) {
+        if (static::responseIncludesInvalidEmail($form->response_email_field, $response)) {
             return false;
         }
 
@@ -39,14 +39,14 @@ class CanSendResponseEmail
      * @param FormResponse $response
      * @return bool
      */
-    private static function responseIncludesValidEmail(int $questionId, FormResponse $response): bool
+    private static function responseIncludesInvalidEmail(int $questionId, FormResponse $response): bool
     {
         $email = $response->response->{$questionId};
 
         if (is_null($email)) {
-            return false;
+            return true;
         }
 
-        return filter_var($email, FILTER_VALIDATE_EMAIL);
+        return !filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 }

@@ -22,7 +22,7 @@ class CanSetResponseEmailField
             return false;
         }
 
-        if (static::questionDoesNotExistOnForm($questionId, $form)) {
+        if (static::questionNotOnForm($questionId, $form)) {
             return false;
         }
 
@@ -43,7 +43,7 @@ class CanSetResponseEmailField
      * @param Form $form
      * @return bool
      */
-    private static function questionDoesNotExistOnForm(int $questionId, Form $form): bool
+    private static function questionNotOnForm(int $questionId, Form $form): bool
     {
         return !$form->questions->contains('id', $questionId);
     }

@@ -15,19 +15,19 @@ class CanSetVisibilityRequirement
     public static function isSatisfiedBy(int $questionId, string $questionValue, Question $question): bool
     {
         if (static::settingRequirementAgainstSelf($questionId, $question->id)) {
-            throw new \InvalidArgumentException("Can't set requirement against self");
+            return false;
         }
 
-        if (!static::requiredQuestionExists($questionId)) {
-            throw new \InvalidArgumentException("Required question does not exist");
+        if (static::requiredQuestionDoesntExists($questionId)) {
+            return false;
         }
 
-        if (!static::requiredQuestionOnSameForm($questionId, $question->form_id)) {
-            throw new \InvalidArgumentException("Required question is on a different form");
+        if (static::requiredQuestionOnDifferentForm($questionId, $question->form_id)) {
+            return false;
         }
 
-        if (!static::requiredValueExists($questionId, $questionValue)) {
-            throw new \InvalidArgumentException("Required value does not exist");
+        if (static::requiredValueDoesntExists($questionId, $questionValue)) {
+            return false;
         }
 
         return true;
@@ -47,9 +47,9 @@ class CanSetVisibilityRequirement
      * @param int $questionId
      * @return bool
      */
-    private static function requiredQuestionExists(int $questionId): bool
+    private static function requiredQuestionDoesntExists(int $questionId): bool
     {
-        return Question::where('id', $questionId)->exists();
+        return !Question::where('id', $questionId)->exists();
     }
 
     /**
@@ -57,9 +57,9 @@ class CanSetVisibilityRequirement
      * @param int $formId
      * @return bool
      */
-    private static function requiredQuestionOnSameForm(int $questionId, int $formId): bool
+    private static function requiredQuestionOnDifferentForm(int $questionId, int $formId): bool
     {
-        return Question::find($questionId)->form_id == $formId;
+        return Question::find($questionId)->form_id != $formId;
     }
 
     /**
@@ -67,8 +67,8 @@ class CanSetVisibilityRequirement
      * @param string $value
      * @return bool
      */
-    private static function requiredValueExists(int $questionId, string $value): bool
+    private static function requiredValueDoesntExists(int $questionId, string $value): bool
     {
-        return Question::find($questionId)->options->contains('value', $value);
+        return !Question::find($questionId)->options->contains('value', $value);
     }
 }
