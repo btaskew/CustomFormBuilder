@@ -43,17 +43,19 @@
                     <div v-if="isSelectQuestion">
                         Edit options:
                         <div class="mt-1 border border-grey rounded">
-                            <options-form
-                                    v-for="(option, key) in form.options"
-                                    :key="option.id"
-                                    :id="option.id"
-                                    :value.sync="option.value"
-                                    :display-value.sync="option.display_value"
-                                    :has-value-error="optionHasError(key, 'value')"
-                                    :has-display-value-error="optionHasError(key, 'display_value')"
-                                    @deleteOption="deleteOption"
-                            >
-                            </options-form>
+                            <div :class="form.options.length > 4 && 'form-options-scroll'">
+                                <options-form
+                                        v-for="(option, key) in form.options"
+                                        :key="option.id"
+                                        :id="option.id"
+                                        :value.sync="option.value"
+                                        :display-value.sync="option.display_value"
+                                        :has-value-error="optionHasError(key, 'value')"
+                                        :has-display-value-error="optionHasError(key, 'display_value')"
+                                        @deleteOption="deleteOption"
+                                >
+                                </options-form>
+                            </div>
                             <button class="btn btn-raised btn-primary m-2" @click="addOption">Add option</button>
                         </div>
                         <span class="text-danger" v-if="form.errors.has('options')" v-text="form.errors.get('options')">
@@ -164,3 +166,10 @@
         }
     }
 </script>
+
+<style>
+    .form-options-scroll {
+        max-height: 335px;
+        overflow-y: scroll;
+    }
+</style>
