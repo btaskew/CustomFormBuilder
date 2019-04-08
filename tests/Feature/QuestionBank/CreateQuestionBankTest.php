@@ -10,6 +10,24 @@ class CreateQuestionBankTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function a_guest_cant_view_the_create_question_bank_page()
+    {
+        $this->get('/admin/question-bank/create')->assertRedirect('login');
+    }
+
+    /** @test */
+    public function a_standard_user_cant_view_the_create_question_bank_page()
+    {
+        $this->login()->get('/admin/question-bank/create')->assertRedirect('login');
+    }
+
+    /** @test */
+    public function an_admin_user_cant_view_the_create_question_bank_page()
+    {
+        $this->loginAdmin()->get('/admin/question-bank/create')->assertSee('question-bank-form');
+    }
+
+    /** @test */
     public function a_guest_cant_create_a_new_question_bank_question()
     {
         $this->post('/admin/question-bank', [])->assertRedirect('login');

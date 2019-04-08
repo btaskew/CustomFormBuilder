@@ -47,28 +47,6 @@ class FolderController extends Controller
     }
 
     /**
-     * Display the specified folder.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified folder.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified folder in storage.
      *
      * @param  \Illuminate\Http\Request $request

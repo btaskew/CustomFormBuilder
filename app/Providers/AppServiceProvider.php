@@ -34,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
         );
     }
 
+    /**
+     * @codeCoverageIgnore
+     * @return array
+     */
     public function provides()
     {
         return [

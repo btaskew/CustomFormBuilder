@@ -29,6 +29,17 @@ class ViewQuestionTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_view_a_forms_questions_as_json()
+    {
+        $form = $this->loginUserWithForm();
+        $question = create(Question::class, ['form_id' => $form->id]);
+
+        $this->json('GET', formPath($form) . '/questions')
+            ->assertStatus(200)
+            ->assertSee($question->title);
+    }
+
+    /** @test */
     public function a_user_cant_view_questions_on_another_users_form()
     {
         $form = create(Form::class, ['user_id' => 999]);

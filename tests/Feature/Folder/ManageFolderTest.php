@@ -12,6 +12,24 @@ class ManageFolderTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function a_guest_cant_view_the_create_folder_page()
+    {
+        $this->get('/admin/folders/create')->assertRedirect('login');
+    }
+
+    /** @test */
+    public function a_standard_user_cant_view_the_create_folder_page()
+    {
+        $this->login()->get('/admin/folders/create')->assertRedirect('login');
+    }
+
+    /** @test */
+    public function an_admin_user_cant_view_the_create_folder_page()
+    {
+        $this->loginAdmin()->get('/admin/folders/create')->assertSee('create-folder-form');
+    }
+
+    /** @test */
     public function a_guest_cant_create_a_folder()
     {
         $this->post('/admin/folders', ['name' => 'New folder'])->assertRedirect('login');
