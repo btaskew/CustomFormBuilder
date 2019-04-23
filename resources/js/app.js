@@ -39,8 +39,8 @@ Vue.use(BootstrapVue);
 Vue.use(VueFormGenerator);
 Vue.use(DdJsPackageComponents);
 
-require('../../../vendor/jwwebdev/admin/resources/assets/js/app.js');
-require('../../../vendor/jwwebdev/bvforms-laravel/resources/assets/js/app.js');
+require('../../vendor/jwwebdev/admin/resources/assets/js/app.js');
+require('../../vendor/jwwebdev/bvforms-laravel/resources/assets/js/app.js');
 
 const app = new Vue({
     el: '#app'
