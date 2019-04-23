@@ -49,10 +49,10 @@
                 <ul class="navbar-nav mr-auto">
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="/forms">My forms</a>
+                            <a class="nav-link main-nav-link" href="/forms">My forms</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/forms/create">Create a form</a>
+                            <a class="nav-link main-nav-link" href="/forms/create">Create a form</a>
                         </li>
                     @endauth
                 </ul>
@@ -67,7 +67,7 @@
                     @else
                         @if (auth()->user()->hasRole('admin'))
                             <li class="nav-item">
-                                <a class="nav-link" href="/admin">Admin site</a>
+                                <a class="nav-link main-nav-link" href="/admin">Admin site</a>
                             </li>
                         @endif
                         <li class="nav-item dropdown">

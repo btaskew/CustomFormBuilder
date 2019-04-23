@@ -81,7 +81,7 @@ a:hover {
   text-decoration: none;
 }
 
-a:not(.nav-link):focus {
+.main-nav-link:focus {
   color: inherit !important;
 }
 
