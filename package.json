@@ -22,13 +22,13 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
-        "vue": "^2.6.0",
+        "vue": "^2.6.10",
         "vue-runtime-helpers": "^1.0.0",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
         "@babel/polyfill": "^7.4.3",
-        "bootstrap-vue": "^2.0.0-rc.16",
+        "bootstrap-vue": "^2.0.0-rc.19",
         "trix": "^1.0.0",
         "vue-form-generator": "^2.3.3",
         "vuedraggable": "^2.17.0"

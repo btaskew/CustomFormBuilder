@@ -29,22 +29,9 @@
             </tbody>
         </table>
 
-        <modal v-if="showConfirmModal">
-            <h4 slot="header">Confirm deletion</h4>
-
-            <div slot="body">
-                <p>Are you sure you want to remove this users access?</p>
-
-                <div class="form-group flex-column">
-                    <button type="button" @click="deleteUser" class="btn btn-raised btn-primary">
-                        Remove access
-                    </button>
-                    <button type="button" @click="hideModal" class="btn btn-raised btn-secondary">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </modal>
+        <b-modal v-model="showConfirmModal" title="Confirm deletion" ok-title="Remove access" @ok="deleteUser">
+            Are you sure you want to remove this users access?
+        </b-modal>
 
         <loading-modal v-if="loading"></loading-modal>
     </div>
@@ -52,11 +39,10 @@
 
 <script>
     import axios from 'axios';
-    import Modal from './Utils/modal';
     import LoadingModal from './Utils/LoadingModal';
 
     export default {
-        components: {LoadingModal, Modal},
+        components: {LoadingModal},
 
         props: ['users', 'formId'],
 

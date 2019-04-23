@@ -1,17 +1,22 @@
 <template>
-    <modal v-if="true">
-        <h4 slot="header">Loading...</h4>
-
-        <div slot="body">
-            <div class="loader"></div>
-        </div>
-    </modal>
+    <b-modal
+            v-model="visible"
+            title="Loading..."
+            :hide-footer="true"
+            :no-close-on-esc="true"
+            :no-close-on-backdrop="true"
+            :hide-header-close="true"
+    >
+        <div class="loader"></div>
+    </b-modal>
 </template>
 
 <script>
-    import Modal from './modal';
-
     export default {
-        components: {Modal},
+        data() {
+            return {
+                visible: true
+            };
+        }
     }
 </script>

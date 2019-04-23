@@ -26,22 +26,9 @@
             </tbody>
         </table>
 
-        <modal v-if="showConfirmModal">
-            <h4 slot="header">Confirm deletion</h4>
-
-            <div slot="body">
-                <p>Are you sure you want to delete this folder?</p>
-
-                <div class="form-group flex-column">
-                    <button type="button" @click="deleteFolder" class="btn btn-raised btn-primary">
-                        Delete folder
-                    </button>
-                    <button type="button" @click="showConfirmModal = false" class="btn btn-raised btn-secondary">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </modal>
+        <b-modal v-model="showConfirmModal" title="Confirm deletion" ok-title="Delete folder" @ok="deleteFolder">
+            Are you sure you want to delete this folder?
+        </b-modal>
 
         <loading-modal v-if="loading"></loading-modal>
     </div>
@@ -51,10 +38,9 @@
     import axios from 'axios';
     import {filter} from 'lodash';
     import LoadingModal from './Utils/LoadingModal';
-    import Modal from './Utils/modal';
 
     export default {
-        components: {LoadingModal, Modal},
+        components: {LoadingModal},
 
         props: ['folders'],
 
@@ -80,12 +66,14 @@
                 axios.delete(`/admin/folders/${this.folderToDelete}`)
                     .then(response => {
                         this.loading = false;
-                        flash('Folder deleted');
 
                         this.displayFolders = filter(this.displayFolders, folder => {
                             return folder.id !== this.folderToDelete;
                         });
+
                         this.folderToDelete = null;
+
+                        flash('Folder deleted');
                     }).catch(error => {
                     this.loading = false;
                     this.folderToDelete = null;
