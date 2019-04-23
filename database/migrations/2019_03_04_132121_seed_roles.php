@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use JWWebDev\Admin\Models\Role;
 
 class SeedRoles extends Migration
 {
@@ -13,7 +12,7 @@ class SeedRoles extends Migration
      */
     public function up()
     {
-        \JWWebDev\Admin\Models\Role::create([
+        Role::create([
             'role' => 'admin'
         ]);
     }
@@ -25,6 +24,6 @@ class SeedRoles extends Migration
      */
     public function down()
     {
-        \JWWebDev\Admin\Models\Role::where('role', 'admin')->delete();
+        Role::where('role', 'admin')->delete();
     }
 }
