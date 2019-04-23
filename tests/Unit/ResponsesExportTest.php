@@ -19,9 +19,10 @@ class ResponsesExportTest extends TestCase
         $form = create(Form::class);
         $formattedResponse = new FormattedResponse();
 
-        $formatter = \Mockery::mock(ResponseFormatter::class);
-        $formatter->shouldReceive('setQuestions')->andReturnSelf();
-        $formatter->shouldReceive('formatResponses')->andReturn([$formattedResponse]);
+        $formatter = $this->mock(ResponseFormatter::class, function ($formatter) use ($formattedResponse) {
+            $formatter->shouldReceive('setQuestions')->andReturnSelf();
+            $formatter->shouldReceive('formatResponses')->andReturn([$formattedResponse]);
+        });
 
         $view = (new ResponsesExport($form, $formatter))->view();
 

@@ -21,10 +21,12 @@ class FormRespondedMailTest extends TestCase
         $response = create(FormResponse::class);
         $formattedResponse = new FormattedResponse();
 
-        $formatter = \Mockery::mock(ResponseFormatter::class);
-        $formatter->shouldReceive('setQuestions')->andReturnSelf();
-        $formatter->shouldReceive('formatResponses')->with([$response])->andReturn([$response->id => $formattedResponse]);
-        $this->app->instance(ResponseFormatter::class, $formatter);
+        $this->mock(ResponseFormatter::class, function ($formatter) use ($response, $formattedResponse) {
+            $formatter->shouldReceive('setQuestions')->andReturnSelf();
+            $formatter->shouldReceive('formatResponses')
+                ->with([$response])
+                ->andReturn([$response->id => $formattedResponse]);
+        });
 
         $mail = (new FormResponded($form, $response))->build();
 
