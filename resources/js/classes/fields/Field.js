@@ -1,4 +1,4 @@
-import VueFormGenerator from "vue-form-generator";
+import VueFormGenerator from 'vue-form-generator';
 
 export default class Field {
     constructor(question) {
@@ -13,7 +13,7 @@ export default class Field {
         this.properties.required = this.question.required;
         this.properties.help = this.question.help_text;
         this.properties.validator = VueFormGenerator.validators.string.locale({
-            fieldIsRequired: "Field is required"
+            fieldIsRequired: 'Field is required'
         });
         this.setVisibilityRequirement();
     }

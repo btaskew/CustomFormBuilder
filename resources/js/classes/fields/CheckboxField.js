@@ -1,4 +1,5 @@
 import Field from './Field';
+import VueFormGenerator from 'vue-form-generator';
 
 export default class CheckboxField extends Field {
     constructor(question) {
@@ -10,6 +11,10 @@ export default class CheckboxField extends Field {
         this.properties.type = 'checklist';
         this.properties.values = this.setOptions();
         this.properties.listBox = true;
+        this.properties.validator = VueFormGenerator.validators.array.locale({
+            fieldIsRequired: 'Field is required',
+            thisNotArray: 'Field is required',
+        });
         return this.properties;
     }
 

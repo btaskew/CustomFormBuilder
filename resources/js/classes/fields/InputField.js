@@ -24,8 +24,9 @@ export default class InputField extends Field {
                 break;
             case 'url':
                 this.properties.validator = VueFormGenerator.validators.url.locale({
-                    invalidURL: "Invalid URL! Must start with http:// or https://"
-                });;
+                    invalidURL: 'Invalid URL! Must start with http:// or https://'
+                });
+                ;
                 break;
             case 'date':
                 this.properties.validator = VueFormGenerator.validators.date;
