@@ -17,7 +17,7 @@ class CanSetResponseEmailFieldTest extends TestCase
      */
     private $form;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->form = create(Form::class);

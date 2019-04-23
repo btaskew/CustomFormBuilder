@@ -14,7 +14,7 @@ class QuestionValidationTest extends TestCase
      */
     private $uri;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

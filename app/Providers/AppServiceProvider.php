@@ -5,12 +5,11 @@ namespace App\Providers;
 use App\Contracts\QuestionBankReplicator;
 use App\Contracts\QuestionSetter;
 use App\Contracts\ResponseFormatter;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class AppServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    protected $defer = true;
-
     /**
      * Register any application services.
      *
