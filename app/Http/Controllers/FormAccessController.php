@@ -33,7 +33,7 @@ class FormAccessController extends Controller
      */
     public function store(Request $request, Form $form)
     {
-        $request->validate([
+        $attributes = $request->validate([
             'username' => 'string|required|min:3',
             'access' => 'string|required|in:view,update'
         ]);
@@ -41,8 +41,8 @@ class FormAccessController extends Controller
         $this->authorize('update', $form);
 
         return FormUser::createAccess(
-            $request->input('username'),
-            $request->input('access'),
+            $attributes['username'],
+            $attributes['access'],
             $form->id
         );
     }

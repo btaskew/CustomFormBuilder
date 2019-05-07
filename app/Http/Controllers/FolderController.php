@@ -36,14 +36,14 @@ class FolderController extends Controller
     /**
      * Store a newly created folder in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return Folder
      */
     public function store(Request $request)
     {
-        $request->validate(['name' => 'string|required']);
+        $name = $request->validate(['name' => 'string|required'])['name'];
 
-        return Folder::create(['name' => $request->input('name')]);
+        return Folder::create(compact('name'));
     }
 
     /**
@@ -55,9 +55,9 @@ class FolderController extends Controller
      */
     public function update(Request $request, Folder $folder)
     {
-        $request->validate(['name' => 'string|required']);
+        $name = $request->validate(['name' => 'string|required'])['name'];
 
-        $folder->update(['name' => $request->input('name')]);
+        $folder->update(compact('name'));
 
         return response()->json(['success' => 'Folder updated']);
     }
