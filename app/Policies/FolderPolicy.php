@@ -9,7 +9,11 @@ class FolderPolicy
 {
     use HandlesAuthorization;
 
-    public function administer(User $user)
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function administer(User $user): bool
     {
         return $user->hasRole('admin');
     }

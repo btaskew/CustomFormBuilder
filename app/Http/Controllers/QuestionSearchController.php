@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 class QuestionSearchController extends Controller
 {
     /**
+     * @param Request $request
      * @return Collection
      */
     public function show(Request $request)

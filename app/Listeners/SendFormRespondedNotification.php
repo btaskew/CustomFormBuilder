@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Mail;
 class SendFormRespondedNotification
 {
     /**
-     * Handle the event.
-     *
      * @param ResponseRecorded $event
      * @return void
      */
