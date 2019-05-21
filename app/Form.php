@@ -153,35 +153,4 @@ class Form extends Model
         $currentDate = new Carbon();
         return $this->active && $currentDate->between((new Carbon($this->open_date)), (new Carbon($this->close_date)));
     }
-
-    /**
-     * @param ResponseRequest $request
-     */
-    public function recordResponse(ResponseRequest $request): void
-    {
-        $answers = [];
-
-        $this->getAnswerableQuestions()
-            ->each(function (Question $question) use ($request, &$answers) {
-                $this->addResponse($question, $request, $answers);
-            });
-
-        $this->responses()->create([
-            'response' => $answers
-        ]);
-    }
-
-    /**
-     * @param Question        $question
-     * @param ResponseRequest $request
-     * @param array           $answers
-     */
-    private function addResponse(Question $question, ResponseRequest $request, array &$answers): void
-    {
-        $answers[$question->id] = $request->getQuestionsResponse($question->id);
-
-        if ($question->type == 'date') {
-            $answers[$question->id] = (Carbon::createFromTimestampMs($answers[$question->id]))->toDateString();
-        }
-    }
 }

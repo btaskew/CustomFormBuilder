@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\FormResponder;
 use App\Contracts\ResponseFormatter;
 use App\Form;
 use App\Http\Requests\ResponseRequest;
@@ -17,11 +18,18 @@ class FormResponseController extends Controller
     private $responseFormatter;
 
     /**
-     * @param ResponseFormatter $responseFormatter
+     * @var FormResponder
      */
-    public function __construct(ResponseFormatter $responseFormatter)
+    private $formResponder;
+
+    /**
+     * @param ResponseFormatter $responseFormatter
+     * @param FormResponder     $formResponder
+     */
+    public function __construct(ResponseFormatter $responseFormatter, FormResponder $formResponder)
     {
         $this->responseFormatter = $responseFormatter;
+        $this->formResponder = $formResponder;
     }
 
     /**
@@ -58,7 +66,7 @@ class FormResponseController extends Controller
             return response()->json(['error' => 'This form is not currently accepting responses'], 403);
         }
 
-        $form->recordResponse($request);
+        $this->formResponder->saveResponse($request, $form);
 
         return response()->json(['success' => 'Response stored']);
     }
