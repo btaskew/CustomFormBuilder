@@ -56,7 +56,7 @@ class ViewFormResponseTest extends TestCase
         $question = create(Question::class, ['form_id' => $form->id]);
         create(FormResponse::class, [
             'form_id' => $form->id,
-            'response' => [$question->id => "My response"]
+            'response' => [$question->id => 'My response']
         ]);
 
         $this->get(formPath($form) . '/responses')
@@ -73,7 +73,7 @@ class ViewFormResponseTest extends TestCase
 
         create(FormResponse::class, [
             'form_id' => $form->id,
-            'response' => [$question->id => "value"]
+            'response' => [$question->id => 'value']
         ]);
 
         $this->get(formPath($form) . '/responses')

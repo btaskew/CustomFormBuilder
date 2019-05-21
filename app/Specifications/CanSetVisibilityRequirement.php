@@ -49,7 +49,7 @@ class CanSetVisibilityRequirement
      */
     private static function requiredQuestionDoesntExists(int $questionId): bool
     {
-        return !Question::where('id', $questionId)->exists();
+        return Question::where('id', $questionId)->doesntExist();
     }
 
     /**

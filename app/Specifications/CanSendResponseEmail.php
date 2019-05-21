@@ -43,10 +43,6 @@ class CanSendResponseEmail
     {
         $email = $response->response[$questionId];
 
-        if (is_null($email)) {
-            return true;
-        }
-
         return !filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 }

@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Exceptions\Handler;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Tests\TestCase;
 
 class HandlerTest extends TestCase
@@ -14,7 +15,7 @@ class HandlerTest extends TestCase
     {
         $handler = new Handler(\Mockery::mock(Container::class));
 
-        $request = \Mockery::mock('\Illuminate\Http\Request');
+        $request = \Mockery::mock(Request::class);
         $request->shouldReceive('wantsJson')->andReturn(true);
 
         $exception = new \Exception('Exception message', 500);

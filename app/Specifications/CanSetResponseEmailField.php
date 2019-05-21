@@ -35,7 +35,7 @@ class CanSetResponseEmailField
 
     private static function questionDoesNotExist(int $questionId): bool
     {
-        return !Question::where('id', $questionId)->exists();
+        return Question::where('id', $questionId)->doesntExist();
     }
 
     /**

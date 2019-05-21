@@ -54,7 +54,7 @@ class RespondToFormTest extends TestCase
         $form = create(Form::class, ['response_email' => 'Thanks for responding!', 'response_email_field' => 1]);
         create(Question::class, ['form_id' => $form->id]);
 
-        $this->post(formPath($form) . '/responses', [1 => "test@email.com"])
+        $this->post(formPath($form) . '/responses', [1 => 'test@email.com'])
             ->assertStatus(200);
 
         Mail::assertSent(FormResponseMail::class, function ($mail) {

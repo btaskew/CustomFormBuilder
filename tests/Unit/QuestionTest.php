@@ -50,7 +50,7 @@ class QuestionTest extends TestCase
     }
 
     /** @test */
-    public function a_question_knows_if_it_has_options()
+    public function a_question_knows_if_it_is_a_select_question()
     {
         $this->assertTrue((make(Question::class, ['type' => 'checkbox']))->isSelectQuestion());
         $this->assertTrue((make(Question::class, ['type' => 'radio']))->isSelectQuestion());

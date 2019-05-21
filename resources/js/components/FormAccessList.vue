@@ -60,11 +60,6 @@
                 this.showConfirmModal = true;
             },
 
-            hideModal() {
-                this.userToDelete = null;
-                this.showConfirmModal = false;
-            },
-
             deleteUser() {
                 this.showConfirmModal = false;
                 this.loading = true;

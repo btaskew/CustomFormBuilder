@@ -35,7 +35,7 @@ class FormResponse extends Model
         parent::boot();
 
         static::created(function ($response) {
-            event(new ResponseRecorded($response));
+            ResponseRecorded::dispatch($response);
         });
     }
 

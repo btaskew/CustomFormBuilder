@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Question extends Model
 {
+    const SELECT_QUESTION_TYPES = ['checkbox', 'radio', 'dropdown'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -102,7 +104,7 @@ class Question extends Model
      */
     public function isSelectQuestion(): bool
     {
-        return $this->type == 'checkbox' || $this->type == 'radio' || $this->type == 'dropdown';
+        return in_array($this->type, self::SELECT_QUESTION_TYPES);
     }
 
     /**

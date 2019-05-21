@@ -21,24 +21,24 @@ class ResponseFormatterTest extends TestCase
         $questions = create(Question::class, ['form_id' => $form->id], 2);
         $response1 = create(FormResponse::class, [
             'form_id' => $form->id,
-            'response' => [$questions[0]->id => "r1q1", $questions[1]->id => "r1q2"]
+            'response' => [$questions[0]->id => 'r1q1', $questions[1]->id => 'r1q2']
         ]);
         $response2 = create(FormResponse::class, [
             'form_id' => $form->id,
-            'response' => [$questions[0]->id => "r2q1", $questions[1]->id => "r2q2"]
+            'response' => [$questions[0]->id => 'r2q1', $questions[1]->id => 'r2q2']
         ]);
 
         $expectedResponse1 = (new FormattedResponse())
             ->setId($response1->id)
             ->setTimeRecorded($response1->created_at)
-            ->addAnswer($questions[0]->getFullTitle(), "r1q1")
-            ->addAnswer($questions[1]->getFullTitle(), "r1q2");
+            ->addAnswer($questions[0]->getFullTitle(), 'r1q1')
+            ->addAnswer($questions[1]->getFullTitle(), 'r1q2');
 
         $expectedResponse2 = (new FormattedResponse())
             ->setId($response2->id)
             ->setTimeRecorded($response2->created_at)
-            ->addAnswer($questions[0]->getFullTitle(), "r2q1")
-            ->addAnswer($questions[1]->getFullTitle(), "r2q2");
+            ->addAnswer($questions[0]->getFullTitle(), 'r2q1')
+            ->addAnswer($questions[1]->getFullTitle(), 'r2q2');
 
         $expectedResult = [
             $response1->id => $expectedResponse1,
@@ -60,13 +60,13 @@ class ResponseFormatterTest extends TestCase
         $questions = create(Question::class, ['form_id' => $form->id], 2);
         $response = create(FormResponse::class, [
             'form_id' => $form->id,
-            'response' => [$questions[0]->id => "r1q1"]
+            'response' => [$questions[0]->id => 'r1q1']
         ]);
 
         $expectedResponse1 = (new FormattedResponse())
             ->setId($response->id)
             ->setTimeRecorded($response->created_at)
-            ->addAnswer($questions[0]->getFullTitle(), "r1q1")
+            ->addAnswer($questions[0]->getFullTitle(), 'r1q1')
             ->addBlankAnswer($questions[1]->getFullTitle());
 
         $this->assertEquals(

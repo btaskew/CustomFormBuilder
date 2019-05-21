@@ -25,9 +25,12 @@ class SendFormRespondedNotificationTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $formatter = \Mockery::mock(ResponseFormatter::class);
-        $formatter->shouldReceive('setQuestions')->andReturnSelf();
-        $formatter->shouldReceive('formatResponses')->andReturn(new FormattedResponse());
+
+        $formatter = $this->mock(ResponseFormatter::class, function ($formatter) {
+            $formatter->shouldReceive('setQuestions')->andReturnSelf();
+            $formatter->shouldReceive('formatResponses')->andReturn(new FormattedResponse());
+        });
+
         $this->notification = new SendFormRespondedNotification($formatter);
     }
 
