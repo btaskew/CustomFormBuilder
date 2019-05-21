@@ -47,9 +47,7 @@ class QuestionSetter implements QuestionSetterContract
     {
         $attributes = array_merge(
             ['form_id' => null, 'in_question_bank' => true, 'order' => 0],
-            $request->only([
-                'title', 'type', 'help_text', 'required', 'admin_only'
-            ])
+            $request->only(['title', 'type', 'help_text', 'required', 'admin_only'])
         );
 
         $question = Question::updateOrCreate(['id' => $id], $attributes);

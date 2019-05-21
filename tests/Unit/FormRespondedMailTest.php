@@ -21,14 +21,14 @@ class FormRespondedMailTest extends TestCase
         $response = create(FormResponse::class);
         $formattedResponse = new FormattedResponse();
 
-        $this->mock(ResponseFormatter::class, function ($formatter) use ($response, $formattedResponse) {
+        $formatter = $this->mock(ResponseFormatter::class, function ($formatter) use ($response, $formattedResponse) {
             $formatter->shouldReceive('setQuestions')->andReturnSelf();
             $formatter->shouldReceive('formatResponses')
                 ->with([$response])
                 ->andReturn([$response->id => $formattedResponse]);
         });
 
-        $mail = (new FormResponded($form, $response))->build();
+        $mail = (new FormResponded($form, $response, $formatter))->build();
 
         $this->assertEquals($form->title . ' - response recorded', $mail->subject);
         $this->assertContains('no-reply@exeter.ac.uk', $mail->from[0]);

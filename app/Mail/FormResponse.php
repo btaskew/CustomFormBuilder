@@ -16,8 +16,6 @@ class FormResponse extends Mailable
     private $mailBody;
 
     /**
-     * Create a new message instance.
-     *
      * @param string $mailBody
      */
     public function __construct(string $mailBody)
@@ -26,8 +24,6 @@ class FormResponse extends Mailable
     }
 
     /**
-     * Build the message.
-     *
      * @return $this
      */
     public function build()

@@ -25,20 +25,23 @@ class FormResponded extends Mailable
     private $response;
 
     /**
-     * Create a new message instance.
-     *
-     * @param Form         $form
-     * @param FormResponse $response
+     * @var ResponseFormatter
      */
-    public function __construct(Form $form, FormResponse $response)
+    private $responseFormatter;
+
+    /**
+     * @param Form              $form
+     * @param FormResponse      $response
+     * @param ResponseFormatter $responseFormatter
+     */
+    public function __construct(Form $form, FormResponse $response, ResponseFormatter $responseFormatter)
     {
         $this->form = $form;
         $this->response = $response;
+        $this->responseFormatter = $responseFormatter;
     }
 
     /**
-     * Build the message.
-     *
      * @return $this
      */
     public function build()
@@ -56,7 +59,7 @@ class FormResponded extends Mailable
      */
     private function getResponse(): FormattedResponse
     {
-        return resolve(ResponseFormatter::class)
+        return $this->responseFormatter
             ->setQuestions($this->form->getAnswerableQuestions())
             ->formatResponses([$this->response])[$this->response->id];
     }

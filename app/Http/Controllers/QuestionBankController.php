@@ -31,7 +31,7 @@ class QuestionBankController extends Controller
      */
     public function index(Request $request)
     {
-        $questions = Question::where('form_id', null)->where('in_question_bank', true)->with('options')->paginate(25);
+        $questions = Question::where(['form_id' => null, 'in_question_bank' => true])->with('options')->paginate(25);
 
         if ($request->route('form')) {
             return view('form.questionBank', [

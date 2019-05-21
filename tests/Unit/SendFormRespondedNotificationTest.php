@@ -2,11 +2,13 @@
 
 namespace Tests\Unit;
 
+use App\Contracts\ResponseFormatter;
 use App\Events\ResponseRecorded;
 use App\Form;
 use App\FormResponse;
 use App\Listeners\SendFormRespondedNotification;
 use App\Mail\FormResponded;
+use App\Objects\FormattedResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
@@ -14,6 +16,20 @@ use Tests\TestCase;
 class SendFormRespondedNotificationTest extends TestCase
 {
     use RefreshDatabase;
+
+    /**
+     * @var SendFormRespondedNotification
+     */
+    private $notification;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $formatter = \Mockery::mock(ResponseFormatter::class);
+        $formatter->shouldReceive('setQuestions')->andReturnSelf();
+        $formatter->shouldReceive('formatResponses')->andReturn(new FormattedResponse());
+        $this->notification = new SendFormRespondedNotification($formatter);
+    }
 
     /** @test */
     public function doesnt_send_notification_if_no_admin_email_set()
@@ -24,7 +40,7 @@ class SendFormRespondedNotificationTest extends TestCase
         $response = create(FormResponse::class, ['form_id' => $form->id]);
 
         $event = new ResponseRecorded($response);
-        (new SendFormRespondedNotification())->handle($event);
+        $this->notification->handle($event);
 
         Mail::assertNotSent(FormResponded::class);
     }
@@ -38,7 +54,7 @@ class SendFormRespondedNotificationTest extends TestCase
         $response = create(FormResponse::class, ['form_id' => $form->id]);
 
         $event = new ResponseRecorded($response);
-        (new SendFormRespondedNotification())->handle($event);
+        $this->notification->handle($event);
 
         Mail::assertSent(FormResponded::class, function ($mail) {
             return $mail->hasTo('admin@email.com');
@@ -57,7 +73,7 @@ class SendFormRespondedNotificationTest extends TestCase
         $response = create(FormResponse::class, ['form_id' => $form->id]);
 
         $event = new ResponseRecorded($response);
-        (new SendFormRespondedNotification())->handle($event);
+        $this->notification->handle($event);
 
         Mail::assertSent(FormResponded::class, function ($mail) {
             return $mail->hasTo('admin@email.com');
