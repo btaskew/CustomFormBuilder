@@ -81,13 +81,13 @@ class ResponseFormatter implements ResponseFormatterContract
 
     /**
      * @param Question          $question
-     * @param \stdClass         $answers
+     * @param array             $answers
      * @param FormattedResponse $response
      */
-    private function addAnswer(Question $question, \stdClass $answers, FormattedResponse $response): void
+    private function addAnswer(Question $question, array $answers, FormattedResponse $response): void
     {
-        if (isset($answers->{$question->id})) {
-            $response->addAnswer($question->getFullTitle(), $answers->{$question->id});
+        if (isset($answers[$question->id])) {
+            $response->addAnswer($question->getFullTitle(), $answers[$question->id]);
             return;
         }
 

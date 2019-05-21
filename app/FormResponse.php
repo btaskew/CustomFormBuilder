@@ -19,6 +19,15 @@ class FormResponse extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'response' => 'array'
+    ];
+
+    /**
      * Boot the model
      */
     protected static function boot()
@@ -28,15 +37,6 @@ class FormResponse extends Model
         static::created(function ($response) {
             event(new ResponseRecorded($response));
         });
-    }
-
-    /**
-     * @param $response
-     * @return mixed
-     */
-    public function getResponseAttribute($response)
-    {
-        return json_decode($response);
     }
 
     /**

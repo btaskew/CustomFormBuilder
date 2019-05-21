@@ -16,7 +16,7 @@ class CreateFormResponsesTable extends Migration
         Schema::create('form_responses', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('form_id');
-            $table->json('response');
+            $table->text('response');
             $table->timestamps();
 
             $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');

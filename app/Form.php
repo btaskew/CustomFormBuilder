@@ -166,7 +166,7 @@ class Form extends Model
             });
 
         $this->responses()->create([
-            'response' => json_encode($answers)
+            'response' => $answers
         ]);
     }
 

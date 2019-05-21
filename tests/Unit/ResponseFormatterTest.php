@@ -21,11 +21,11 @@ class ResponseFormatterTest extends TestCase
         $questions = create(Question::class, ['form_id' => $form->id], 2);
         $response1 = create(FormResponse::class, [
             'form_id' => $form->id,
-            'response' => '{"' . $questions[0]->id . '":"r1q1","' . $questions[1]->id . '":"r1q2"}'
+            'response' => [$questions[0]->id => "r1q1", $questions[1]->id => "r1q2"]
         ]);
         $response2 = create(FormResponse::class, [
             'form_id' => $form->id,
-            'response' => '{"' . $questions[0]->id . '":"r2q1","' . $questions[1]->id . '":"r2q2"}'
+            'response' => [$questions[0]->id => "r2q1", $questions[1]->id => "r2q2"]
         ]);
 
         $expectedResponse1 = (new FormattedResponse())
@@ -60,7 +60,7 @@ class ResponseFormatterTest extends TestCase
         $questions = create(Question::class, ['form_id' => $form->id], 2);
         $response = create(FormResponse::class, [
             'form_id' => $form->id,
-            'response' => '{"' . $questions[0]->id . '":"r1q1"}'
+            'response' => [$questions[0]->id => "r1q1"]
         ]);
 
         $expectedResponse1 = (new FormattedResponse())

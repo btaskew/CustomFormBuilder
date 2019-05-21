@@ -41,7 +41,7 @@ class CanSendResponseEmail
      */
     private static function responseIncludesInvalidEmail(int $questionId, FormResponse $response): bool
     {
-        $email = $response->response->{$questionId};
+        $email = $response->response[$questionId];
 
         if (is_null($email)) {
             return true;

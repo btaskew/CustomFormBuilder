@@ -3,7 +3,9 @@
 namespace Tests\Feature\Responses;
 
 use App\Form;
+use App\FormResponse;
 use App\Mail\FormResponded;
+use App\Mail\FormResponse as FormResponseMail;
 use App\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
@@ -14,7 +16,7 @@ class RespondToFormTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_submitted_forms_data_is_stored_correctly()
+    public function a_user_can_respond_to_a_form()
     {
         $form = create(Form::class);
         $question = create(Question::class, ['form_id' => $form->id]);
@@ -22,10 +24,10 @@ class RespondToFormTest extends TestCase
         $this->post(formPath($form) . '/responses', [$question->id => "value"])
             ->assertStatus(200);
 
-        $this->assertDatabaseHas('form_responses', [
-            'form_id' => $form->id,
-            'response' => '{"' . $question->id . '":"value"}'
-        ]);
+        $response = FormResponse::latest()->first();
+
+        $this->assertEquals($form->id, $response->form_id);
+        $this->assertEquals([$question->id => "value"], $response->response);
     }
 
     /** @test */
@@ -38,10 +40,8 @@ class RespondToFormTest extends TestCase
         $this->post(formPath($form) . '/responses', [$question->id => "value", $labelQuestion->id => "label value"])
             ->assertStatus(200);
 
-        $this->assertDatabaseHas('form_responses', [
-            'form_id' => $form->id,
-            'response' => '{"' . $question->id . '":"value"}'
-        ]);
+        $response = FormResponse::latest()->first();
+        $this->assertEquals([$question->id => "value"], $response->response);
     }
 
     /** @test */
@@ -53,10 +53,8 @@ class RespondToFormTest extends TestCase
         $this->post(formPath($form) . '/responses', [$question->id => 631152000000])
             ->assertStatus(200);
 
-        $this->assertDatabaseHas('form_responses', [
-            'form_id' => $form->id,
-            'response' => '{"' . $question->id . '":"1990-01-01"}'
-        ]);
+        $response = FormResponse::latest()->first();
+        $this->assertEquals([$question->id => "1990-01-01"], $response->response);
     }
 
     /** @test */
@@ -77,6 +75,7 @@ class RespondToFormTest extends TestCase
     /** @test */
     public function an_email_is_sent_to_the_responder_if_the_form_allows()
     {
+        $this->withoutExceptionHandling();
         Mail::fake();
 
         $form = create(Form::class, ['response_email' => 'Thanks for responding!', 'response_email_field' => 1]);
@@ -85,7 +84,7 @@ class RespondToFormTest extends TestCase
         $this->post(formPath($form) . '/responses', [1 => "test@email.com"])
             ->assertStatus(200);
 
-        Mail::assertSent(\App\Mail\FormResponse::class, function ($mail) {
+        Mail::assertSent(FormResponseMail::class, function ($mail) {
             return $mail->hasTo('test@email.com');
         });
     }
@@ -99,9 +98,6 @@ class RespondToFormTest extends TestCase
         $this->post(formPath($form) . '/responses', [$question->id => "value"])
             ->assertStatus(403);
 
-        $this->assertDatabaseMissing('form_responses', [
-            'form_id' => $form->id,
-            'response' => '{"' . $question->id . '":"value"}'
-        ]);
+        $this->assertDatabaseMissing('form_responses', ['form_id' => $form->id]);
     }
 }

@@ -16,7 +16,7 @@ class CanSendResponseEmailTest extends TestCase
     public function returns_true_if_parameters_valid()
     {
         $form = create(Form::class, ['response_email' => 'text', 'response_email_field' => 1]);
-        $response = create(FormResponse::class, ['response' => '{"1":"test@email.com"}']);
+        $response = create(FormResponse::class, ['response' => [1 => "test@email.com"]]);
 
         $this->assertTrue(CanSendResponseEmail::isSatisfiedBy($form, $response));
     }
@@ -41,7 +41,7 @@ class CanSendResponseEmailTest extends TestCase
     public function returns_false_if_no_response_given_for_relevant_question()
     {
         $form = create(Form::class, ['response_email' => 'text', 'response_email_field' => 1]);
-        $response = create(FormResponse::class, ['response' => '{"1":null}']);
+        $response = create(FormResponse::class, ['response' => [1 => null]]);
 
         $this->assertFalse(CanSendResponseEmail::isSatisfiedBy($form, $response));
     }
@@ -50,7 +50,7 @@ class CanSendResponseEmailTest extends TestCase
     public function returns_false_if_invalid_response_given_for_relevant_question()
     {
         $form = create(Form::class, ['response_email' => 'text', 'response_email_field' => 1]);
-        $response = create(FormResponse::class, ['response' => '{"1":"not-an-email"}']);
+        $response = create(FormResponse::class, ['response' => [1 => "not-an-email"]]);
 
         $this->assertFalse(CanSendResponseEmail::isSatisfiedBy($form, $response));
     }
