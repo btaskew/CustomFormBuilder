@@ -6,7 +6,9 @@ use App\Contracts\QuestionSetter;
 use App\Form;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class QuestionBankController extends Controller
 {
@@ -25,7 +27,7 @@ class QuestionBankController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function index(Request $request)
     {
@@ -44,7 +46,7 @@ class QuestionBankController extends Controller
     }
 
     /**
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function create()
     {
@@ -53,7 +55,7 @@ class QuestionBankController extends Controller
 
     /**
      * @param QuestionRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function store(QuestionRequest $request)
     {
@@ -64,7 +66,7 @@ class QuestionBankController extends Controller
 
     /**
      * @param Question $question
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function edit(Question $question)
     {
@@ -76,7 +78,7 @@ class QuestionBankController extends Controller
     /**
      * @param Question        $question
      * @param QuestionRequest $request
-     * @return Question|\Illuminate\Http\JsonResponse
+     * @return Question|JsonResponse
      */
     public function update(Question $question, QuestionRequest $request)
     {

@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Form;
 use App\FormUser;
-use App\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class FormAccessController extends Controller
 {
     /**
      * @param Form $form
-     * @return \Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return View
+     * @throws AuthorizationException
      */
     public function index(Form $form)
     {
@@ -28,8 +29,8 @@ class FormAccessController extends Controller
     /**
      * @param Request $request
      * @param Form    $form
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function store(Request $request, Form $form)
     {
@@ -50,8 +51,8 @@ class FormAccessController extends Controller
     /**
      * @param Form     $form
      * @param FormUser $formUser
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function destroy(Form $form, FormUser $formUser)
     {

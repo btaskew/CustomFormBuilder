@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Purify;
 
 class Form extends Model
 {
@@ -61,7 +62,7 @@ class Form extends Model
      */
     public function getDescriptionAttribute($description)
     {
-        return \Purify::clean($description);
+        return Purify::clean($description);
     }
 
     /**
@@ -70,7 +71,7 @@ class Form extends Model
      */
     public function getSuccessTextAttribute($text)
     {
-        return \Purify::clean($text);
+        return Purify::clean($text);
     }
 
     /**
@@ -79,7 +80,7 @@ class Form extends Model
      */
     public function getResponseEmailAttribute($email)
     {
-        return \Purify::clean($email);
+        return Purify::clean($email);
     }
 
     /**

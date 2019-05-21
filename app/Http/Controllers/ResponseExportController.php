@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Contracts\ResponseFormatter;
 use App\Exports\ResponsesExport;
 use App\Form;
+use Illuminate\Auth\Access\AuthorizationException;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ResponseExportController extends Controller
 {
@@ -24,8 +26,8 @@ class ResponseExportController extends Controller
 
     /**
      * @param Form $form
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return BinaryFileResponse
+     * @throws AuthorizationException
      */
     public function index(Form $form)
     {

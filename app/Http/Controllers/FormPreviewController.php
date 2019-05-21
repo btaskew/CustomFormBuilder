@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Form;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\View\View;
 
 class FormPreviewController extends Controller
 {
@@ -10,8 +12,8 @@ class FormPreviewController extends Controller
      * Display the specified resource.
      *
      * @param Form $form
-     * @return \Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return View
+     * @throws AuthorizationException
      */
     public function show(Form $form)
     {

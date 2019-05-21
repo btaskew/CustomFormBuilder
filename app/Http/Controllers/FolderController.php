@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Folder;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class FolderController extends Controller
 {
     /**
      * Display a listing of the folders.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -26,7 +30,7 @@ class FolderController extends Controller
     /**
      * Show the form for creating a new folder.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function create()
     {
@@ -49,9 +53,9 @@ class FolderController extends Controller
     /**
      * Update the specified folder in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param Folder                    $folder
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @param Folder  $folder
+     * @return JsonResponse
      */
     public function update(Request $request, Folder $folder)
     {
@@ -66,8 +70,8 @@ class FolderController extends Controller
      * Remove the specified folder from storage.
      *
      * @param Folder $folder
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
+     * @return JsonResponse
+     * @throws Exception
      */
     public function destroy(Folder $folder)
     {

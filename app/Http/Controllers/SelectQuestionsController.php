@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Form;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class SelectQuestionsController extends Controller
@@ -10,8 +12,8 @@ class SelectQuestionsController extends Controller
     /**
      * @param Request $request
      * @param Form    $form
-     * @return \Illuminate\Database\Eloquent\Collection
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Collection
+     * @throws AuthorizationException
      */
     public function index(Request $request, Form $form)
     {

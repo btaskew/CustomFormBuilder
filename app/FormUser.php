@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
 
 class FormUser extends Model
 {
@@ -29,7 +30,7 @@ class FormUser extends Model
      * @param string $username
      * @param string $access
      * @param int    $formId
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public static function createAccess(string $username, string $access, int $formId)
     {

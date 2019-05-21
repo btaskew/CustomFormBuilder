@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Collection;
 
@@ -71,9 +72,9 @@ class QuestionRequest extends FormRequest
 
     /**
      * @param Collection $options
-     * @return \Closure
+     * @return Closure
      */
-    private function hasUniqueOptionValues(Collection $options): \Closure
+    private function hasUniqueOptionValues(Collection $options): Closure
     {
         return function ($attribute, $value, $fail) use ($options) {
             if ($options->where('value', $value)->count() > 1) {

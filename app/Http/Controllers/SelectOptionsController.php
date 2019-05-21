@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\SelectOption;
+use Exception;
+use Illuminate\Http\JsonResponse;
 
 class SelectOptionsController extends Controller
 {
     /**
      * @param SelectOption $option
-     * @throws \Exception
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
+     * @throws Exception
      */
     public function destroy(SelectOption $option)
     {

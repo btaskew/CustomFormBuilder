@@ -6,6 +6,11 @@ use App\Folder;
 use App\Form;
 use App\Http\Requests\FormRequest;
 use App\Specifications\CanSetResponseEmailField;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class FormController extends Controller
 {
@@ -15,9 +20,7 @@ class FormController extends Controller
     }
 
     /**
-     * Display a listing of the form.
-     *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -28,9 +31,7 @@ class FormController extends Controller
     }
 
     /**
-     * Show the form for creating a new form.
-     *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function create()
     {
@@ -40,8 +41,6 @@ class FormController extends Controller
     }
 
     /**
-     * Store a newly created form in storage.
-     *
      * @param FormRequest $request
      * @return Form
      */
@@ -62,10 +61,8 @@ class FormController extends Controller
     }
 
     /**
-     * Display the specified form.
-     *
      * @param Form $form
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function show(Form $form)
     {
@@ -81,11 +78,9 @@ class FormController extends Controller
     }
 
     /**
-     * Show the form for editing the specified form.
-     *
      * @param Form $form
-     * @return \Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return View
+     * @throws AuthorizationException
      */
     public function edit(Form $form)
     {
@@ -99,12 +94,10 @@ class FormController extends Controller
     }
 
     /**
-     * Update the specified form in storage.
-     *
      * @param FormRequest $request
      * @param Form        $form
      * @return Form
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function update(FormRequest $request, Form $form)
     {
@@ -131,11 +124,9 @@ class FormController extends Controller
     }
 
     /**
-     * Remove the specified form from storage.
-     *
      * @param Form $form
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
+     * @return JsonResponse
+     * @throws Exception
      */
     public function destroy(Form $form)
     {

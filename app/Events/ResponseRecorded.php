@@ -22,8 +22,6 @@ class ResponseRecorded
     public $form;
 
     /**
-     * Create a new event instance.
-     *
      * @param FormResponse $response
      */
     public function __construct(FormResponse $response)

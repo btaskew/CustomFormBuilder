@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Form;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class FormOrderController extends Controller
@@ -10,8 +12,8 @@ class FormOrderController extends Controller
     /**
      * @param Form    $form
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function update(Form $form, Request $request)
     {

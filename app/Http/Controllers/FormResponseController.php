@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Contracts\ResponseFormatter;
 use App\Form;
 use App\Http\Requests\ResponseRequest;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
 
 class FormResponseController extends Controller
 {
@@ -23,8 +26,8 @@ class FormResponseController extends Controller
 
     /**
      * @param Form $form
-     * @return \Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return View
+     * @throws AuthorizationException
      */
     public function index(Form $form)
     {
@@ -47,7 +50,7 @@ class FormResponseController extends Controller
     /**
      * @param Form            $form
      * @param ResponseRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function store(Form $form, ResponseRequest $request)
     {

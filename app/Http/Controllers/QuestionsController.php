@@ -6,6 +6,10 @@ use App\Contracts\QuestionSetter;
 use App\Form;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
 
 class QuestionsController extends Controller
 {
@@ -25,7 +29,7 @@ class QuestionsController extends Controller
     /**
      * @param Form $form
      * @return mixed
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function index(Form $form)
     {
@@ -45,8 +49,8 @@ class QuestionsController extends Controller
 
     /**
      * @param Form $form
-     * @return \Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return View
+     * @throws AuthorizationException
      */
     public function create(Form $form)
     {
@@ -58,7 +62,7 @@ class QuestionsController extends Controller
     /**
      * @param Form            $form
      * @param QuestionRequest $request
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function store(Form $form, QuestionRequest $request)
     {
@@ -71,7 +75,7 @@ class QuestionsController extends Controller
      * @param Form     $form
      * @param Question $question
      * @return Question
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function show(Form $form, Question $question)
     {
@@ -85,7 +89,7 @@ class QuestionsController extends Controller
      * @param Question        $question
      * @param QuestionRequest $request
      * @return Question
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function update($form, Question $question, QuestionRequest $request)
     {
@@ -99,8 +103,8 @@ class QuestionsController extends Controller
     /**
      * @param Form     $form
      * @param Question $question
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
+     * @return JsonResponse
+     * @throws Exception
      */
     public function destroy($form, Question $question)
     {
