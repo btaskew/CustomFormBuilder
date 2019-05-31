@@ -134,14 +134,15 @@ class Form extends Model
     }
 
     /**
+     * @param array $columns
      * @return Collection
      */
-    public function getAnswerableQuestions(): Collection
+    public function getAnswerableQuestions(array $columns = ['*']): Collection
     {
         return $this->questions()
             ->where('type', '!=', 'label')
             ->orderBy('order')
-            ->get();
+            ->get($columns);
     }
 
     /**

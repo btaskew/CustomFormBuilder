@@ -18,7 +18,7 @@ class FormResponder implements FormResponderContract
     {
         $answers = [];
 
-        $form->getAnswerableQuestions()
+        $form->getAnswerableQuestions(['id', 'type'])
             ->each(function (Question $question) use ($response, &$answers) {
                 $this->addResponse($question, $response, $answers);
             });

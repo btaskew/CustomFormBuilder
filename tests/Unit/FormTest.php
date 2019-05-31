@@ -141,6 +141,19 @@ class FormTest extends TestCase
     }
 
     /** @test */
+    public function a_form_can_get_specific_keys_from_its_answerable_questions()
+    {
+        $question = create(Question::class, ['form_id' => $this->form->id]);
+
+        $questions = $this->form->getAnswerableQuestions(['title']);
+
+        $this->assertEquals(
+            ['title' => $question->title],
+            $questions->first()->toArray()
+        );
+    }
+
+    /** @test */
     public function a_forms_description_is_sanitized_when_fetched()
     {
         $form = make(Form::class, ['description' => '<script>alert("Bad code")</script><h1>Good code</h1>']);
