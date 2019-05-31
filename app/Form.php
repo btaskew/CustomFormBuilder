@@ -21,6 +21,7 @@ class Form extends Model
         'title',
         'description',
         'active',
+        'max_responses',
         'open_date',
         'close_date',
         'admin_email',
@@ -150,7 +151,24 @@ class Form extends Model
      */
     public function isActive(): bool
     {
-        $currentDate = new Carbon();
-        return $this->active && $currentDate->between((new Carbon($this->open_date)), (new Carbon($this->close_date)));
+        return $this->active
+            && $this->isBetweenActiveDates()
+            && $this->hasNotReachMaxResponses();
+    }
+
+    /**
+     * @return bool
+     */
+    private function isBetweenActiveDates(): bool
+    {
+        return (new Carbon())->between((new Carbon($this->open_date)), (new Carbon($this->close_date)));
+    }
+
+    /**
+     * @return bool
+     */
+    private function hasNotReachMaxResponses(): bool
+    {
+        return (is_null($this->max_responses) || $this->responses()->count() < $this->max_responses);
     }
 }

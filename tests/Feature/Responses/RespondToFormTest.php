@@ -48,7 +48,6 @@ class RespondToFormTest extends TestCase
     /** @test */
     public function an_email_is_sent_to_the_responder_if_the_form_allows()
     {
-        $this->withoutExceptionHandling();
         Mail::fake();
 
         $form = create(Form::class, ['response_email' => 'Thanks for responding!', 'response_email_field' => 1]);

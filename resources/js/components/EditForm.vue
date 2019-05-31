@@ -38,6 +38,13 @@
             </div>
 
             <dd-form-input
+                    tag="max_responses"
+                    label="Maxmimum number of responses"
+                    type="number"
+                    :value.sync="form.max_responses"
+            ></dd-form-input>
+
+            <dd-form-input
                     tag="admin_email"
                     label="Admin emails"
                     description="List of valid emails separated by semi-colons with no spaces"
@@ -116,6 +123,7 @@
                     description: null,
                     open_date: null,
                     close_date: null,
+                    max_responses: null,
                     active: false,
                     admin_email: null,
                     success_text: null,
@@ -137,6 +145,7 @@
                 this.form.description = this.formData.description;
                 this.form.open_date = this.formData.open_date;
                 this.form.close_date = this.formData.close_date;
+                this.form.max_responses = this.formData.max_responses;
                 this.form.active = this.formData.active;
                 this.form.admin_email = this.formData.admin_email;
                 this.form.success_text = this.formData.success_text;

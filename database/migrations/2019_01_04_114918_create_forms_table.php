@@ -20,6 +20,7 @@ class CreateFormsTable extends Migration
             $table->date('open_date')->nullable();
             $table->date('close_date')->nullable();
             $table->boolean('active')->default(false);
+            $table->unsignedInteger('max_responses')->nullable();
             $table->string('admin_email')->nullable();
             $table->text('response_email')->nullable();
             $table->unsignedInteger('response_email_field')->nullable();

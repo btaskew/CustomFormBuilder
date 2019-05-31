@@ -121,6 +121,23 @@ class FormTest extends TestCase
     }
 
     /** @test */
+    public function a_form_is_inactive_if_it_has_reached_its_maximum_number_of_responses()
+    {
+        $form = create(Form::class, ['max_responses' => 1, 'active' => true]);
+        create(FormResponse::class, ['form_id' => $form->id]);
+
+        $this->assertFalse($form->isActive());
+    }
+
+    /** @test */
+    public function a_form_is_active_if_no_max_responses_set_and_no_responses_recorded()
+    {
+        $form = create(Form::class, ['max_responses' => null, 'active' => true]);
+
+        $this->assertTrue($form->isActive());
+    }
+
+    /** @test */
     public function a_form_can_get_its_questions_in_order()
     {
         $question2 = create(Question::class, ['order' => 2, 'form_id' => $this->form->id]);

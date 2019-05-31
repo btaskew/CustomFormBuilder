@@ -71,6 +71,7 @@ class UpdateFormTest extends TestCase
             'description' => 'New description',
             'open_date' => '1990-01-01',
             'close_date' => '1990-01-02',
+            'max_responses' => 3,
             'admin_email' => 'test@email.com',
             'success_text' => 'Form submitted',
             'response_email' => 'Response text',
@@ -87,6 +88,7 @@ class UpdateFormTest extends TestCase
         $this->assertEquals('New description', $form->description);
         $this->assertEquals('1990-01-01', $form->open_date);
         $this->assertEquals('1990-01-02', $form->close_date);
+        $this->assertEquals(3, $form->max_responses);
         $this->assertEquals('test@email.com', $form->admin_email);
         $this->assertEquals('Form submitted', $form->success_text);
         $this->assertEquals('Response text', $form->response_email);

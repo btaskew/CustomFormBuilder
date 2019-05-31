@@ -35,6 +35,7 @@ class CreateFormTest extends TestCase
             'description' => 'Form description',
             'open_date' => '1990-01-01',
             'close_date' => '1990-01-02',
+            'max_responses' => 2,
             'active' => true,
             'admin_email' => 'test@email.com;foo@email.com',
             'success_text' => 'Form submitted',
