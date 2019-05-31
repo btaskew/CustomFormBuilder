@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Contracts\FormResponseMailMapper;
 use App\Events\ResponseRecorded;
 use App\FormResponse;
 use App\Mail\FormResponse as FormResponseMail;
@@ -10,6 +11,19 @@ use Illuminate\Support\Facades\Mail;
 
 class SendFormResponseMail
 {
+    /**
+     * @var FormResponseMailMapper
+     */
+    private $mailMapper;
+
+    /**
+     * @param FormResponseMailMapper $mailMapper
+     */
+    public function __construct(FormResponseMailMapper $mailMapper)
+    {
+        $this->mailMapper = $mailMapper;
+    }
+
     /**
      * @param ResponseRecorded $event
      */
@@ -21,7 +35,7 @@ class SendFormResponseMail
 
         Mail::to($this->setMailTo($event->form->response_email_field, $event->response))
             ->send(
-                new FormResponseMail($event->form->response_email)
+                new FormResponseMail($this->mailMapper->mapResponse($event->form->response_email, $event->response))
             );
     }
 

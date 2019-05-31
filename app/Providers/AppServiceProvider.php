@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Contracts\FormResponder;
+use App\Contracts\FormResponseMailMapper;
 use App\Contracts\QuestionBankReplicator;
 use App\Contracts\QuestionSetter;
 use App\Contracts\ResponseFormatter;
@@ -37,6 +38,11 @@ class AppServiceProvider extends ServiceProvider implements DeferrableProvider
             FormResponder::class,
             \App\Services\FormResponder::class
         );
+
+        $this->app->singleton(
+            FormResponseMailMapper::class,
+            \App\Services\FormResponseMailMapper::class
+        );
     }
 
     /**
@@ -50,6 +56,7 @@ class AppServiceProvider extends ServiceProvider implements DeferrableProvider
             QuestionSetter::class,
             ResponseFormatter::class,
             FormResponder::class,
+            FormResponseMailMapper::class
         ];
     }
 }
