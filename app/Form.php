@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Http\Requests\ResponseRequest;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
