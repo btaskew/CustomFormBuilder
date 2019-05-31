@@ -1,6 +1,8 @@
 <template>
     <div>
         <dd-form :form="form" @submitted="onSubmit">
+            <dd-checkbox-input tag="active" label="Active" :checked.sync="form.active" class="mt-3"></dd-checkbox-input>
+
             <dd-form-input tag="title" label="Title" :value.sync="form.title" required></dd-form-input>
 
             <dd-form-group
@@ -54,18 +56,40 @@
                     :show-blank-option="true"
             ></dd-select-input>
 
-            <dd-form-group
-                    v-if="form.response_email_field"
-                    tag="response_email"
-                    label="Response email text"
-                    :error-message="form.errors.get('response_email')"
-                    :error-state="form.errors.state('response_email')"
-            >
-                <rich-text-editor id="response_email" name="response_email" :value.sync="form.response_email">
-                </rich-text-editor>
-            </dd-form-group>
+            <div v-if="form.response_email_field" class="mb-4">
+                <dd-form-group
+                        tag="response_email"
+                        label="Response email text"
+                        :error-message="form.errors.get('response_email')"
+                        :error-state="form.errors.state('response_email')"
+                >
+                    <rich-text-editor id="response_email" name="response_email" :value.sync="form.response_email">
+                    </rich-text-editor>
+                </dd-form-group>
 
-            <dd-checkbox-input tag="active" label="Active" :checked.sync="form.active"></dd-checkbox-input>
+                <button class="btn btn-raised btn-primary btn-sm mb-2"
+                        @click.prevent="showQuestionList = !showQuestionList"
+                >
+                    Show questions to add
+                </button>
+
+                <div v-if="showQuestionList" class="border rounded m-2 p-2 email-response-question-container">
+                    <p>
+                        Click on a question to add that question's response to the email text. This will appear here as
+                        the question's ID field - do not change this otherwise it will not be replaced by the correct
+                        response. If a response was not made for that question, the text in the email will be blank.
+                        Only questions of type 'Text' can be used.
+                    </p>
+                    <ul>
+                        <li v-for="question in textQuestions"
+                            @click="addToEmail(question.id)"
+                            class="email-question-list"
+                        >
+                            {{ question.title }} [{{ question.id }}]
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
             <button type="submit" class="btn btn-raised btn-primary mt" :disabled="loading">Save form</button>
         </dd-form>
@@ -81,7 +105,8 @@
         props: {
             formData: {default: null},
             folders: {default: null},
-            emailQuestions: {default: []}
+            emailQuestions: {default: []},
+            textQuestions: {default: []},
         },
 
         data() {
@@ -101,7 +126,8 @@
                 loading: false,
                 success: true,
                 error: false,
-                isNewForm: true
+                isNewForm: true,
+                showQuestionList: false
             }
         },
 
@@ -152,7 +178,27 @@
                     this.loading = false;
                     flash('Error updating form. Please try again later', 'danger');
                 });
+            },
+
+            addToEmail(questionId) {
+                const element = document.querySelector('.trix-editor-response_email');
+                element.editor.insertString('[' + questionId + ']');
             }
         }
     }
 </script>
+
+<style>
+    .email-question-list {
+        cursor: pointer;
+    }
+
+    .email-question-list:hover {
+        color: #005DAB;
+    }
+
+    .email-response-question-container {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+</style>

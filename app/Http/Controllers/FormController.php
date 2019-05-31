@@ -88,9 +88,12 @@ class FormController extends Controller
 
         $folders = Folder::all();
 
-        $emailQuestions = $form->getAnswerableQuestions()->where('type', 'email')->values();
+        $questions = $form->getAnswerableQuestions();
 
-        return view('form.edit', compact('form', 'folders', 'emailQuestions'));
+        $emailQuestions = $questions->where('type', 'email')->values();
+        $textQuestions = $questions->where('type', 'text')->values();
+
+        return view('form.edit', compact('form', 'folders', 'emailQuestions', 'textQuestions'));
     }
 
     /**
