@@ -15,8 +15,6 @@ Route::get('/', function () {
     return redirect('/forms');
 })->name('home');
 
-OpenAm::routes();
-
 Route::resource('forms', 'FormController');
 
 Route::post('forms/{form}/responses', 'FormResponseController@store');
@@ -61,3 +59,5 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 });
+
+Auth::routes();
