@@ -2,7 +2,6 @@
 
 use App\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class UsersSeeder extends Seeder
 {
@@ -13,22 +12,22 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class)->create([
+        $user = factory(User::class)->create([
             'id' => 1,
-            'name' => 'Ben Askew',
-            'username' => 'ba329',
+            'name' => 'John Doe',
+            'username' => 'jd123',
+            'email' => 'john@email.com',
+            'password' => bcrypt('password')
         ]);
 
-        DB::table('role_user')->insert([
-            'role_id' => 1,
-            'user_id' => 1
-        ]);
+        $user->assignRole('admin');
 
         factory(User::class)->create([
             'id' => 2,
             'name' => 'Jane Doe',
             'username' => 'jd456',
-            'email' => 'jane@email.com'
+            'email' => 'jane@email.com',
+            'password' => bcrypt('password')
         ]);
     }
 }

@@ -6,7 +6,6 @@ use App\Form;
 use App\FormUser;
 use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Support\Facades\DB;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -17,23 +16,28 @@ abstract class TestCase extends BaseTestCase
      */
     public function loginAdmin()
     {
-        $this->login();
-        DB::table('role_user')->insert([
-            'role_id' => 1,
-            'user_id' => auth()->id()
-        ]);
-        return $this;
-    }
-
-    public function login()
-    {
-        $this->actingAs(create(User::class));
+        $user = create(User::class);
+        $user->assignRole('standard_user');
+        $user->assignRole('admin');
+        $this->actingAs($user);
 
         return $this;
     }
 
     /**
-     * @return \App\Form
+     * @return $this
+     */
+    public function login()
+    {
+        $user = create(User::class);
+        $user->assignRole('standard_user');
+        $this->actingAs($user);
+
+        return $this;
+    }
+
+    /**
+     * @return Form
      */
     public function loginUserWithForm(): Form
     {

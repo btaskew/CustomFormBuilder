@@ -24,7 +24,7 @@ class ManageFolderTest extends TestCase
     }
 
     /** @test */
-    public function an_admin_user_cant_view_the_create_folder_page()
+    public function an_admin_user_can_view_the_create_folder_page()
     {
         $this->loginAdmin()->get('/admin/folders/create')->assertSee('create-folder-form');
     }

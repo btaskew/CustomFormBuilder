@@ -2,30 +2,14 @@
     "name": "exeterit/custom-form-builder",
     "license": "MIT",
     "type": "project",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@bitbucket.org:exeterit/dd-php-package-admin.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@bitbucket.org:exeterit/dd-php-package-openam.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@bitbucket.org:exeterit/dd-php-package-bvforms.git"
-        }
-    ],
     "require": {
         "php": "^7.2.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "^3.1",
-        "stevebauman/purify": "^2.0",
-        "jwwebdev/admin": "^1.0.0",
-        "jwwebdev/openam": "^1.0.0",
-        "jwwebdev/bvforms-laravel": "^1.0.0"
+        "spatie/laravel-permission": "^3.8",
+        "stevebauman/purify": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

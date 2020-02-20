@@ -22,6 +22,8 @@ use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use JWWebDev\Admin\Http\Middleware\AuthenticateAdmin;
+use Spatie\Permission\Middlewares\PermissionMiddleware;
+use Spatie\Permission\Middlewares\RoleMiddleware;
 
 class Kernel extends HttpKernel
 {
@@ -72,12 +74,13 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => Authenticate::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
-        'auth.admin' => AuthenticateAdmin::class,
         'bindings' => SubstituteBindings::class,
         'cache.headers' => SetCacheHeaders::class,
         'can' => Authorize::class,
         'guest' => RedirectIfAuthenticated::class,
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
+        'permission' => PermissionMiddleware::class,
+        'role' => RoleMiddleware::class,
     ];
 }
