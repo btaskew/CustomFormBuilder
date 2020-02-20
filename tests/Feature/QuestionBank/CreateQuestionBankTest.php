@@ -18,7 +18,7 @@ class CreateQuestionBankTest extends TestCase
     /** @test */
     public function a_standard_user_cant_view_the_create_question_bank_page()
     {
-        $this->login()->get('/admin/question-bank/create')->assertRedirect('login');
+        $this->login()->get('/admin/question-bank/create')->assertStatus(403);
     }
 
     /** @test */
@@ -36,7 +36,7 @@ class CreateQuestionBankTest extends TestCase
     /** @test */
     public function a_non_admin_cant_create_a_new_question_bank_question()
     {
-        $this->login()->post('/admin/question-bank', [])->assertRedirect('login');
+        $this->login()->post('/admin/question-bank', [])->assertStatus(403);
     }
 
     /** @test */

@@ -19,7 +19,7 @@ Route::resource('forms', 'FormController');
 
 Route::post('forms/{form}/responses', 'FormResponseController@store');
 
-Route::group(['middleware' => ['auth', 'permission:manage_forms']], function () {
+Route::group(['middleware' => ['auth', 'can:manage_forms']], function () {
 
     Route::get('question-bank/search', 'QuestionSearchController@show');
     Route::post('question-bank/assign', 'AssignQuestionBankController@store');
@@ -47,15 +47,14 @@ Route::group(['middleware' => ['auth', 'permission:manage_forms']], function () 
 
     });
 
-
-    Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function () {
-
+    Route::group(['prefix' => 'admin', 'middleware' => 'can:manage_folders'], function () {
         Route::resource('folders', 'FolderController');
+    });
 
+    Route::group(['prefix' => 'admin', 'middleware' => 'can:manage_question_bank'], function () {
         Route::resource('question-bank', 'QuestionBankController')
             ->except(['show'])
             ->parameters(['question-bank' => 'question']);
-
     });
 
 });

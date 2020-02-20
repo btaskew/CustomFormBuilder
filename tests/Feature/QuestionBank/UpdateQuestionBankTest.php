@@ -20,7 +20,7 @@ class UpdateQuestionBankTest extends TestCase
     public function a_non_admin_cant_see_the_edit_bank_question_page()
     {
         $question = create(Question::class);
-        $this->login()->get('/admin/question-bank/' . $question->id . '/edit')->assertRedirect('login');
+        $this->login()->get('/admin/question-bank/' . $question->id . '/edit')->assertStatus(403);
     }
 
     /** @test */
@@ -52,7 +52,7 @@ class UpdateQuestionBankTest extends TestCase
     public function a_non_admin_cant_update_a_question_bank_question()
     {
         $question = create(Question::class);
-        $this->login()->patch('/admin/question-bank/' . $question->id, [])->assertRedirect('login');
+        $this->login()->patch('/admin/question-bank/' . $question->id, [])->assertStatus(403);
     }
 
     /** @test */

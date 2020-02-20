@@ -35,6 +35,6 @@ class ViewFolderTest extends TestCase
     {
         $this->login()
             ->get('/admin/folders')
-            ->assertRedirect('login');
+            ->assertStatus(403);
     }
 }

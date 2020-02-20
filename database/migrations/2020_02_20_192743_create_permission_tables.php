@@ -99,6 +99,10 @@ class CreatePermissionTables extends Migration
             'name' => 'manage_folders',
             'description' => 'User has access to add and manage form folders'
         ]);
+        $questionBankPermission = Permission::create([
+            'name' => 'manage_question_bank',
+            'description' => 'User has access to add and manage questions in the question bank'
+        ]);
         $globalFormPermission = Permission::create([
             'name' => 'manage_all_forms',
             'description' => 'User has access to create and manage all forms in the system'
@@ -108,10 +112,10 @@ class CreatePermissionTables extends Migration
         $standardRole->givePermissionTo($standardPermission);
 
         $adminRole = Role::create(['name' => 'admin']);
-        $adminRole->givePermissionTo([$standardPermission, $usersPermission, $foldersPermission]);
+        $adminRole->givePermissionTo([$standardPermission, $usersPermission, $foldersPermission, $questionBankPermission]);
 
         $superUserRole = Role::create(['name' => 'super_user']);
-        $superUserRole->givePermissionTo([$standardPermission, $usersPermission, $foldersPermission, $globalFormPermission]);
+        $superUserRole->givePermissionTo([$standardPermission, $usersPermission, $foldersPermission, $questionBankPermission, $globalFormPermission]);
     }
 
     /**
