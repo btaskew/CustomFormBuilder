@@ -11,9 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('/forms');
-})->name('home');
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+Auth::routes();
+
+Route::redirect('/', '/forms')->name('home');
 
 Route::resource('forms', 'FormController');
 
@@ -47,16 +50,20 @@ Route::group(['middleware' => ['auth', 'can:manage_forms']], function () {
 
     });
 
-    Route::group(['prefix' => 'admin', 'middleware' => 'can:manage_folders'], function () {
-        Route::resource('folders', 'FolderController');
-    });
+    Route::group(['prefix' => 'admin'], function () {
 
-    Route::group(['prefix' => 'admin', 'middleware' => 'can:manage_question_bank'], function () {
-        Route::resource('question-bank', 'QuestionBankController')
-            ->except(['show'])
-            ->parameters(['question-bank' => 'question']);
+        Route::view('/', 'admin/index')->middleware('role:admin');
+
+        Route::group(['middleware' => 'can:manage_folders'], function () {
+            Route::resource('folders', 'FolderController');
+        });
+
+        Route::group(['middleware' => 'can:manage_question_bank'], function () {
+            Route::resource('question-bank', 'QuestionBankController')
+                ->except(['show'])
+                ->parameters(['question-bank' => 'question']);
+        });
+
     });
 
 });
-
-Auth::routes();
