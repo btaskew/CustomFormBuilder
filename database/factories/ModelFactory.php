@@ -1,5 +1,14 @@
 <?php
 
+use App\Folder;
+use App\Form;
+use App\FormResponse;
+use App\FormUser;
+use App\Question;
+use App\SelectOption;
+use App\User;
+use App\VisibilityRequirement;
+use Faker\Factory;
 use Faker\Generator as Faker;
 
 /*
@@ -13,7 +22,8 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+/** @var Factory $factory */
+$factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'username' => $faker->unique()->userName,
@@ -23,7 +33,7 @@ $factory->define(App\User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Form::class, function (Faker $faker) {
+$factory->define(Form::class, function (Faker $faker) {
     return [
         'title' => $faker->word,
         'description' => $faker->sentence,
@@ -32,20 +42,20 @@ $factory->define(App\Form::class, function (Faker $faker) {
         'close_date' => '2990-01-01',
         'admin_email' => null,
         'user_id' => function () {
-            return factory(\App\User::class)->create()->id;
+            return factory(User::class)->create()->id;
         },
         'folder_id' => function () {
-            return factory(\App\Folder::class)->create()->id;
+            return factory(Folder::class)->create()->id;
         },
     ];
 });
 
-$factory->define(App\Question::class, function (Faker $faker) {
+$factory->define(Question::class, function (Faker $faker) {
     return [
         'title' => $faker->sentence,
         'type' => 'text',
         'form_id' => function () {
-            return factory(\App\Form::class)->create()->id;
+            return factory(Form::class)->create()->id;
         },
         'help_text' => $faker->sentence,
         'required' => false,
@@ -53,50 +63,50 @@ $factory->define(App\Question::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\SelectOption::class, function (Faker $faker) {
+$factory->define(SelectOption::class, function (Faker $faker) {
     return [
         'question_id' => function () {
-            return factory(\App\Question::class)->create()->id;
+            return factory(Question::class)->create()->id;
         },
         'value' => $faker->word,
         'display_value' => $faker->word
     ];
 });
 
-$factory->define(App\VisibilityRequirement::class, function (Faker $faker) {
+$factory->define(VisibilityRequirement::class, function (Faker $faker) {
     return [
         'question_id' => function () {
-            return factory(\App\Question::class)->create()->id;
+            return factory(Question::class)->create()->id;
         },
         'required_question_id' => function () {
-            return factory(\App\Question::class)->create()->id;
+            return factory(Question::class)->create()->id;
         },
         'required_value' => $faker->word,
     ];
 });
 
-$factory->define(App\FormResponse::class, function (Faker $faker) {
+$factory->define(FormResponse::class, function (Faker $faker) {
     return [
         'form_id' => function () {
-            return factory(\App\Form::class)->create()->id;
+            return factory(Form::class)->create()->id;
         },
         'response' => $faker->word
     ];
 });
 
-$factory->define(App\Folder::class, function (Faker $faker) {
+$factory->define(Folder::class, function (Faker $faker) {
     return [
         'name' => $faker->word
     ];
 });
 
-$factory->define(App\FormUser::class, function (Faker $faker) {
+$factory->define(FormUser::class, function (Faker $faker) {
     return [
         'user_id' => function () {
-            return factory(\App\User::class)->create()->id;
+            return factory(User::class)->create()->id;
         },
         'form_id' => function () {
-            return factory(\App\Form::class)->create()->id;
+            return factory(Form::class)->create()->id;
         },
         'access' => 'update'
     ];

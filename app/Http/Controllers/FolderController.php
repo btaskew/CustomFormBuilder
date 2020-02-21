@@ -12,8 +12,6 @@ use Illuminate\View\View;
 class FolderController extends Controller
 {
     /**
-     * Display a listing of the folders.
-     *
      * @return Response
      */
     public function index()
@@ -28,8 +26,6 @@ class FolderController extends Controller
     }
 
     /**
-     * Show the form for creating a new folder.
-     *
      * @return View
      */
     public function create()
@@ -38,8 +34,6 @@ class FolderController extends Controller
     }
 
     /**
-     * Store a newly created folder in storage.
-     *
      * @param Request $request
      * @return Folder
      */
@@ -51,8 +45,6 @@ class FolderController extends Controller
     }
 
     /**
-     * Update the specified folder in storage.
-     *
      * @param Request $request
      * @param Folder  $folder
      * @return JsonResponse
@@ -67,8 +59,6 @@ class FolderController extends Controller
     }
 
     /**
-     * Remove the specified folder from storage.
-     *
      * @param Folder $folder
      * @return JsonResponse
      * @throws Exception

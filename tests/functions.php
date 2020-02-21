@@ -1,5 +1,7 @@
 <?php
 
+use App\Form;
+
 /**
  * @param string $class
  * @param array  $attributes
@@ -34,10 +36,10 @@ function raw(string $class, array $attributes = [], int $count = null)
 }
 
 /**
- * @param \App\Form $form
+ * @param Form $form
  * @return string
  */
-function formPath(\App\Form $form): string
+function formPath(Form $form): string
 {
     return 'forms/' . $form->id;
 }

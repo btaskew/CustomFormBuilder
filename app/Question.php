@@ -13,8 +13,6 @@ class Question extends Model
     const SELECT_QUESTION_TYPES = ['checkbox', 'radio', 'dropdown'];
 
     /**
-     * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
@@ -28,8 +26,6 @@ class Question extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
      * @var array
      */
     protected $casts = [
@@ -37,9 +33,6 @@ class Question extends Model
         'in_question_bank' => 'boolean'
     ];
 
-    /**
-     * Boot the model
-     */
     protected static function boot()
     {
         parent::boot();

@@ -17,11 +17,10 @@ abstract class TestCase extends BaseTestCase
     public function loginAdmin()
     {
         $user = create(User::class);
-        $user->assignRole('standard_user');
-        $user->assignRole('admin');
-        $this->actingAs($user);
+        $user->assignRole('standard_user')
+            ->assignRole('admin');
 
-        return $this;
+        return $this->actingAs($user);
     }
 
     /**
@@ -31,9 +30,8 @@ abstract class TestCase extends BaseTestCase
     {
         $user = create(User::class);
         $user->assignRole('standard_user');
-        $this->actingAs($user);
 
-        return $this;
+        return $this->actingAs($user);
     }
 
     /**

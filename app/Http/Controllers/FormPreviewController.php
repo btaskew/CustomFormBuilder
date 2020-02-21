@@ -9,8 +9,6 @@ use Illuminate\View\View;
 class FormPreviewController extends Controller
 {
     /**
-     * Display the specified resource.
-     *
      * @param Form $form
      * @return View
      * @throws AuthorizationException
