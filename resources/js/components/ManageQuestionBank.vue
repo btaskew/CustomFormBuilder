@@ -52,7 +52,7 @@
                 return type === 'checkbox' || type === 'radio' || type === 'dropdown';
             },
 
-            searchQuestions:debounce(function(e) {
+            searchQuestions: debounce(function (e) {
                 const title = e.target.value;
 
                 if (!title || title === '') {

@@ -10,36 +10,38 @@
         </span>
 
         <div v-else>
-            <dd-select-input
-                    tag="question"
-                    label="Question"
-                    :value.sync="selectedQuestion"
-                    :options="questions"
-                    option-value-field="id"
-                    option-text-field="title"
-                    @update:value="updateQuestion"
-                    show-first-option
-                    required
-            ></dd-select-input>
+            <select-field
+                tag="question"
+                label="Question"
+                :value.sync="selectedQuestion"
+                :options="questions"
+                option-value-field="id"
+                option-text-field="title"
+                @update:value="updateQuestion"
+                show-first-option
+                required
+            ></select-field>
 
-            <dd-select-input
-                    tag="value"
-                    label="Value"
-                    :value.sync="selectedValue"
-                    @update:value="updateValue"
-                    :options="selectedQuestionOptions"
-                    option-text-field="value"
-                    show-first-option
-                    required
-            ></dd-select-input>
+            <select-field
+                tag="value"
+                label="Value"
+                :value.sync="selectedValue"
+                @update:value="updateValue"
+                :options="selectedQuestionOptions"
+                option-text-field="value"
+                show-first-option
+                required
+            ></select-field>
         </div>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
+    import SelectField from './Utils/Fields/SelectField';
 
     export default {
+        components: {SelectField},
         props: ['formId', 'question', 'value', 'questionId'],
 
         data() {

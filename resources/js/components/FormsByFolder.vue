@@ -2,11 +2,12 @@
     <div class="mt-3">
         <span class="mr-2">Folder:</span>
         <div class="btn-group" role="group" aria-label="Folders">
-            <button v-for="(forms, folder) in this.displayFolders"
-                    type="button"
-                    class="btn"
-                    :class="activeButtonClass(folder)"
-                    @click="changeFolder(folder)"
+            <button
+                v-for="(forms, folder) in this.displayFolders"
+                type="button"
+                class="btn"
+                :class="activeButtonClass(folder)"
+                @click="changeFolder(folder)"
             >
                 {{ folder }}
             </button>

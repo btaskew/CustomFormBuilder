@@ -1,0 +1,8 @@
+- Fix auth page styling
+- Replace email login with username?
+- Replace frontend components
+- Remove username?
+- REgister test
+- Change response code for deleting folder containing forms
+- CHeck form access function - user already has access?
+- Remove required for labels

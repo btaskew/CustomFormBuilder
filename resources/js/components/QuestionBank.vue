@@ -32,10 +32,11 @@
             </tr>
             </tbody>
         </table>
-        <button class="btn btn-primary"
-                @click="addQuestions"
-                :disabled="loading || this.questionsToAdd.length < 1"
-                v-text="loading ? 'Loading' : 'Add questions to form'"
+        <button
+            class="btn btn-primary"
+            @click="addQuestions"
+            :disabled="loading || this.questionsToAdd.length < 1"
+            v-text="loading ? 'Loading' : 'Add questions to form'"
         ></button>
 
         <slot v-if="!showingSearchResults" name="pagination"></slot>
@@ -81,7 +82,7 @@
                 });
             },
 
-            searchQuestions:debounce(function(e) {
+            searchQuestions: debounce(function (e) {
                 const title = e.target.value;
 
                 if (!title || title === '') {

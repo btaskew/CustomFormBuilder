@@ -12,13 +12,13 @@
 
             <draggable v-model="displayQuestions" :options="dragOptions">
                 <edit-question
-                        v-for="question in displayQuestions"
-                        :question="question"
-                        :key="question.id"
-                        :is-open="visibleQuestion === question.id"
-                        :form-id="formId"
-                        @toggled="onToggle"
-                        @questionDeleted="removeQuestion"
+                    v-for="question in displayQuestions"
+                    :question="question"
+                    :key="question.id"
+                    :is-open="visibleQuestion === question.id"
+                    :form-id="formId"
+                    @toggled="onToggle"
+                    @questionDeleted="removeQuestion"
                 >
                 </edit-question>
             </draggable>

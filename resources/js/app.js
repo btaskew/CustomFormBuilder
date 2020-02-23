@@ -1,4 +1,6 @@
-import "@babel/polyfill";
+import '@babel/polyfill';
+import BootstrapVue from 'bootstrap-vue';
+import VueFormGenerator from 'vue-form-generator';
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -31,13 +33,8 @@ Vue.component('create-folder-form', require('./components/CreateFolderForm').def
 
 Vue.config.ignoredElements = ['trix-editor'];
 
-import BootstrapVue from 'bootstrap-vue';
-import VueFormGenerator from 'vue-form-generator';
-import DdJsPackageComponents from 'dd-js-package-components';
-
 Vue.use(BootstrapVue);
 Vue.use(VueFormGenerator);
-Vue.use(DdJsPackageComponents);
 
 const app = new Vue({
     el: '#app'

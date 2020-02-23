@@ -13,7 +13,6 @@
         "axios": "^0.18",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
-        "dd-js-package-components": "git+ssh://git@bitbucket.org/exeterit/dd-js-package-components",
         "fecha": "^3.0.2",
         "jquery": "^3.2",
         "laravel-mix": "^4.0.7",

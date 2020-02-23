@@ -1,20 +1,19 @@
 <template>
     <question-form
-            :form-id="this.formId"
-            :question-id="this.questionId"
-            :form="this.form"
-            :loading="this.loading"
-            :is-new-question="this.isNewQuestion"
-            :is-select-question="this.isSelectQuestion"
-            @formSubmitted="this.handleSubmit"
+        :form-id="this.formId"
+        :question-id="this.questionId"
+        :form="this.form"
+        :loading="this.loading"
+        :is-new-question="this.isNewQuestion"
+        :is-select-question="this.isSelectQuestion"
+        @formSubmitted="this.handleSubmit"
     >
     </question-form>
 </template>
 
 <script>
     import axios from 'axios';
-    import {isEqual} from 'lodash';
-    import {Form} from 'dd-js-package-components';
+    import Form from './../classes/Form';
     import QuestionForm from './QuestionForm';
 
     export default {
@@ -77,7 +76,7 @@
                 if (question.visibility_requirement) {
                     this.form.visibility_requirement = true;
                     this.form.required_question = question.visibility_requirement.required_question_id;
-                    this.form.required_value =  question.visibility_requirement.required_value;
+                    this.form.required_value = question.visibility_requirement.required_value;
                 }
             },
 

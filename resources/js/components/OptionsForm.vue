@@ -1,17 +1,18 @@
 <template>
-    <form method="GET" @submit.prevent class="p-2 options-form">
+    <form @submit.prevent class="p-2 options-form">
         <div class="form-row">
             <div class="col">
                 <label for="value" class="col-form-label" :class="{ 'has-error': hasValueError }">
                     Value
                 </label>
-                <input class="form-control"
-                       type="text"
-                       :value="value"
-                       @change="updateValue"
-                       id="value"
-                       name="value"
-                       required
+                <input
+                    class="form-control"
+                    type="text"
+                    :value="value"
+                    @change="updateValue"
+                    id="value"
+                    name="value"
+                    required
                 >
                 <span class="text-danger" v-if="hasValueError">Value field required and must be unique</span>
             </div>
@@ -20,13 +21,14 @@
                 <label for="display_value" class="col-form-label" :class="{ 'has-error': hasDisplayValueError }">
                     Display value
                 </label>
-                <input class="form-control"
-                       type="text"
-                       :value="displayValue"
-                       @change="updateDisplayValue"
-                       id="display_value"
-                       name="display_value"
-                       required
+                <input
+                    class="form-control"
+                    type="text"
+                    :value="displayValue"
+                    @change="updateDisplayValue"
+                    id="display_value"
+                    name="display_value"
+                    required
                 >
                 <span class="text-danger" v-if="hasDisplayValueError">Display value field required</span>
             </div>

@@ -1,21 +1,25 @@
 <template>
-    <dd-form :form="form" @submitted="onSubmit">
-        <dd-form-input tag="name" label="Folder name" :value.sync="form.name">
+    <cfb-form :form="form" @submitted="onSubmit">
+        <input-field tag="name" label="Folder name" :value.sync="form.name">
             <template v-slot:append>
-                <button type="submit"
-                        class="btn btn-raised btn-primary"
-                        :disabled="loading"
-                        v-text="loading ? 'Loading' : 'Add folder'"
+                <button
+                    type="submit"
+                    class="btn btn-raised btn-primary"
+                    :disabled="loading"
+                    v-text="loading ? 'Loading' : 'Add folder'"
                 ></button>
             </template>
-        </dd-form-input>
-    </dd-form>
+        </input-field>
+    </cfb-form>
 </template>
 
 <script>
-    import {Form} from 'dd-js-package-components';
+    import Form from './../classes/Form';
+    import CfbForm from './Utils/CfbForm';
+    import InputField from './Utils/Fields/InputField';
 
     export default {
+        components: {CfbForm, InputField},
         data() {
             return {
                 form: new Form({
@@ -27,6 +31,8 @@
 
         methods: {
             onSubmit() {
+                this.loading = true;
+
                 this.form.post(`/admin/folders`)
                     .then(response => {
                         flash('Folder created');

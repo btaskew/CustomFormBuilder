@@ -1,81 +1,82 @@
 <template>
     <div>
-        <dd-form :form="form" @submitted="onSubmit">
-            <dd-checkbox-input tag="active" label="Active" :checked.sync="form.active" class="mt-3"></dd-checkbox-input>
+        <cfb-form :form="form" @submitted="onSubmit">
+            <checkbox-field tag="active" label="Active" :checked.sync="form.active" class="mt-3"></checkbox-field>
 
-            <dd-form-input tag="title" label="Title" :value.sync="form.title" required></dd-form-input>
+            <input-field tag="title" label="Title" :value.sync="form.title" required></input-field>
 
-            <dd-form-group
-                    tag="description"
-                    label="Description"
-                    :error-message="form.errors.get('description')"
-                    :error-state="form.errors.state('description')"
+            <form-group
+                tag="description"
+                label="Description"
+                :error-message="form.errors.get('description')"
+                :error-state="form.errors.state('description')"
             >
                 <rich-text-editor id="description" name="description" :value.sync="form.description">
                 </rich-text-editor>
-            </dd-form-group>
+            </form-group>
 
-            <dd-select-input
-                    tag="folder_id"
-                    label="Folder"
-                    :value.sync="form.folder_id"
-                    :options="folders"
-                    option-value-field="id"
-                    option-text-field="name"
-                    required
-            ></dd-select-input>
+            <select-field
+                tag="folder_id"
+                label="Folder"
+                :value.sync="form.folder_id"
+                :options="folders"
+                option-value-field="id"
+                option-text-field="name"
+                required
+            ></select-field>
 
             <div class="form-row">
                 <div class="col">
-                    <dd-form-input tag="open_date" label="Open date" :value.sync="form.open_date" type="date">
-                    </dd-form-input>
+                    <input-field tag="open_date" label="Open date" :value.sync="form.open_date" type="date">
+                    </input-field>
                 </div>
 
                 <div class="col">
-                    <dd-form-input tag="close_date" label="Closing date" :value.sync="form.close_date" type="date">
-                    </dd-form-input>
+                    <input-field tag="close_date" label="Closing date" :value.sync="form.close_date" type="date">
+                    </input-field>
                 </div>
             </div>
 
-            <dd-form-input
-                    tag="max_responses"
-                    label="Maxmimum number of responses"
-                    type="number"
-                    :value.sync="form.max_responses"
-            ></dd-form-input>
+            <input-field
+                tag="max_responses"
+                label="Maximum number of responses"
+                type="number"
+                :value.sync="form.max_responses"
+            ></input-field>
 
-            <dd-form-input
-                    tag="admin_email"
-                    label="Admin emails"
-                    description="List of valid emails separated by semi-colons with no spaces"
-                    :value.sync="form.admin_email"
-            ></dd-form-input>
+            <input-field
+                tag="admin_email"
+                label="Admin emails"
+                description="List of valid emails separated by semi-colons with no spaces"
+                :value.sync="form.admin_email"
+            ></input-field>
 
-            <dd-form-input tag="success_text" label="Success text" :value.sync="form.success_text"></dd-form-input>
+            <input-field tag="success_text" label="Success text" :value.sync="form.success_text"></input-field>
 
-            <dd-select-input
-                    tag="response_email_field"
-                    label="Response email field"
-                    :value.sync="form.response_email_field"
-                    :options="this.emailQuestions"
-                    option-value-field="id"
-                    option-text-field="title"
-                    :show-blank-option="true"
-            ></dd-select-input>
+            <select-field
+                tag="response_email_field"
+                label="Response email field"
+                :value.sync="form.response_email_field"
+                :options="this.emailQuestions"
+                option-value-field="id"
+                option-text-field="title"
+                :show-blank-option="true"
+            ></select-field>
 
             <div v-if="form.response_email_field" class="mb-4">
-                <dd-form-group
-                        tag="response_email"
-                        label="Response email text"
-                        :error-message="form.errors.get('response_email')"
-                        :error-state="form.errors.state('response_email')"
+                <form-group
+                    tag="response_email"
+                    label="Response email text"
+                    :error-message="form.errors.get('response_email')"
+                    :error-state="form.errors.state('response_email')"
                 >
                     <rich-text-editor id="response_email" name="response_email" :value.sync="form.response_email">
                     </rich-text-editor>
-                </dd-form-group>
+                </form-group>
 
-                <button class="btn btn-raised btn-primary btn-sm mb-2"
-                        @click.prevent="showQuestionList = !showQuestionList"
+                <button
+                    class="btn btn-raised btn-primary btn-sm mb-2"
+                    @click.prevent="showQuestionList = !showQuestionList"
                 >
                     Show questions to add
                 </button>
@@ -88,7 +89,8 @@
                         Only questions of type 'Text' can be used.
                     </p>
                     <ul>
-                        <li v-for="question in textQuestions"
+                        <li
+                            v-for="question in textQuestions"
                             @click="addToEmail(question.id)"
                             class="email-question-list"
                         >
@@ -99,16 +101,23 @@
             </div>
 
             <button type="submit" class="btn btn-raised btn-primary mt" :disabled="loading">Save form</button>
-        </dd-form>
+        </cfb-form>
 
         <div class="loader" v-if="loading"></div>
     </div>
 </template>
 
 <script>
-    import {Form} from 'dd-js-package-components';
+    import Form from './../classes/Form';
+    import CfbForm from './Utils/CfbForm';
+    import SelectField from './Utils/Fields/SelectField';
+    import FormGroup from './Utils/Fields/FormGroup';
+    import InputField from './Utils/Fields/InputField';
+    import CheckboxField from './Utils/Fields/CheckboxField';
 
     export default {
+        components: {CfbForm, SelectField, FormGroup, InputField, CheckboxField},
+
         props: {
             formData: {default: null},
             folders: {default: null},

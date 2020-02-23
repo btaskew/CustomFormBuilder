@@ -1,17 +1,17 @@
 <template>
     <question-form
-            :form="this.form"
-            :loading="this.loading"
-            :is-new-question="this.isNewQuestion"
-            :is-select-question="this.isSelectQuestion"
-            :allow-visibility-requirement="false"
-            @formSubmitted="this.handleSubmit"
+        :form="this.form"
+        :loading="this.loading"
+        :is-new-question="this.isNewQuestion"
+        :is-select-question="this.isSelectQuestion"
+        :allow-visibility-requirement="false"
+        @formSubmitted="this.handleSubmit"
     >
     </question-form>
 </template>
 
 <script>
-    import {Form} from 'dd-js-package-components';
+    import Form from './../classes/Form';
     import QuestionForm from './QuestionForm';
 
     export default {

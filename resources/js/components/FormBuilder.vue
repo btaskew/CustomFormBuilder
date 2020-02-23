@@ -61,7 +61,7 @@
                         this.loading = false;
                         this.isSubmitted = true;
                     }).catch(error => {
-                        this.loading = false;
+                    this.loading = false;
                     this.error = true;
                 });
             }
