@@ -7,6 +7,9 @@
         <p>This view is for testing only - submitting the form will not store any data as a response.</p>
         @if ($form->active)
             <p>This form is currently <b>active</b></p>
+            <p>
+                Your form can be accessed via: <a href="{{ url("forms/$form->id") }}">{{ url("forms/$form->id") }}</a>
+            </p>
         @else
             <p>This form is currently <b>inactive</b></p>
         @endif
