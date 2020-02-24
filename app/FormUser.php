@@ -30,7 +30,7 @@ class FormUser extends Model
      */
     public static function createAccess(string $username, string $access, int $formId)
     {
-        if ($username == auth()->user()->username) {
+        if ($username === auth()->user()->username) {
             return response()->json(['error' => "Can't grant access to self"], 422);
         }
 
@@ -40,7 +40,7 @@ class FormUser extends Model
             return response()->json(['error' => 'Given user was not found in the database'], 404);
         }
 
-        if (FormUser::where('user_id', $user->id)->exists()) {
+        if (FormUser::where(['user_id' => $user->id, 'form_id' => $formId])->exists()) {
             return response()->json(['error' => 'User already has access'], 422);
         }
 

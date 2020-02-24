@@ -108,4 +108,23 @@ class CreateFormAccessTest extends TestCase
             ->assertStatus(422)
             ->assertJsonFragment(['error' => 'User already has access']);
     }
+
+    /** @test */
+    public function a_user_can_grant_access_to_a_user_who_has_access_to_another_form()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = create(User::class);
+        $form = $this->loginUserWithForm();
+        create(FormUser::class, ['form_id' => 123, 'user_id' => $user->id]);
+
+        $this->post(formPath($form) . '/access', ['username' => $user->username, 'access' => 'view'])
+            ->assertStatus(200);
+
+        $this->assertDatabaseHas('form_user', [
+            'form_id' => $form->id,
+            'user_id' => $user->id,
+            'access' => 'view'
+        ]);
+    }
 }
