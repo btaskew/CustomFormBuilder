@@ -40,11 +40,10 @@ class FormUser extends Model
             return response()->json(['error' => 'Given user was not found in the database'], 404);
         }
 
-        if (FormUser::where(['user_id' => $user->id, 'form_id' => $formId])->exists()) {
-            return response()->json(['error' => 'User already has access'], 422);
-        }
-
-        $user->pivot = self::create([
+        $user->pivot = self::updateOrCreate([
+            'user_id' => $user->id,
+            'form_id' => $formId,
+        ], [
             'user_id' => $user->id,
             'form_id' => $formId,
             'access' => $access

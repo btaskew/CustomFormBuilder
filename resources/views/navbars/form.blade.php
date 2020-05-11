@@ -14,8 +14,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ setActiveLink('forms/*/question-bank') }}"
-                   href="/forms/{{ $form->id }}/question-bank"
+                <a
+                    class="nav-link {{ setActiveLink('forms/*/question-bank') }}"
+                    href="/forms/{{ $form->id }}/question-bank"
                 >
                     Add from question bank
                 </a>

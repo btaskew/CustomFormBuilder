@@ -96,24 +96,26 @@ class CreateFormAccessTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cant_grant_access_to_the_same_user_twice()
+    public function adding_the_same_user_twice_to_a_form_updates_the_existing_record()
     {
-        $this->withoutExceptionHandling();
-
         $user = create(User::class);
         $form = $this->loginUserWithForm();
-        create(FormUser::class, ['form_id' => $form->id, 'user_id' => $user->id]);
+        create(FormUser::class, ['form_id' => $form->id, 'user_id' => $user->id, 'access' => 'view']);
 
-        $this->post(formPath($form) . '/access', ['username' => $user->username, 'access' => 'view'])
-            ->assertStatus(422)
-            ->assertJsonFragment(['error' => 'User already has access']);
+        $this->post(formPath($form) . '/access', ['username' => $user->username, 'access' => 'update'])
+            ->assertStatus(200);
+
+        $this->assertEquals(1, FormUser::count());
+        $this->assertDatabaseHas('form_user', [
+            'form_id' => $form->id,
+            'user_id' => $user->id,
+            'access' => 'update'
+        ]);
     }
 
     /** @test */
     public function a_user_can_grant_access_to_a_user_who_has_access_to_another_form()
     {
-        $this->withoutExceptionHandling();
-
         $user = create(User::class);
         $form = $this->loginUserWithForm();
         create(FormUser::class, ['form_id' => 123, 'user_id' => $user->id]);
