@@ -12,14 +12,6 @@ class ExportResponsesTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_guest_cant_export_a_forms_result()
-    {
-        $form = create(Form::class);
-
-        $this->get(formPath($form) . '/responses/export')->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_export_the_results_of_their_form()
     {
         Excel::fake();
@@ -29,6 +21,14 @@ class ExportResponsesTest extends TestCase
         $this->get(formPath($form) . '/responses/export')->assertStatus(200);
 
         Excel::assertDownloaded('responses.xlsx');
+    }
+
+    /** @test */
+    public function a_guest_cant_export_a_forms_result()
+    {
+        $form = create(Form::class);
+
+        $this->get(formPath($form) . '/responses/export')->assertRedirect('login');
     }
 
     /** @test */

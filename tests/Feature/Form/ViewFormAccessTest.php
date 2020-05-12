@@ -13,12 +13,6 @@ class ViewFormAccessTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_guest_cant_view_a_forms_list_of_users()
-    {
-        $this->get('/forms/1/access')->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_view_all_users_who_have_access_to_their_form()
     {
         $form = $this->loginUserWithForm();
@@ -28,6 +22,12 @@ class ViewFormAccessTest extends TestCase
         $this->get(formPath($form) . '/access')
             ->assertStatus(200)
             ->assertSee($user->username);
+    }
+
+    /** @test */
+    public function a_guest_cant_view_a_forms_list_of_users()
+    {
+        $this->get('/forms/1/access')->assertRedirect('login');
     }
 
     /** @test */

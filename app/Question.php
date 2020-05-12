@@ -22,7 +22,7 @@ class Question extends Model
         'required',
         'admin_only',
         'order',
-        'in_question_bank'
+        'in_question_bank',
     ];
 
     /**
@@ -30,7 +30,7 @@ class Question extends Model
      */
     protected $casts = [
         'required' => 'boolean',
-        'in_question_bank' => 'boolean'
+        'in_question_bank' => 'boolean',
     ];
 
     protected static function boot()
@@ -107,7 +107,7 @@ class Question extends Model
     {
         foreach ($options as $option) {
             $this->options()->updateOrCreate([
-                'id' => (isset($option['id']) ? $option['id'] : null)
+                'id' => isset($option['id']) ? $option['id'] : null,
             ], [
                 'value' => $option['value'],
                 'display_value' => $option['display_value'],
@@ -121,14 +121,16 @@ class Question extends Model
      */
     public function setVisibilityRequirement(int $questionId, string $questionValue): void
     {
-        if (CanSetVisibilityRequirement::isSatisfiedBy($questionId, $questionValue, $this)) {
-            $this->visibilityRequirement()->updateOrCreate([
-                'question_id' => $this->id
-            ], [
-                'required_question_id' => $questionId,
-                'required_value' => $questionValue
-            ]);
+        if (!CanSetVisibilityRequirement::isSatisfiedBy($questionId, $questionValue, $this)) {
+            return;
         }
+
+        $this->visibilityRequirement()->updateOrCreate([
+            'question_id' => $this->id,
+        ], [
+            'required_question_id' => $questionId,
+            'required_value' => $questionValue,
+        ]);
     }
 
     /**
@@ -142,11 +144,7 @@ class Question extends Model
 
         $highestOrder = $this->form->questions()->max('order');
 
-        if (is_null($highestOrder)) {
-            $this->order = 0;
-        } else {
-            $this->order = $highestOrder + 1;
-        }
+        $this->order = is_null($highestOrder) ? 0 : $highestOrder + 1;
     }
 
     /**

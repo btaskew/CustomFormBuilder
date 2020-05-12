@@ -11,16 +11,6 @@ class DeleteFormTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_guest_cant_delete_a_form()
-    {
-        $form = create(Form::class);
-
-        $this->delete(formPath($form))->assertRedirect('login');
-
-        $this->assertDatabaseHas('forms', ['id' => $form->id]);
-    }
-
-    /** @test */
     public function a_user_can_delete_one_of_their_forms()
     {
         $form = $this->loginUserWithForm();
@@ -28,6 +18,16 @@ class DeleteFormTest extends TestCase
         $this->delete(formPath($form))->assertStatus(200);
 
         $this->assertDatabaseMissing('forms', ['id' => $form->id]);
+    }
+
+    /** @test */
+    public function a_guest_cant_delete_a_form()
+    {
+        $form = create(Form::class);
+
+        $this->delete(formPath($form))->assertRedirect('login');
+
+        $this->assertDatabaseHas('forms', ['id' => $form->id]);
     }
 
     /** @test */

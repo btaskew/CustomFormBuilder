@@ -70,18 +70,6 @@ class ManageSelectOptionsTest extends TestCase
 
 
     /** @test */
-    public function a_guest_cant_delete_a_select_option()
-    {
-        $question = create(Question::class, ['type' => 'radio']);
-        $option = create(SelectOption::class, ['question_id' => $question->id]);
-
-        $this->delete('/select-options/' . $option->id)
-            ->assertRedirect('login');
-
-        $this->assertDatabaseHas('select_options', ['id' => $option->id]);
-    }
-
-    /** @test */
     public function a_user_can_delete_an_option_from_a_select_question()
     {
         $form = $this->loginUserWithForm();
@@ -92,6 +80,18 @@ class ManageSelectOptionsTest extends TestCase
             ->assertStatus(200);
 
         $this->assertDatabaseMissing('select_options', ['id' => $option->id]);
+    }
+
+    /** @test */
+    public function a_guest_cant_delete_a_select_option()
+    {
+        $question = create(Question::class, ['type' => 'radio']);
+        $option = create(SelectOption::class, ['question_id' => $question->id]);
+
+        $this->delete('/select-options/' . $option->id)
+            ->assertRedirect('login');
+
+        $this->assertDatabaseHas('select_options', ['id' => $option->id]);
     }
 
     /** @test */

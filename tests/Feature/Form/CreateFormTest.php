@@ -22,12 +22,6 @@ class CreateFormTest extends TestCase
     }
 
     /** @test */
-    public function a_guest_cant_create_new_forms()
-    {
-        $this->post('/forms', [])->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_create_a_new_form()
     {
         $attributes = [
@@ -48,5 +42,11 @@ class CreateFormTest extends TestCase
             ->assertStatus(201);
 
         $this->assertDatabaseHas('forms', $attributes);
+    }
+
+    /** @test */
+    public function a_guest_cant_create_new_forms()
+    {
+        $this->post('/forms', [])->assertRedirect('login');
     }
 }

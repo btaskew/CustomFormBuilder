@@ -14,7 +14,6 @@ interface QuestionSetter
      */
     public static function createQuestion(Form $form, QuestionRequest $request): void;
 
-
     /**
      * @param Question        $question
      * @param QuestionRequest $request

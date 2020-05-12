@@ -12,12 +12,6 @@ class FormPreviewTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_guest_cant_preview_a_form()
-    {
-        $this->get('/forms/1/preview')->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_preview_their_complete_form()
     {
         $form = $this->loginUserWithForm();
@@ -27,6 +21,12 @@ class FormPreviewTest extends TestCase
             ->assertStatus(200)
             ->assertSee($form->title)
             ->assertSee($question->title);
+    }
+
+    /** @test */
+    public function a_guest_cant_preview_a_form()
+    {
+        $this->get('/forms/1/preview')->assertRedirect('login');
     }
 
     /** @test */

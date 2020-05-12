@@ -23,17 +23,17 @@ class CreateQuestionTest extends TestCase
     ];
 
     /** @test */
-    public function a_guest_cant_view_the_create_question_page()
-    {
-        $this->get('/forms/1/questions/create')->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_view_the_create_question_page_for_their_form()
     {
         $form = $this->loginUserWithForm();
 
         $this->get(formPath($form) . '/questions/create')->assertSee('Create form question');
+    }
+
+    /** @test */
+    public function a_guest_cant_view_the_create_question_page()
+    {
+        $this->get('/forms/1/questions/create')->assertRedirect('login');
     }
 
     /** @test */
@@ -62,12 +62,6 @@ class CreateQuestionTest extends TestCase
 
 
     /** @test */
-    public function a_guest_cant_add_questions()
-    {
-        $this->post('/forms/1/questions', [])->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_create_questions()
     {
         $form = $this->loginUserWithForm();
@@ -75,6 +69,12 @@ class CreateQuestionTest extends TestCase
         $this->post(formPath($form) . '/questions', $this->attributes)->assertStatus(200);
 
         $this->assertDatabaseHas('questions', $this->attributes);
+    }
+
+    /** @test */
+    public function a_guest_cant_add_questions()
+    {
+        $this->post('/forms/1/questions', [])->assertRedirect('login');
     }
 
     /** @test */

@@ -12,6 +12,22 @@ class ManageFolderTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function an_admin_user_can_view_the_create_folder_page()
+    {
+        $this->loginAdmin()->get('/admin/folders/create')->assertSee('create-folder-form');
+    }
+
+    /** @test */
+    public function an_admin_user_can_create_a_new_folder()
+    {
+        $this->loginAdmin()
+            ->post('/admin/folders', ['name' => 'New folder'])
+            ->assertStatus(201);
+
+        $this->assertDatabaseHas('folders', ['name' => 'New folder']);
+    }
+
+    /** @test */
     public function a_guest_cant_view_the_create_folder_page()
     {
         $this->get('/admin/folders/create')->assertRedirect('login');
@@ -24,25 +40,9 @@ class ManageFolderTest extends TestCase
     }
 
     /** @test */
-    public function an_admin_user_can_view_the_create_folder_page()
-    {
-        $this->loginAdmin()->get('/admin/folders/create')->assertSee('create-folder-form');
-    }
-
-    /** @test */
     public function a_guest_cant_create_a_folder()
     {
         $this->post('/admin/folders', ['name' => 'New folder'])->assertRedirect('login');
-    }
-
-    /** @test */
-    public function an_admin_user_can_create_a_new_folder()
-    {
-        $this->loginAdmin()
-            ->post('/admin/folders', ['name' => 'New folder'])
-            ->assertStatus(201);
-
-        $this->assertDatabaseHas('folders', ['name' => 'New folder']);
     }
 
     /** @test */
@@ -64,16 +64,6 @@ class ManageFolderTest extends TestCase
 
 
     /** @test */
-    public function a_guest_cant_update_a_folder()
-    {
-        $folder = create(Folder::class, ['name' => 'Old name']);
-
-        $this->patch('/admin/folders/' . $folder->id, ['name' => 'New folder'])->assertRedirect('login');
-
-        $this->assertEquals('Old name', $folder->fresh()->name);
-    }
-
-    /** @test */
     public function an_admin_user_can_update_a_folder()
     {
         $folder = create(Folder::class, ['name' => 'Old name']);
@@ -83,6 +73,16 @@ class ManageFolderTest extends TestCase
             ->assertStatus(200);
 
         $this->assertEquals('New name', $folder->fresh()->name);
+    }
+
+    /** @test */
+    public function a_guest_cant_update_a_folder()
+    {
+        $folder = create(Folder::class, ['name' => 'Old name']);
+
+        $this->patch('/admin/folders/' . $folder->id, ['name' => 'New folder'])->assertRedirect('login');
+
+        $this->assertEquals('Old name', $folder->fresh()->name);
     }
 
     /** @test */
@@ -112,16 +112,6 @@ class ManageFolderTest extends TestCase
 
 
     /** @test */
-    public function a_guest_cant_delete_a_folder()
-    {
-        $folder = create(Folder::class, ['name' => 'Old name']);
-
-        $this->delete('/admin/folders/' . $folder->id)->assertRedirect('login');
-
-        $this->assertDatabaseHas('folders', ['id' => $folder->id]);
-    }
-
-    /** @test */
     public function an_admin_user_can_delete_a_folder()
     {
         $folder = create(Folder::class);
@@ -131,6 +121,16 @@ class ManageFolderTest extends TestCase
             ->assertStatus(200);
 
         $this->assertDatabaseMissing('folders', ['id' => $folder->id]);
+    }
+
+    /** @test */
+    public function a_guest_cant_delete_a_folder()
+    {
+        $folder = create(Folder::class, ['name' => 'Old name']);
+
+        $this->delete('/admin/folders/' . $folder->id)->assertRedirect('login');
+
+        $this->assertDatabaseHas('folders', ['id' => $folder->id]);
     }
 
     /** @test */

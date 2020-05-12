@@ -6,13 +6,12 @@ use App\Folder;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class FolderController extends Controller
 {
     /**
-     * @return Response
+     * @return View
      */
     public function index()
     {

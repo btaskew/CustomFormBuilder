@@ -13,12 +13,6 @@ class ViewSelectQuestionsTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_guest_cant_view_select_questions_for_a_form()
-    {
-        $this->get('/forms/1/select-questions')->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_view_all_the_select_questions_on_their_form()
     {
         $form = $this->loginUserWithForm();
@@ -31,6 +25,12 @@ class ViewSelectQuestionsTest extends TestCase
             ->assertSee($selectQuestion->title)
             ->assertSee($option->value)
             ->assertDontSee($otherQuestion->title);
+    }
+
+    /** @test */
+    public function a_guest_cant_view_select_questions_for_a_form()
+    {
+        $this->get('/forms/1/select-questions')->assertRedirect('login');
     }
 
     /** @test */

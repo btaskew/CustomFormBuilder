@@ -13,12 +13,6 @@ class AddFromQuestionBankTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_guest_cant_add_a_question_bank_question_to_a_form()
-    {
-        $this->post('question-bank/assign', ['form' => 1, 'questions' => [1]])->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_add_a_question_bank_question_to_their_form()
     {
         $this->withoutExceptionHandling();
@@ -30,6 +24,12 @@ class AddFromQuestionBankTest extends TestCase
 
         $this->assertEquals($question->title, $form->questions->first()->title);
         $this->assertFalse($form->questions->first()->in_question_bank);
+    }
+
+    /** @test */
+    public function a_guest_cant_add_a_question_bank_question_to_a_form()
+    {
+        $this->post('question-bank/assign', ['form' => 1, 'questions' => [1]])->assertRedirect('login');
     }
 
     /** @test */

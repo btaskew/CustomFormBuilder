@@ -13,12 +13,6 @@ class ViewFormResponseTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_guest_cant_view_a_forms_responses()
-    {
-        $this->get('/forms/1/responses')->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_view_their_forms_responses()
     {
         $form = $this->loginUserWithForm();
@@ -31,6 +25,12 @@ class ViewFormResponseTest extends TestCase
         $this->get(formPath($form) . '/responses')
             ->assertStatus(200)
             ->assertSee('My response');
+    }
+
+    /** @test */
+    public function a_guest_cant_view_a_forms_responses()
+    {
+        $this->get('/forms/1/responses')->assertRedirect('login');
     }
 
     /** @test */

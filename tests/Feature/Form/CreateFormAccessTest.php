@@ -13,12 +13,6 @@ class CreateFormAccessTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_guest_cant_grant_access_to_a_form()
-    {
-        $this->post('forms/1/access', ['username' => 'ab123'])->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_forms_owner_can_grant_another_user_access_to_their_form()
     {
         $form = $this->loginUserWithForm();
@@ -33,6 +27,12 @@ class CreateFormAccessTest extends TestCase
             'user_id' => $user->id,
             'access' => 'view'
         ]);
+    }
+
+    /** @test */
+    public function a_guest_cant_grant_access_to_a_form()
+    {
+        $this->post('forms/1/access', ['username' => 'ab123'])->assertRedirect('login');
     }
 
     /** @test */

@@ -12,12 +12,6 @@ class ViewQuestionTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_guest_cant_view_a_forms_questions()
-    {
-        $this->get('/forms/1/questions')->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_view_a_forms_questions()
     {
         $form = $this->loginUserWithForm();
@@ -26,6 +20,12 @@ class ViewQuestionTest extends TestCase
         $this->get(formPath($form) . '/questions')
             ->assertStatus(200)
             ->assertSee($question->title);
+    }
+
+    /** @test */
+    public function a_guest_cant_view_a_forms_questions()
+    {
+        $this->get('/forms/1/questions')->assertRedirect('login');
     }
 
     /** @test */
@@ -75,12 +75,6 @@ class ViewQuestionTest extends TestCase
 
 
     /** @test */
-    public function a_guest_cant_view_a_specific_questions_data()
-    {
-        $this->get('/forms/1/questions/1')->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_view_a_questions_data_for_one_of_their_forms()
     {
         $form = $this->loginUserWithForm();
@@ -89,6 +83,12 @@ class ViewQuestionTest extends TestCase
         $this->get(formPath($form) . '/questions/' . $question->id)
             ->assertStatus(200)
             ->assertSee($question->title);
+    }
+
+    /** @test */
+    public function a_guest_cant_view_a_specific_questions_data()
+    {
+        $this->get('/forms/1/questions/1')->assertRedirect('login');
     }
 
     /** @test */

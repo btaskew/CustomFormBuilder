@@ -12,17 +12,17 @@ class UpdateFormTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_guest_cant_view_the_edit_form_page()
-    {
-        $this->get('/forms/1/edit')->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_view_the_edit_form_page_for_their_form()
     {
         $form = $this->loginUserWithForm();
 
         $this->get(formPath($form) . '/edit')->assertSee($form->title);
+    }
+
+    /** @test */
+    public function a_guest_cant_view_the_edit_form_page()
+    {
+        $this->get('/forms/1/edit')->assertRedirect('login');
     }
 
     /** @test */
@@ -49,16 +49,6 @@ class UpdateFormTest extends TestCase
         $this->get(formPath($form) . '/edit')->assertStatus(403);
     }
 
-
-    /** @test */
-    public function a_guest_cant_edit_a_form()
-    {
-        $form = create(Form::class, ['title' => 'Old title']);
-
-        $this->patch(formPath($form), ['title' => 'New title'])->assertRedirect('login');
-
-        $this->assertEquals('Old title', $form->fresh()->title);
-    }
 
     /** @test */
     public function a_user_can_edit_their_form()
@@ -95,6 +85,16 @@ class UpdateFormTest extends TestCase
         $this->assertEquals($question->id, $form->response_email_field);
         $this->assertFalse($form->active);
         $this->assertEquals(2, $form->folder_id);
+    }
+
+    /** @test */
+    public function a_guest_cant_edit_a_form()
+    {
+        $form = create(Form::class, ['title' => 'Old title']);
+
+        $this->patch(formPath($form), ['title' => 'New title'])->assertRedirect('login');
+
+        $this->assertEquals('Old title', $form->fresh()->title);
     }
 
     /** @test */

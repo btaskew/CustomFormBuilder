@@ -12,12 +12,6 @@ class ViewQuestionBankTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_guest_cant_view_question_bank_questions()
-    {
-        $this->get('/forms/1/questions/bank')->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_view_all_the_questions_in_the_question_bank()
     {
         $form = $this->loginUserWithForm();
@@ -28,6 +22,12 @@ class ViewQuestionBankTest extends TestCase
             ->assertStatus(200)
             ->assertSee($question->title)
             ->assertSee($option->value);
+    }
+
+    /** @test */
+    public function a_guest_cant_view_question_bank_questions()
+    {
+        $this->get('/forms/1/questions/bank')->assertRedirect('login');
     }
 
     /** @test */
@@ -68,7 +68,6 @@ class ViewQuestionBankTest extends TestCase
 
         $this->assertCount(25, $result);
     }
-
 
     /** @test */
     public function an_admin_can_view_the_question_bank_via_the_admin_route()

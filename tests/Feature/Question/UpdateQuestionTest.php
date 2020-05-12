@@ -12,16 +12,6 @@ class UpdateQuestionTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_guest_cant_edit_a_question()
-    {
-        $form = create(Form::class);
-        $question = create(Question::class, ['form_id' => $form->id]);
-
-        $this->patch('/forms/' . $question->form->id . '/questions/' . $question->id, [])
-            ->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_edit_a_question_for_their_form()
     {
         $form = $this->loginUserWithForm();
@@ -33,6 +23,16 @@ class UpdateQuestionTest extends TestCase
         )->assertStatus(200);
 
         $this->assertEquals('New title', $question->fresh()->title);
+    }
+
+    /** @test */
+    public function a_guest_cant_edit_a_question()
+    {
+        $form = create(Form::class);
+        $question = create(Question::class, ['form_id' => $form->id]);
+
+        $this->patch('/forms/' . $question->form->id . '/questions/' . $question->id, [])
+            ->assertRedirect('login');
     }
 
     /** @test */

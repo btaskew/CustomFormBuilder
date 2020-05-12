@@ -100,7 +100,7 @@ class FormController extends Controller
     /**
      * @param FormRequest $request
      * @param Form        $form
-     * @return Form
+     * @return Form|JsonResponse
      * @throws AuthorizationException
      */
     public function update(FormRequest $request, Form $form)

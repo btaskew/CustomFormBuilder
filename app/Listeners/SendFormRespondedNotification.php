@@ -45,7 +45,7 @@ class SendFormRespondedNotification
     {
         $emails = [];
 
-        foreach (explode(";", $adminEmails) as $email) {
+        foreach (explode(';', $adminEmails) as $email) {
             filter_var($email, FILTER_VALIDATE_EMAIL) && $emails[] = $email;
         }
 

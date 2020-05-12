@@ -14,12 +14,6 @@ class ViewFormTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_guest_cant_view_their_forms()
-    {
-        $this->get('/forms')->assertRedirect('login');
-    }
-
-    /** @test */
     public function a_user_can_view_all_their_forms()
     {
         $form = $this->loginUserWithForm();
@@ -33,6 +27,12 @@ class ViewFormTest extends TestCase
             ->assertStatus(200)
             ->assertSee($form->title)
             ->assertSee($form2->title);
+    }
+
+    /** @test */
+    public function a_guest_cant_view_their_forms()
+    {
+        $this->get('/forms')->assertRedirect('login');
     }
 
     /** @test */

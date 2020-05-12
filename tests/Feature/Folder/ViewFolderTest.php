@@ -12,12 +12,6 @@ class ViewFolderTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_guest_cant_view_all_folder()
-    {
-        $this->get('/admin/folders')->assertRedirect('login');
-    }
-
-    /** @test */
     public function an_admin_user_can_see_a_list_of_all_folders_with_their_form_counts()
     {
         $folder = create(Folder::class);
@@ -28,6 +22,12 @@ class ViewFolderTest extends TestCase
             ->assertStatus(200)
             ->assertSee($folder->name)
             ->assertSee(2);
+    }
+
+    /** @test */
+    public function a_guest_cant_view_all_folder()
+    {
+        $this->get('/admin/folders')->assertRedirect('login');
     }
 
     /** @test */

@@ -81,7 +81,7 @@ class User extends Authenticatable
         ]);
 
         if ($access == 'view') {
-            $userAccess = $userAccess
+            $userAccess
                 ->orWhere('access', 'update')
                 ->where([
                     'user_id' => $this->id,
