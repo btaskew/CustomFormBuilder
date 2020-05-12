@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light mb-3 sub-nav">
-    <span class="navbar-brand mb-0 h1">Form: {{ str_limit($form->title, 25) }}</span>
+    <span class="navbar-brand mb-0 h1">Form: {{ \Illuminate\Support\Str::limit($form->title, 25) }}</span>
 
     <ul class="nav">
         @if (auth()->user()->hasAccessTo('edit', $form))

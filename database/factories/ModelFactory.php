@@ -10,6 +10,7 @@ use App\User;
 use App\VisibilityRequirement;
 use Faker\Factory;
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ $factory->define(User::class, function (Faker $faker) {
         'username' => $faker->unique()->userName,
         'email' => $faker->unique()->safeEmail,
         'password' => bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'remember_token' => Str::random(10),
     ];
 });
 
@@ -69,7 +70,7 @@ $factory->define(SelectOption::class, function (Faker $faker) {
             return factory(Question::class)->create()->id;
         },
         'value' => $faker->word,
-        'display_value' => $faker->word
+        'display_value' => $faker->word,
     ];
 });
 
@@ -90,13 +91,13 @@ $factory->define(FormResponse::class, function (Faker $faker) {
         'form_id' => function () {
             return factory(Form::class)->create()->id;
         },
-        'response' => $faker->word
+        'response' => $faker->word,
     ];
 });
 
 $factory->define(Folder::class, function (Faker $faker) {
     return [
-        'name' => $faker->word
+        'name' => $faker->word,
     ];
 });
 
@@ -108,6 +109,6 @@ $factory->define(FormUser::class, function (Faker $faker) {
         'form_id' => function () {
             return factory(Form::class)->create()->id;
         },
-        'access' => 'update'
+        'access' => 'update',
     ];
 });
