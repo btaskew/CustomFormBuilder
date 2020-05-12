@@ -27,14 +27,14 @@ class Form extends Model
         'response_email',
         'response_email_field',
         'user_id',
-        'folder_id'
+        'folder_id',
     ];
 
     /**
      * @var array
      */
     protected $casts = [
-        'active' => 'boolean'
+        'active' => 'boolean',
     ];
 
     protected static function boot()
@@ -154,7 +154,7 @@ class Form extends Model
      */
     private function isBetweenActiveDates(): bool
     {
-        return (new Carbon())->between((new Carbon($this->open_date)), (new Carbon($this->close_date)));
+        return (new Carbon())->between(new Carbon($this->open_date), new Carbon($this->close_date));
     }
 
     /**
@@ -162,6 +162,6 @@ class Form extends Model
      */
     private function hasNotReachMaxResponses(): bool
     {
-        return (is_null($this->max_responses) || $this->responses()->count() < $this->max_responses);
+        return is_null($this->max_responses) || $this->responses()->count() < $this->max_responses;
     }
 }

@@ -3,8 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\JsonResponse;
 
 class FormUser extends Model
 {
@@ -19,26 +17,18 @@ class FormUser extends Model
     protected $fillable = [
         'user_id',
         'form_id',
-        'access'
+        'access',
     ];
 
     /**
      * @param string $username
      * @param string $access
      * @param int    $formId
-     * @return JsonResponse
+     * @return User
      */
     public static function createAccess(string $username, string $access, int $formId)
     {
-        if ($username === auth()->user()->username) {
-            return response()->json(['error' => "Can't grant access to self"], 422);
-        }
-
-        try {
-            $user = User::where('username', $username)->firstOrFail();
-        } catch (ModelNotFoundException $exception) {
-            return response()->json(['error' => 'Given user was not found in the database'], 404);
-        }
+        $user = User::where('username', $username)->firstOrFail();
 
         $user->pivot = self::updateOrCreate([
             'user_id' => $user->id,
@@ -46,7 +36,7 @@ class FormUser extends Model
         ], [
             'user_id' => $user->id,
             'form_id' => $formId,
-            'access' => $access
+            'access' => $access,
         ]);
 
         return $user;

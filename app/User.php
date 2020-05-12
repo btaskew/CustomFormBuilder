@@ -20,14 +20,14 @@ class User extends Authenticatable
         'name',
         'username',
         'email',
-        'password'
+        'password',
     ];
 
     /**
      * @var array
      */
     protected $hidden = [
-        'remember_token', 'password'
+        'remember_token', 'password',
     ];
 
     /**
@@ -77,7 +77,7 @@ class User extends Authenticatable
         $userAccess = FormUser::where([
             'user_id' => $this->id,
             'form_id' => $form->id,
-            'access' => $access
+            'access' => $access,
         ]);
 
         if ($access == 'view') {

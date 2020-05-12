@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Form;
 use App\FormUser;
+use App\User;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -22,30 +24,38 @@ class FormAccessController extends Controller
 
         return view('form.users', [
             'form' => $form,
-            'users' => $form->usersWithAccess
+            'users' => $form->usersWithAccess,
         ]);
     }
 
     /**
      * @param Request $request
      * @param Form    $form
-     * @return JsonResponse
+     * @return User|JsonResponse
      * @throws AuthorizationException
      */
     public function store(Request $request, Form $form)
     {
         $attributes = $request->validate([
             'username' => 'string|required|min:3',
-            'access' => 'string|required|in:view,update'
+            'access' => 'string|required|in:view,update',
         ]);
 
         $this->authorize('update', $form);
 
-        return FormUser::createAccess(
-            $attributes['username'],
-            $attributes['access'],
-            $form->id
-        );
+        if ($attributes['username'] === auth()->user()->username) {
+            return response()->json(['error' => 'Can\'t grant access to self'], 422);
+        }
+
+        try {
+            return FormUser::createAccess(
+                $attributes['username'],
+                $attributes['access'],
+                $form->id
+            );
+        } catch (ModelNotFoundException $exception) {
+            return response()->json(['error' => 'Given user was not found in the database'], 404);
+        }
     }
 
     /**
